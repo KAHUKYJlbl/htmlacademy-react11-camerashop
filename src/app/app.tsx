@@ -8,6 +8,7 @@ import { store } from './provider/store/ui/store';
 import HistoryRouter from './provider/router/ui/app-router';
 import { AppRoute } from './provider/router/lib/routes';
 import { browserHistory } from './provider/router/lib/history';
+import Main from '../pages/main/ui/main';
 
 export default function App(): JSX.Element {
   // const authStatus = useAppSelector(getAuthStatus);
@@ -17,8 +18,10 @@ export default function App(): JSX.Element {
   // }
 
   return (
-    <ErrorBoundary fallback={<Oops type='error-boundary' />}>
-      <Suspense fallback={<LoadingSpinner spinnerType='page' />}>
+    // <Oops type='error-boundary' />
+    // <LoadingSpinner spinnerType='page' />
+    <ErrorBoundary fallback={<div>Oops...</div>}>
+      <Suspense fallback={<div>Oops...</div>}>
         <Provider store={store}>
           <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
           <HistoryRouter history={browserHistory}>
@@ -57,10 +60,10 @@ export default function App(): JSX.Element {
                   </PrivateRoute>
                 }
               /> */}
-              <Route
+              {/* <Route
                 path="*"
                 element={<NotFound />}
-              />
+              /> */}
             </Routes>
           </HistoryRouter>
         </Provider>
