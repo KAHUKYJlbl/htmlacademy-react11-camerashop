@@ -8,7 +8,8 @@ import { store } from './provider/store/ui/store';
 import HistoryRouter from './provider/router/ui/app-router';
 import { AppRoute } from './provider/router/lib/routes';
 import { browserHistory } from './provider/router/lib/history';
-import Main from '../pages/main-page/ui/main-page';
+import { CatalogPage } from '../pages/catalog-page';
+import { MainPage } from '../pages/main-page';
 
 export default function App(): JSX.Element {
   // const authStatus = useAppSelector(getAuthStatus);
@@ -29,14 +30,14 @@ export default function App(): JSX.Element {
               <Route
                 path={AppRoute.Main}
                 element={
-                  <Main />
+                  <MainPage />
                 }
               />
-              {/* <Route
-                path={AppRoute.Login}
-                element={<Login />}
-              />
               <Route
+                path={AppRoute.Catalog}
+                element={<CatalogPage />}
+              />
+              {/* <Route
                 path={AppRoute.Contacts}
                 element={<Contacts />}
               />
