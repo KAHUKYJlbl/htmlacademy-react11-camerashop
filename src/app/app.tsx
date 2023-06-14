@@ -8,7 +8,7 @@ import { store } from './provider/store/ui/store';
 import HistoryRouter from './provider/router/ui/app-router';
 import { AppRoute } from './provider/router/lib/routes';
 import { browserHistory } from './provider/router/lib/history';
-import Main from '../pages/main/ui/main';
+import Main from '../pages/main-page/ui/main-page';
 
 export default function App(): JSX.Element {
   // const authStatus = useAppSelector(getAuthStatus);
