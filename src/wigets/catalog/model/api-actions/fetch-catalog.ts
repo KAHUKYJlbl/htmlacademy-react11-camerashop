@@ -4,7 +4,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { Camera } from '../../../../entities/camera';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
-import { APIRoute } from '../../../../shared/lib/api-routes';
+import { APIRoute } from '../../../../shared/lib/const/api-routes';
 
 export const fetchCatalog = createAsyncThunk<Camera[], undefined, {
   dispatch: AppDispatch;

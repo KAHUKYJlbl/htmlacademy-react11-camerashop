@@ -1,4 +1,10 @@
-export function CameraCard (): JSX.Element {
+import { Camera } from '../types/camera';
+
+type CameraCardProps = {
+  camera: Camera;
+}
+
+export function CameraCard ({camera}: CameraCardProps): JSX.Element {
   return (
     <div className="product-card">
       <div className="product-card__img">
