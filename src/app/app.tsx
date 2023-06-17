@@ -8,7 +8,11 @@ import { store } from './provider/store/ui/store';
 import HistoryRouter from './provider/router/ui/app-router';
 import { AppRoute } from './provider/router/lib/routes';
 import { browserHistory } from './provider/router/lib/history';
-import Main from '../pages/main/ui/main';
+
+import { CatalogPage } from '../pages/catalog-page';
+import { MainPage } from '../pages/main-page';
+import { LoadingSpinner } from '../shared/ui/loading-spinner';
+import { CameraPage } from '../pages/camera-page';
 
 export default function App(): JSX.Element {
   // const authStatus = useAppSelector(getAuthStatus);
@@ -19,9 +23,8 @@ export default function App(): JSX.Element {
 
   return (
     // <Oops type='error-boundary' />
-    // <LoadingSpinner spinnerType='page' />
     <ErrorBoundary fallback={<div>Oops...</div>}>
-      <Suspense fallback={<div>Oops...</div>}>
+      <Suspense fallback={<LoadingSpinner spinnerType='page' />}>
         <Provider store={store}>
           <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
           <HistoryRouter history={browserHistory}>
@@ -29,37 +32,17 @@ export default function App(): JSX.Element {
               <Route
                 path={AppRoute.Main}
                 element={
-                  <Main />
-                }
-              />
-              {/* <Route
-                path={AppRoute.Login}
-                element={<Login />}
-              />
-              <Route
-                path={AppRoute.Contacts}
-                element={<Contacts />}
-              />
-              <Route
-                path={AppRoute.Quest}
-                element={<Quest />}
-              />
-              <Route
-                path={AppRoute.Booking}
-                element={
-                  <PrivateRoute>
-                    <Booking />
-                  </PrivateRoute>
+                  <MainPage />
                 }
               />
               <Route
-                path={AppRoute.MyQuests}
-                element={
-                  <PrivateRoute>
-                    <MyQuests />
-                  </PrivateRoute>
-                }
-              /> */}
+                path={AppRoute.Catalog}
+                element={<CatalogPage />}
+              />
+              <Route
+                path={AppRoute.Camera}
+                element={<CameraPage />}
+              />
               {/* <Route
                 path="*"
                 element={<NotFound />}
