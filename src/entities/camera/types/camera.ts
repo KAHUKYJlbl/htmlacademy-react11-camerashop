@@ -1,6 +1,13 @@
-export type Camera = {
+export type BannerCamera = {
   id: number;
   name: string;
+  previewImg: string;
+  previewImg2x: string;
+  previewImgWebp: string;
+  previewImgWebp2x: string;
+};
+
+export type Camera = BannerCamera & {
   vendorCode: string;
   type: CameraTypes;
   category: CameraCategories;
@@ -8,10 +15,6 @@ export type Camera = {
   description: string;
   price: number;
   reviewCount: number;
-  previewImg: string;
-  previewImg2x: string;
-  previewImgWebp: string;
-  previewImgWebp2x: string;
 };
 
 export type CameraTypes = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';

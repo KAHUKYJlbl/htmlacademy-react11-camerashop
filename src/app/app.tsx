@@ -12,6 +12,7 @@ import { browserHistory } from './provider/router/lib/history';
 import { CatalogPage } from '../pages/catalog-page';
 import { MainPage } from '../pages/main-page';
 import { LoadingSpinner } from '../shared/ui/loading-spinner';
+import { CameraPage } from '../pages/camera-page';
 
 export default function App(): JSX.Element {
   // const authStatus = useAppSelector(getAuthStatus);
@@ -38,30 +39,10 @@ export default function App(): JSX.Element {
                 path={AppRoute.Catalog}
                 element={<CatalogPage />}
               />
-              {/* <Route
-                path={AppRoute.Contacts}
-                element={<Contacts />}
-              />
               <Route
-                path={AppRoute.Quest}
-                element={<Quest />}
+                path={AppRoute.Camera}
+                element={<CameraPage />}
               />
-              <Route
-                path={AppRoute.Booking}
-                element={
-                  <PrivateRoute>
-                    <Booking />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path={AppRoute.MyQuests}
-                element={
-                  <PrivateRoute>
-                    <MyQuests />
-                  </PrivateRoute>
-                }
-              /> */}
               {/* <Route
                 path="*"
                 element={<NotFound />}

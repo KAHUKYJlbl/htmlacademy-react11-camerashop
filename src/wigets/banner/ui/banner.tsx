@@ -1,9 +1,38 @@
+import { useEffect } from 'react';
+
+import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { fetchBanner } from '../model/api-actions/fetch-banner';
+import { getBanner } from '../model/banner-selectors';
+import { getCatalog } from '../../catalog/model/catalog-selectors';
+
 export function Banner (): JSX.Element {
+  const dispatch = useAppDispatch();
+  const banner = useAppSelector(getBanner);
+  const catalog = useAppSelector(getCatalog);
+
+  useEffect(() => {
+    dispatch(fetchBanner());
+  }, []);
+
+  if (!banner) {
+    return <div className="banner"></div>;
+  }
+
   return (
     <div className="banner">
       <picture>
-        <source type="image/webp" srcSet="img/content/banner-bg.webp, img/content/banner-bg@2x.webp 2x" />
-        <img src="img/content/banner-bg.jpg" srcSet="img/content/banner-bg@2x.jpg 2x" width="1280" height="280" alt="баннер" />
+        <source
+          type="image/webp"
+          srcSet={`/${banner.previewImgWebp} /${banner.previewImgWebp2x}`}
+        />
+        <img
+          src={`/${banner.previewImg}`}
+          srcSet={`/${banner.previewImg2x}`}
+          width="1280"
+          height="280"
+          alt="баннер"
+        />
       </picture>
 
       <p className="banner__info">
@@ -11,10 +40,10 @@ export function Banner (): JSX.Element {
           Новинка!
         </span>
         <span className="title title--h1">
-          Cannonball&nbsp;Pro&nbsp;MX&nbsp;8i
+          {banner.name}
         </span>
         <span className="banner__text">
-          Профессиональная камера от&nbsp;известного производителя
+          {catalog.find((camera) => camera.id === banner.id)?.description}
         </span>
         <a className="btn" href="#">
           Подробнее

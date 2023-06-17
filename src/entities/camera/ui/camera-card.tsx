@@ -1,4 +1,6 @@
+import { Link, generatePath } from 'react-router-dom';
 import { Camera } from '../types/camera';
+import { AppRoute } from '../../../app/provider/router';
 
 type CameraCardProps = {
   camera: Camera;
@@ -9,13 +11,16 @@ export function CameraCard ({camera}: CameraCardProps): JSX.Element {
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet="img/content/img1.webp, img/content/img1@2x.webp 2x" />
+          <source
+            type="image/webp"
+            srcSet={`/${camera.previewImgWebp} /${camera.previewImgWebp2x}`}
+          />
           <img
-            src="img/content/img1.jpg"
-            srcSet="img/content/img1@2x.jpg 2x"
+            src={`/${camera.previewImg}`}
+            srcSet={`/${camera.previewImg2x}`}
             width="280"
             height="240"
-            alt="Ретрокамера «Das Auge IV»"
+            alt={camera.name}
           />
         </picture>
       </div>
@@ -43,26 +48,27 @@ export function CameraCard ({camera}: CameraCardProps): JSX.Element {
             <span className="visually-hidden">
               Всего оценок:
             </span>
-            23
+            {camera.reviewCount}
           </p>
         </div>
+
         <p className="product-card__title">
-          Ретрокамера Das Auge {camera.id}
+          {camera.name}
         </p>
         <p className="product-card__price">
           <span className="visually-hidden">
             Цена:
           </span>
-          73 450 ₽
+          {camera.price} ₽
         </p>
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">
           Купить
         </button>
-        <a className="btn btn--transparent" href="#">
+        <Link className="btn btn--transparent" to={ generatePath( AppRoute.Camera, { id: String(camera.id) } ) }>
           Подробнее
-        </a>
+        </Link>
       </div>
     </div>
   );

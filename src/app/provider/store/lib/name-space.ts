@@ -1,6 +1,6 @@
 export enum NameSpace {
   Catalog = 'Catalog',
-  // User = 'User',
+  Banner = 'Banner',
   // Quest = 'Quest',
   // Booking = 'Booking',
   // MyQuests = 'MyQuests'

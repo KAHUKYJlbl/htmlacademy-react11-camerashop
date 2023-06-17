@@ -1,6 +1,6 @@
 export enum APIRoute {
   Catalog = '/cameras',
-  // Canceling = '/reservation/:reservationId',
+  Banner = '/promo',
   // Quests = '/quest',
   // Quest = '/quest/:questId',
   // Booking = '/quest/:id/booking',
