@@ -47,7 +47,7 @@ export function CameraCard ({camera}: CameraCardProps): JSX.Element {
           </p>
         </div>
         <p className="product-card__title">
-          Ретрокамера Das Auge IV
+          Ретрокамера Das Auge {camera.id}
         </p>
         <p className="product-card__price">
           <span className="visually-hidden">

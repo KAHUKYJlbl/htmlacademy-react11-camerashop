@@ -2526,6 +2526,13 @@ button,
   border-radius: 20px;
 }
 
+.pagination__link--text--disabled {
+  color: #ffffff;
+  background-color: #ffffff;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .pagination__link:disabled {
   color: #dddddd;
   background-color: #f8f8f8;

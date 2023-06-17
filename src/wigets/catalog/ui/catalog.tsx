@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { fetchCatalog } from '../model/api-actions/fetch-catalog';
 import { getCatalog, getCatalogLoadingStatus } from '../model/catalog-selectors';
@@ -10,8 +11,10 @@ import { Pagination } from '../../../shared/ui/pagination';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
+import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 
 export function Catalog (): JSX.Element {
+  const { page } = useParams();
   const dispatch = useAppDispatch();
   const catalog = useAppSelector(getCatalog);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
@@ -24,7 +27,7 @@ export function Catalog (): JSX.Element {
     return <LoadingSpinner spinnerType='page' />;
   }
 
-  if (catalog.length === 0) {
+  if (catalog.length === 0 || !page) {
     return <span>Oops ...</span>;
   }
 
@@ -44,19 +47,14 @@ export function Catalog (): JSX.Element {
             <CatalogSort />
 
             <div className="cards catalog__cards">
-              <CameraCard camera={catalog[0]}/>
-              {/* <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard />
-              <CameraCard /> */}
+              {
+                catalog.slice( (+page - 1) * CARDS_PER_PAGE, +page * CARDS_PER_PAGE ).map((camera) => (
+                  <CameraCard camera={camera} key={camera.id} />
+                ))
+              }
             </div>
 
-            <Pagination />
+            <Pagination page={page} pagesCount={ Math.ceil( catalog.length / CARDS_PER_PAGE ) } />
           </div>
         </div>
       </div>
