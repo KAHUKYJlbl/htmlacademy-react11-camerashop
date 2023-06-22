@@ -1,20 +1,29 @@
+import { AddBasket, getAddBasketShown } from '../../../features/add-basket';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
 import { Banner } from '../../../wigets/banner';
 import { Catalog } from '../../../wigets/catalog';
 import { Layout } from '../../../wigets/layout';
 
-const CatalogPage = (): JSX.Element => (
-  <Layout>
-    <main>
-      <Banner />
+const CatalogPage = (): JSX.Element => {
+  const isAddBasketShown = useAppSelector(getAddBasketShown);
 
-      <div className="page-content">
-        <Breadcrumbs />
+  return (
+    <Layout>
+      <main>
+        <Banner />
 
-        <Catalog />
-      </div>
-    </main>
-  </Layout>
-);
+        <div className="page-content">
+          <Breadcrumbs />
+
+          <Catalog />
+        </div>
+
+        {isAddBasketShown && <AddBasket />}
+      </main>
+    </Layout>
+  );
+};
+
 
 export default CatalogPage;

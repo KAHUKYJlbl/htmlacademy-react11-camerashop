@@ -1,12 +1,17 @@
 import { Link, generatePath } from 'react-router-dom';
+
 import { Camera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
+import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { showAddBasket } from '../../../features/add-basket';
 
 type CameraCardProps = {
   camera: Camera;
 }
 
 export function CameraCard ({camera}: CameraCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -63,7 +68,7 @@ export function CameraCard ({camera}: CameraCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">
+        <button className="btn btn--purple product-card__btn" type="button" onClick={() => dispatch(showAddBasket(camera))}>
           Купить
         </button>
         <Link className="btn btn--transparent" to={ generatePath( AppRoute.Camera, { id: String(camera.id) } ) }>
