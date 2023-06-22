@@ -25,7 +25,7 @@ export function CatalogSort (): JSX.Element {
               <input type="radio" id="up" name="sort-icon" checked aria-label="По возрастанию" />
               <label htmlFor="up">
                 <svg width="16" height="14" aria-hidden="true">
-                  <image href="/img/sprite/icon-sort.svg" />
+                  <use xlinkHref="#icon-sort"></use>
                 </svg>
               </label>
             </div>
@@ -33,7 +33,7 @@ export function CatalogSort (): JSX.Element {
               <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">
-                  <image href="/img/sprite/icon-sort.svg" />
+                  <use xlinkHref="#icon-sort"></use>
                 </svg>
               </label>
             </div>

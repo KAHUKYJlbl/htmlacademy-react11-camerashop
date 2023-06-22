@@ -2,6 +2,6 @@ export enum NameSpace {
   Catalog = 'Catalog',
   Banner = 'Banner',
   AddBasket = 'AddBasket',
-  // Booking = 'Booking',
+  CameraInfo = 'CameraInfo',
   // MyQuests = 'MyQuests'
 }

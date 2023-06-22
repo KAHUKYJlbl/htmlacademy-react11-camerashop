@@ -8,6 +8,12 @@ const spinnerTypes = {
     wrapperHeight: '100vh',
     color: '#7575e2',
   },
+  wiget: {
+    height: '240',
+    width: '240',
+    wrapperHeight: '100%',
+    color: '#7575e2',
+  },
   button: {
     height: '15',
     width: '15',

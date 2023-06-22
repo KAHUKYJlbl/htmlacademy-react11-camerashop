@@ -7,7 +7,7 @@ export default function Header (): JSX.Element {
       <div className="container">
         <Link className="header__logo" to={AppRoute.Main} aria-label="Переход на главную">
           <svg width="100" height="36" aria-hidden="true">
-            <image href="/img/sprite/icon-logo.svg" />
+            <use xlinkHref="#icon-logo"></use>
           </svg>
         </Link>
         <nav className="main-nav header__main-nav">
@@ -38,7 +38,7 @@ export default function Header (): JSX.Element {
           <form>
             <label>
               <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
-                <image href="/img/sprite/icon-lens.svg" />
+                <use xlinkHref="#icon-lens"></use>
               </svg>
               <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту" />
             </label>
@@ -62,7 +62,7 @@ export default function Header (): JSX.Element {
           </form>
           <button className="form-search__reset" type="reset">
             <svg width="10" height="10" aria-hidden="true">
-              <image href="/img/sprite/icon-close.svg" />
+              <use xlinkHref="#icon-close"></use>
             </svg>
             <span className="visually-hidden">
               Сбросить поиск
@@ -71,7 +71,7 @@ export default function Header (): JSX.Element {
         </div>
         <a className="header__basket-link" href="#">
           <svg width="16" height="16" aria-hidden="true">
-            <image href="/img/sprite/icon-basket.svg" />
+            <use xlinkHref="#icon-basket"></use>
           </svg>
         </a>
       </div>

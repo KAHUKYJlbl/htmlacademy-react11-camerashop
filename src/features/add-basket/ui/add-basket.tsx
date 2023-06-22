@@ -41,7 +41,7 @@ export function AddBasket (): JSX.Element {
 
           <div className="basket-item__description">
             <p className="basket-item__title">
-              Орлёнок
+              {currentCamera.name}
             </p>
 
             <ul className="basket-item__list">
@@ -69,7 +69,7 @@ export function AddBasket (): JSX.Element {
               <span className="visually-hidden">
                 Цена:
               </span>
-              {currentCamera.price}
+              {currentCamera.price} ₽
             </p>
           </div>
         </div>
@@ -77,7 +77,7 @@ export function AddBasket (): JSX.Element {
         <div className="modal__buttons">
           <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" >
             <svg width="24" height="16" aria-hidden="true">
-              <image href="/img/sprite/icon-add-basket.svg" />
+              <use xlinkHref="#icon-add-basket"></use>
             </svg>
             Добавить в корзину
           </button>
@@ -85,7 +85,7 @@ export function AddBasket (): JSX.Element {
 
         <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(hideAddBasket(null))}>
           <svg width="10" height="10" aria-hidden="true">
-            <image href="/img/sprite/icon-close.svg" />
+            <use xlinkHref="#icon-close"></use>
           </svg>
         </button>
       </>
