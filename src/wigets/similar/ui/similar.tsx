@@ -32,7 +32,7 @@ export function Similar ({cameraId}: SimilarProps): JSX.Element {
 
       setTimeout(() => {
         setScroll('');
-        setShown((a) => a + 1);
+        setShown((a) => a === similar.length - SIMILAR_SHOWN_COUNT ? a : a + 1);
       }, 300);
     }
   };
@@ -43,7 +43,7 @@ export function Similar ({cameraId}: SimilarProps): JSX.Element {
 
       setTimeout(() => {
         setScroll('');
-        setShown((a) => a - 1);
+        setShown((a) => a === 0 ? 0 : a - 1);
       }, 300);
     }
   };
