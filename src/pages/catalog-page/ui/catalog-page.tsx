@@ -1,4 +1,5 @@
 import { AddBasket, getAddBasketShown } from '../../../features/add-basket';
+import { Titles } from '../../../shared/lib/const/titles';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
 import { Banner } from '../../../wigets/banner';
@@ -9,12 +10,12 @@ const CatalogPage = (): JSX.Element => {
   const isAddBasketShown = useAppSelector(getAddBasketShown);
 
   return (
-    <Layout>
+    <Layout title={Titles.Catalog} >
       <main>
         <Banner />
 
         <div className="page-content">
-          <Breadcrumbs />
+          <Breadcrumbs title={Titles.Catalog} />
 
           <Catalog />
         </div>

@@ -27,7 +27,7 @@ export function Catalog (): JSX.Element {
     return <LoadingSpinner spinnerType='page' />;
   }
 
-  if (catalog.length === 0 || !page) {
+  if (!page) {
     return <span>Oops ...</span>;
   }
 
@@ -48,9 +48,11 @@ export function Catalog (): JSX.Element {
 
             <div className="cards catalog__cards">
               {
-                catalog.slice( (+page - 1) * CARDS_PER_PAGE, +page * CARDS_PER_PAGE ).map((camera) => (
-                  <CameraCard camera={camera} key={camera.id} />
-                ))
+                catalog
+                  .slice( (+page - 1) * CARDS_PER_PAGE, +page * CARDS_PER_PAGE )
+                  .map((camera) =>
+                    <CameraCard camera={camera} key={camera.id} />
+                  )
               }
             </div>
 

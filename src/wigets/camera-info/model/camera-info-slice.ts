@@ -17,7 +17,7 @@ const initialState: InitialState = {
 };
 
 export const cameraInfoSlice = createSlice({
-  name: NameSpace.Catalog,
+  name: NameSpace.CameraInfo,
   initialState,
   reducers: {},
   extraReducers(builder) {

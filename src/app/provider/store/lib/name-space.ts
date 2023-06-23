@@ -3,5 +3,5 @@ export enum NameSpace {
   Banner = 'Banner',
   AddBasket = 'AddBasket',
   CameraInfo = 'CameraInfo',
-  // MyQuests = 'MyQuests'
+  Similar = 'Similar',
 }

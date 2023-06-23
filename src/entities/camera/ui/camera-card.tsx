@@ -29,6 +29,7 @@ export function CameraCard ({camera}: CameraCardProps): JSX.Element {
           />
         </picture>
       </div>
+
       <div className="product-card__info">
         <div className="rate product-card__rate">
           <svg width="17" height="16" aria-hidden="true">
