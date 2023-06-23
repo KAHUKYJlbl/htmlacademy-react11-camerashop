@@ -1,4 +1,5 @@
 import { Link, generatePath } from 'react-router-dom';
+import cn from 'classnames';
 
 import { Camera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
@@ -7,13 +8,14 @@ import { showAddBasket } from '../../../features/add-basket';
 
 type CameraCardProps = {
   camera: Camera;
+  className?: string;
 }
 
-export function CameraCard ({camera}: CameraCardProps): JSX.Element {
+export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="product-card">
+    <div className={ cn('product-card', className) }>
       <div className="product-card__img">
         <picture>
           <source
