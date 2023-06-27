@@ -7,6 +7,7 @@ import { Review } from '../../../entities/review';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { REVIEWS_PER_STEP } from '../lib/const';
+import { showAddReview } from '../../../features/add-review';
 
 type ReviewBlockProps = {
   cameraId: string;
@@ -33,7 +34,11 @@ export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
           <h2 className="title title--h3">
             Отзывы
           </h2>
-          <button className="btn" type="button">
+          <button
+            className="btn"
+            type="button"
+            onClick={() => dispath(showAddReview())}
+          >
             Оставить свой отзыв
           </button>
         </div>

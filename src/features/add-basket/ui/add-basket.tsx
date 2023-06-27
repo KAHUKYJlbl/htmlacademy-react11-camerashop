@@ -83,7 +83,12 @@ export function AddBasket (): JSX.Element {
           </button>
         </div>
 
-        <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(hideAddBasket(null))}>
+        <button
+          className="cross-btn"
+          type="button"
+          aria-label="Закрыть попап"
+          onClick={() => dispatch(hideAddBasket(null))}
+        >
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>
           </svg>
