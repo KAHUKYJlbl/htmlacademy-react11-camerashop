@@ -4,4 +4,5 @@ export enum NameSpace {
   AddBasket = 'AddBasket',
   CameraInfo = 'CameraInfo',
   Similar = 'Similar',
+  Review = 'Review'
 }

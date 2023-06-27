@@ -6,6 +6,7 @@ import { catalogSlice } from '../../../../wigets/catalog';
 import { addBasketSlice } from '../../../../features/add-basket';
 import { cameraInfoSlice } from '../../../../wigets/camera-info';
 import { similarSlice } from '../../../../wigets/similar';
+import { reviewSlice } from '../../../../wigets/review-block';
 
 export const rootReducer = combineReducers({
   [NameSpace.Catalog]: catalogSlice.reducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   [NameSpace.AddBasket]: addBasketSlice.reducer,
   [NameSpace.CameraInfo]: cameraInfoSlice.reducer,
   [NameSpace.Similar]: similarSlice.reducer,
+  [NameSpace.Review]: reviewSlice.reducer,
 });

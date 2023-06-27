@@ -5,9 +5,9 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Titles } from '../../../shared/lib/const/titles';
 import { AddBasket, getAddBasketShown } from '../../../features/add-basket';
 import { Layout } from '../../../wigets/layout';
-import { Review } from '../../../wigets/review';
 import { Similar } from '../../../wigets/similar';
 import { CameraInfo, getCamera } from '../../../wigets/camera-info';
+import { ReviewBlock } from '../../../wigets/review-block';
 
 const CameraPage = (): JSX.Element => {
   const { cameraId } = useParams();
@@ -35,7 +35,7 @@ const CameraPage = (): JSX.Element => {
           </div>
 
           <div className="page-content__section">
-            <Review />
+            <ReviewBlock cameraId={cameraId} />
           </div>
         </div>
 

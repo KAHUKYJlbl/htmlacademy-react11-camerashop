@@ -8,8 +8,8 @@ import styles from './similar.module.sass';
 
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { CameraCard } from '../../../entities/camera';
+import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 
 type SimilarProps = {
   cameraId: string;
@@ -48,12 +48,12 @@ export function Similar ({cameraId}: SimilarProps): JSX.Element {
     }
   };
 
-  if (similarLoadingStatus.isLoading) {
-    return <LoadingSpinner spinnerType='wiget' />;
-  }
-
   if (similar.length === 0) {
     return <p>Oops ...</p>;
+  }
+
+  if (similarLoadingStatus.isLoading) {
+    return <LoadingSpinner spinnerType='widget' />;
   }
 
   return (

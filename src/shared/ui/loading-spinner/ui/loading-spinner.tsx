@@ -5,20 +5,28 @@ const spinnerTypes = {
   page: {
     height: '240',
     width: '240',
-    wrapperHeight: '100vh',
     color: '#7575e2',
+    wrapperStyle: {
+      height: '100vh',
+    },
   },
-  wiget: {
+  widget: {
     height: '240',
     width: '240',
     wrapperHeight: '100%',
     color: '#7575e2',
+    wrapperStyle: {
+      padding: '40px',
+      height: '100%'
+    },
   },
   button: {
     height: '15',
     width: '15',
-    wrapperHeight: '100%',
     color: '#333333',
+    wrapperStyle: {
+      height: '100%'
+    },
   }
 };
 
@@ -34,7 +42,7 @@ export function LoadingSpinner ({spinnerType}: LoadingSpinnerProps): JSX.Element
       radius="48"
       color={spinnerTypes[spinnerType].color}
       ariaLabel="watch-loading"
-      wrapperStyle={{height: spinnerTypes[spinnerType].wrapperHeight}}
+      wrapperStyle={spinnerTypes[spinnerType].wrapperStyle}
       wrapperClass={classes.container}
       visible
     />

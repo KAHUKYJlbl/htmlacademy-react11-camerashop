@@ -4,22 +4,23 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
 import { APIRoute } from '../../../../shared/lib/const/api-routes';
-import { BannerCamera } from '../../../../entities/camera';
+import { ReviewType } from '../../../../entities/review';
+import { generatePath } from 'react-router-dom';
 
-export const fetchBanner = createAsyncThunk<BannerCamera, undefined, {
+export const fetchReviews = createAsyncThunk<ReviewType[], string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'Banner/fetchCBanner',
-  async (_arg, {extra: axios}) => {
+  'REview/fetchReviews',
+  async (cameraId, {extra: axios}) => {
     try {
-      const { data } = await axios.get<BannerCamera>(APIRoute.Banner);
+      const { data } = await axios.get<ReviewType[]>(generatePath(APIRoute.Review, {cameraId}));
 
       return data;
     } catch (err) {
       if (err instanceof AxiosError && err.response?.status !== 401) {
-        toast.error('Banner loading failed.');
+        toast.error('Catalog loading failed.');
       }
       throw err;
     }
