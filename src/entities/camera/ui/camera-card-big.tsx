@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import cn from 'classnames';
+
 import { showAddBasket } from '../../../features/add-basket';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { Camera } from '../types/camera';
@@ -6,8 +9,14 @@ type CameraPageInfoProps = {
   camera: Camera;
 }
 
+enum CameraTabs {
+  Properties = 'Характеристики',
+  Description = 'Описание',
+}
+
 export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const [currentTab, setCurrentTab] = useState<CameraTabs>(CameraTabs.Properties);
 
   return (
     <section className="product">
@@ -27,6 +36,7 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
             />
           </picture>
         </div>
+
         <div className="product__content">
           <h1 className="title title--h3">{camera.name}</h1>
 
@@ -78,17 +88,27 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
 
           <div className="tabs product__tabs">
             <div className="tabs__controls product__tabs-controls">
-              <button className="tabs__control" type="button">
-                Характеристики
+              <button
+                type="button"
+                className={ cn( 'tabs__control', { 'is-active': currentTab === CameraTabs.Properties } ) }
+                onClick={ () => setCurrentTab(CameraTabs.Properties) }
+              >
+                {CameraTabs.Properties}
               </button>
 
-              <button className="tabs__control is-active" type="button">
-                Описание
+              <button
+                className={ cn( 'tabs__control', { 'is-active': currentTab === CameraTabs.Description } ) }
+                type="button"
+                onClick={() => setCurrentTab(CameraTabs.Description)}
+              >
+                {CameraTabs.Description}
               </button>
             </div>
 
             <div className="tabs__content">
-              <div className="tabs__element">
+              <div
+                className={ cn( 'tabs__element', { 'is-active': currentTab === CameraTabs.Properties } ) }
+              >
                 <ul className="product__tabs-list">
                   <li className="item-list">
                     <span className="item-list__title">
@@ -132,7 +152,9 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
                 </ul>
               </div>
 
-              <div className="tabs__element is-active">
+              <div
+                className={ cn( 'tabs__element', { 'is-active': currentTab === CameraTabs.Description } ) }
+              >
                 <div className="product__tabs-text">
                   <p>
                     {camera.description}
