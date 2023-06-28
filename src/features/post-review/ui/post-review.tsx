@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import cn from 'classnames';
 
 
 import { RATING_SCALE_MAX, RatingScale, ReviewForm } from '../../../entities/review';
@@ -55,7 +56,12 @@ export function PostReview (): JSX.Element {
             onSubmit={handleSubmit(onFormSubmit, onFormSubmitError)}
           >
             <div className="form-review__rate">
-              <fieldset className="rate form-review__item">
+              <fieldset
+                className={cn(
+                  'rate form-review__item',
+                  {'is-invalid': fieldErrors.rating}
+                )}
+              >
                 <legend className="rate__caption">
                   Рейтинг
                   <svg width="9" height="9" aria-hidden="true">
@@ -108,7 +114,12 @@ export function PostReview (): JSX.Element {
                 {fieldErrors.rating && <p className="rate__message">Нужно оценить товар</p>}
               </fieldset>
 
-              <div className="custom-input form-review__item">
+              <div
+                className={cn(
+                  'custom-input form-review__item',
+                  {'is-invalid': fieldErrors.userName}
+                )}
+              >
                 <label>
                   <span className="custom-input__label">
                     Ваше имя
@@ -123,13 +134,17 @@ export function PostReview (): JSX.Element {
                     type="text"
                     name="userName"
                     placeholder="Введите ваше имя"
-                    required
                   />
                 </label>
                 {fieldErrors.userName && <p className="custom-input__error">Нужно указать имя</p>}
               </div>
 
-              <div className="custom-input form-review__item">
+              <div
+                className={cn(
+                  'custom-input form-review__item',
+                  {'is-invalid': fieldErrors.advantage}
+                )}
+              >
                 <label>
                   <span className="custom-input__label">
                     Достоинства
@@ -143,14 +158,18 @@ export function PostReview (): JSX.Element {
                     type="text"
                     name="advantage"
                     placeholder="Основные преимущества товара"
-                    required
                   />
                 </label>
 
                 {fieldErrors.advantage && <p className="custom-input__error">Нужно указать достоинства</p>}
               </div>
 
-              <div className="custom-input form-review__item">
+              <div
+                className={cn(
+                  'custom-input form-review__item',
+                  {'is-invalid': fieldErrors.disadvantage}
+                )}
+              >
                 <label>
                   <span className="custom-input__label">
                     Недостатки
@@ -165,14 +184,18 @@ export function PostReview (): JSX.Element {
                     type="text"
                     name="disadvantage"
                     placeholder="Главные недостатки товара"
-                    required
                   />
                 </label>
 
                 {fieldErrors.disadvantage && <p className="custom-input__error">Нужно указать недостатки</p>}
               </div>
 
-              <div className="custom-textarea form-review__item">
+              <div
+                className={cn(
+                  'custom-textarea form-review__item',
+                  {'is-invalid': fieldErrors.review}
+                )}
+              >
                 <label>
                   <span className="custom-textarea__label">
                     Комментарий
@@ -185,7 +208,6 @@ export function PostReview (): JSX.Element {
                   <textarea
                     {...register('review', {required: true, minLength: REVIEW_MIN_LENGTH})}
                     name="review"
-                    minLength={REVIEW_MIN_LENGTH}
                     placeholder="Поделитесь своим опытом покупки"
                   >
                   </textarea>
