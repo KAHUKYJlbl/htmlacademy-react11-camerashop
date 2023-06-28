@@ -2,7 +2,7 @@ export enum NameSpace {
   Catalog = 'Catalog',
   Banner = 'Banner',
   AddBasket = 'AddBasket',
-  AddReview = 'AddReview',
+  PostReview = 'PostReview',
   CameraInfo = 'CameraInfo',
   Similar = 'Similar',
   Review = 'Review'

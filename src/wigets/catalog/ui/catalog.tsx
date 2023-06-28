@@ -24,7 +24,7 @@ export function Catalog (): JSX.Element {
   }, []);
 
   if (catalogLoadingStatus.isLoading) {
-    return <LoadingSpinner spinnerType='page' />;
+    return <LoadingSpinner spinnerType='widget' />;
   }
 
   if (!page) {

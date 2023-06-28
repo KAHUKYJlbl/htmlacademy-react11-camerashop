@@ -1,3 +1,3 @@
-export { Review } from './ui/review';
-export type { Review as ReviewType } from './types/review';
-
+export { ReviewCard } from './ui/review-card';
+export type { Review, ReviewForm, ReviewFormAPI } from './types/review';
+export { RatingScale, RATING_SCALE_MAX } from './lib/const';

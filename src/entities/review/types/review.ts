@@ -1,12 +1,17 @@
-export type Review = {
-  id: string;
-  createAt: string;
-  cameraId: number;
+export type ReviewForm = {
+  rating: string;
   userName: string;
   advantage: string;
   disadvantage: string;
   review: string;
-  rating: FiveScaleRating;
 }
 
-type FiveScaleRating = 1 | 2 | 3 | 4 | 5
+export type ReviewFormAPI = Omit<ReviewForm, 'rating'> & {
+  cameraId: number;
+  rating: number;
+}
+
+export type Review = ReviewFormAPI & {
+  id: string;
+  createAt: string;
+}

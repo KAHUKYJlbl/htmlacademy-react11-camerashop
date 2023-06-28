@@ -4,4 +4,5 @@ export enum APIRoute {
   Camera = '/cameras/:cameraId',
   Similar = '/cameras/:cameraId/similar',
   Review = '/cameras/:cameraId/reviews',
+  PostReview = '/reviews',
 }

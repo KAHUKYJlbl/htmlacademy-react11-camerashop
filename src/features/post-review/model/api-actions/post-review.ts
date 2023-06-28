@@ -4,18 +4,21 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
 import { APIRoute } from '../../../../shared/lib/const/api-routes';
-import { Review } from '../../../../entities/review';
+import { Review, ReviewFormAPI } from '../../../../entities/review';
 import { generatePath } from 'react-router-dom';
 
-export const fetchReviews = createAsyncThunk<Review[], string, {
+export const postReview = createAsyncThunk<Review, ReviewFormAPI, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'Review/fetchReviews',
-  async (cameraId, {extra: axios}) => {
+  'Review/postReview',
+  async (newReview, {extra: axios}) => {
     try {
-      const { data } = await axios.get<Review[]>(generatePath(APIRoute.Review, {cameraId}));
+      const { data } = await axios.post<Review>(
+        generatePath( APIRoute.PostReview, { cameraId: String(newReview.cameraId) } ),
+        newReview
+      );
 
       return data;
     } catch (err) {

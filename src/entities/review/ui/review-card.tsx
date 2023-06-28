@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 
-import { ReviewType } from '..';
+import { Review } from '..';
 
 dayjs.extend(updateLocale);
 
@@ -23,10 +23,10 @@ dayjs.updateLocale('en', {
 });
 
 type ReviewProps = {
-  review: ReviewType;
+  review: Review;
 }
 
-export function Review ({review}: ReviewProps): JSX.Element {
+export function ReviewCard ({review}: ReviewProps): JSX.Element {
   return (
     <li className="review-card">
       <div className="review-card__head">

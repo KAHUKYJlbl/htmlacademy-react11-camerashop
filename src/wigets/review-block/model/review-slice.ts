@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../../app/provider/store';
 import { FetchStatus } from '../../../shared/types/fetch-status';
-import { ReviewType } from '../../../entities/review';
+import { Review } from '../../../entities/review';
 import { fetchReviews } from './api-actions/fetch-reviews';
 
 type InitialState = {
   reviewsLoadingStatus: FetchStatus;
-  reviews: ReviewType[];
+  reviews: Review[];
 }
 
 const initialState: InitialState = {

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { fetchReviews } from '../model/api-actions/fetch-reviews';
-import { getReviews } from '../model/review-selectors';
+import { getReviews, getReviewsLoadingStatus } from '../model/review-selectors';
 
-import { Review } from '../../../entities/review';
+import { ReviewCard } from '../../../entities/review';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { REVIEWS_PER_STEP } from '../lib/const';
-import { showAddReview } from '../../../features/add-review';
+import { showPostReview } from '../../../features/post-review';
+import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 
 type ReviewBlockProps = {
   cameraId: string;
@@ -18,14 +19,19 @@ export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const [shownReviewsCount, setShownReviewsCount] = useState<number>(REVIEWS_PER_STEP);
   const reviewsToShow = reviews.slice(0, shownReviewsCount);
+  const reviewsLoadingStatus = useAppSelector(getReviewsLoadingStatus);
 
   useEffect(() => {
-    dispath(fetchReviews(cameraId));
+    dispath( fetchReviews( String(cameraId) ) );
   }, [cameraId]);
 
   const handleButtonClick = () => {
     setShownReviewsCount((current) => current + REVIEWS_PER_STEP);
   };
+
+  if (reviewsLoadingStatus.isLoading) {
+    return <LoadingSpinner spinnerType='widget' />;
+  }
 
   return (
     <section className="review-block">
@@ -37,7 +43,7 @@ export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
           <button
             className="btn"
             type="button"
-            onClick={() => dispath(showAddReview())}
+            onClick={() => dispath(showPostReview(cameraId))}
           >
             Оставить свой отзыв
           </button>
@@ -46,7 +52,7 @@ export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
         <ul className="review-block__list">
           {
             reviewsToShow.map((review) => (
-              <Review key={review.id} review={review} />
+              <ReviewCard key={review.id} review={review} />
             ))
           }
         </ul>
