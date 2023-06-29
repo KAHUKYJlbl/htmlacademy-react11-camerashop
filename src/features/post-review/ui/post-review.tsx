@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { Modal } from '../../../shared/ui/modal';
 
 import { REVIEW_MIN_LENGTH } from '../lib/const';
-import { hidePostReview } from '../model/post-review-slice';
+import { hidePostReview, showSuccessReview } from '../model/post-review-slice';
 import { postReview } from '../model/api-actions/post-review';
 import { getCurrentCameraId } from '../model/post-review-selectors';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
@@ -34,7 +34,11 @@ export function PostReview (): JSX.Element {
   }
 
   const onFormSubmit: SubmitHandler<ReviewForm> = (data) => {
-    dispatch(postReview({...data, rating: +data.rating, cameraId: +currentCameraId}));
+    dispatch(postReview({...data, rating: +data.rating, cameraId: +currentCameraId}))
+      .then(() => {
+        dispatch(hidePostReview());
+        dispatch(showSuccessReview());
+      });
   };
 
   const onFormSubmitError: SubmitErrorHandler<ReviewForm> = (errors) => {
@@ -125,7 +129,7 @@ export function PostReview (): JSX.Element {
                     Ваше имя
 
                     <svg width="9" height="9" aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake"></use>
+                      <use xlinkHref="#icon-snowflake" />
                     </svg>
                   </span>
 
@@ -150,7 +154,7 @@ export function PostReview (): JSX.Element {
                     Достоинства
 
                     <svg width="9" height="9" aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake"></use>
+                      <use xlinkHref="#icon-snowflake" />
                     </svg>
                   </span>
                   <input
@@ -175,7 +179,7 @@ export function PostReview (): JSX.Element {
                     Недостатки
 
                     <svg width="9" height="9" aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake"></use>
+                      <use xlinkHref="#icon-snowflake" />
                     </svg>
                   </span>
 
@@ -201,7 +205,7 @@ export function PostReview (): JSX.Element {
                     Комментарий
 
                     <svg width="9" height="9" aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake"></use>
+                      <use xlinkHref="#icon-snowflake" />
                     </svg>
                   </span>
 
@@ -232,7 +236,7 @@ export function PostReview (): JSX.Element {
           onClick={() => dispatch(hidePostReview())}
         >
           <svg width="10" height="10" aria-hidden="true">
-            <use xlinkHref="#icon-close"></use>
+            <use xlinkHref="#icon-close" />
           </svg>
         </button>
       </>

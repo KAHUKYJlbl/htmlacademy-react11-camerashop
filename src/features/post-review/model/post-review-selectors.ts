@@ -2,9 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { NameSpace, State } from '../../../app/provider/store';
 import { FetchStatus } from '../../../shared/types/fetch-status';
-// import { Camera } from '../../../entities/camera';
 
 export const getPostReviewShown = (state: State): boolean => state[NameSpace.PostReview].isPostReviewShown;
+
+export const getSuccessReviewShown = (state: State): boolean => state[NameSpace.PostReview].isSuccessReviewShown;
 
 export const getCurrentCameraId = (state: State): string | null => state[NameSpace.PostReview].currentCameraId;
 

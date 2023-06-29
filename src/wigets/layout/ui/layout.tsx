@@ -6,6 +6,7 @@ import { Titles } from '../../../shared/lib/const/titles';
 import { Camera } from '../../../entities/camera';
 import Footer from './footer';
 import Header from './header';
+import { ScrollRestoration } from 'react-router-dom';
 
 type LayoutProps = {
   children: JSX.Element;
@@ -30,6 +31,7 @@ export function Layout ({children, isUpHeader, title, camera}: LayoutProps): JSX
       {isUpHeader && <UpHeader />}
 
       <Footer />
+      <ScrollRestoration />
     </div>
   );
 }

@@ -6,12 +6,14 @@ import { FetchStatus } from '../../../shared/types/fetch-status';
 
 type InitialState = {
   isPostReviewShown: boolean;
+  isSuccessReviewShown: boolean;
   currentCameraId: string | null;
   postReviewLoadingStatus: FetchStatus;
 }
 
 const initialState: InitialState = {
   isPostReviewShown: false,
+  isSuccessReviewShown: false,
   currentCameraId: null,
   postReviewLoadingStatus: FetchStatus.Idle,
 };
@@ -28,6 +30,12 @@ export const postReviewSlice = createSlice({
       state.isPostReviewShown = !state.isPostReviewShown;
       state.currentCameraId = null;
     },
+    showSuccessReview: (state) => {
+      state.isSuccessReviewShown = !state.isSuccessReviewShown;
+    },
+    hideSuccessReview: (state) => {
+      state.isSuccessReviewShown = !state.isSuccessReviewShown;
+    },
   },
   extraReducers(builder) {
     builder
@@ -43,4 +51,4 @@ export const postReviewSlice = createSlice({
   }
 });
 
-export const { showPostReview, hidePostReview } = postReviewSlice.actions;
+export const { showPostReview, hidePostReview, showSuccessReview, hideSuccessReview } = postReviewSlice.actions;
