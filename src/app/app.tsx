@@ -13,14 +13,10 @@ import { CatalogPage } from '../pages/catalog-page';
 import { MainPage } from '../pages/main-page';
 import { LoadingSpinner } from '../shared/ui/loading-spinner';
 import { CameraPage } from '../pages/camera-page';
+import { CameraInfo } from '../wigets/camera-info';
+import { CameraTabs } from '../entities/camera';
 
 export default function App(): JSX.Element {
-  // const authStatus = useAppSelector(getAuthStatus);
-
-  // if (authStatus.unknown) {
-  //   return <LoadingSpinner spinnerType='page' />;
-  // }
-
   return (
     // <Oops type='error-boundary' />
     <ErrorBoundary fallback={<div>Oops...</div>}>
@@ -42,7 +38,20 @@ export default function App(): JSX.Element {
               <Route
                 path={AppRoute.Camera}
                 element={<CameraPage />}
-              />
+              >
+                <Route
+                  index
+                  element={<CameraInfo cameraTab={CameraTabs.Description} />}
+                />
+                <Route
+                  path={AppRoute.CameraDescription}
+                  element={<CameraInfo cameraTab={CameraTabs.Description} />}
+                />
+                <Route
+                  path={AppRoute.CameraProperties}
+                  element={<CameraInfo cameraTab={CameraTabs.Properties} />}
+                />
+              </Route>
               {/* <Route
                 path="*"
                 element={<NotFound />}

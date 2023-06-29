@@ -1,22 +1,20 @@
-import { useState } from 'react';
 import cn from 'classnames';
 
 import { showAddBasket } from '../../../features/add-basket';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { Camera } from '../types/camera';
+import { CameraTabs } from '../lib/const';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../../app/provider/router';
 
 type CameraPageInfoProps = {
   camera: Camera;
+  cameraTab: CameraTabs;
 }
 
-enum CameraTabs {
-  Properties = 'Характеристики',
-  Description = 'Описание',
-}
-
-export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
+export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [currentTab, setCurrentTab] = useState<CameraTabs>(CameraTabs.Properties);
+  const navigate = useNavigate();
 
   return (
     <section className="product">
@@ -90,16 +88,20 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
             <div className="tabs__controls product__tabs-controls">
               <button
                 type="button"
-                className={ cn( 'tabs__control', { 'is-active': currentTab === CameraTabs.Properties } ) }
-                onClick={ () => setCurrentTab(CameraTabs.Properties) }
+                className={ cn( 'tabs__control', { 'is-active': cameraTab === CameraTabs.Properties } ) }
+                onClick={ () => navigate(
+                  generatePath( AppRoute.CameraProperties, { cameraId: String(camera.id) } )
+                )}
               >
                 {CameraTabs.Properties}
               </button>
 
               <button
-                className={ cn( 'tabs__control', { 'is-active': currentTab === CameraTabs.Description } ) }
+                className={ cn( 'tabs__control', { 'is-active': cameraTab === CameraTabs.Description } ) }
                 type="button"
-                onClick={() => setCurrentTab(CameraTabs.Description)}
+                onClick={ () => navigate(
+                  generatePath( AppRoute.CameraDescription, { cameraId: String(camera.id) } )
+                )}
               >
                 {CameraTabs.Description}
               </button>
@@ -107,7 +109,7 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
 
             <div className="tabs__content">
               <div
-                className={ cn( 'tabs__element', { 'is-active': currentTab === CameraTabs.Properties } ) }
+                className={ cn( 'tabs__element', { 'is-active': cameraTab === CameraTabs.Properties } ) }
               >
                 <ul className="product__tabs-list">
                   <li className="item-list">
@@ -153,7 +155,7 @@ export function CameraCardBig ({camera}: CameraPageInfoProps): JSX.Element {
               </div>
 
               <div
-                className={ cn( 'tabs__element', { 'is-active': currentTab === CameraTabs.Description } ) }
+                className={ cn( 'tabs__element', { 'is-active': cameraTab === CameraTabs.Description } ) }
               >
                 <div className="product__tabs-text">
                   <p>

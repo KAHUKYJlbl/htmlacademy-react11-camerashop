@@ -5,15 +5,17 @@ import { getCamera, getCameraLoadingStatus } from '../model/camera-info-selector
 
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { CameraCardBig } from '../../../entities/camera';
+import { CameraCardBig, CameraTabs } from '../../../entities/camera';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
+import { useOutletContext } from 'react-router-dom';
 
 type CameraInfoProps = {
-  cameraId: string;
+  cameraTab: CameraTabs;
 }
 
-export function CameraInfo ({cameraId}: CameraInfoProps): JSX.Element {
+export function CameraInfo ({cameraTab}: CameraInfoProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const cameraId = useOutletContext<string>();
   const camera = useAppSelector(getCamera);
   const cameraLoadingStatus = useAppSelector(getCameraLoadingStatus);
 
@@ -29,13 +31,14 @@ export function CameraInfo ({cameraId}: CameraInfoProps): JSX.Element {
     );
   }
 
+
   if (cameraLoadingStatus.isLoading) {
     return <LoadingSpinner spinnerType='widget' />;
   }
 
   return (
     <div className="page-content__section">
-      <CameraCardBig camera={camera} />
+      <CameraCardBig camera={camera} cameraTab={cameraTab} />
     </div>
   );
 }
