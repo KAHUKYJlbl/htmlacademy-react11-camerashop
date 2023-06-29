@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchReviews } from '../model/api-actions/fetch-reviews';
-import { getReviews, getReviewsLoadingStatus } from '../model/review-selectors';
+import { getSortedReviewsNewToOld, getReviewsLoadingStatus } from '../model/review-selectors';
 
 import { ReviewCard } from '../../../entities/review';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
@@ -16,7 +16,7 @@ type ReviewBlockProps = {
 
 export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
   const dispath = useAppDispatch();
-  const reviews = useAppSelector(getReviews);
+  const reviews = useAppSelector(getSortedReviewsNewToOld);
   const [shownReviewsCount, setShownReviewsCount] = useState<number>(REVIEWS_PER_STEP);
   const reviewsToShow = reviews.slice(0, shownReviewsCount);
   const reviewsLoadingStatus = useAppSelector(getReviewsLoadingStatus);

@@ -4,7 +4,12 @@ import { NameSpace, State } from '../../../app/provider/store';
 import { FetchStatus } from '../../../shared/types/fetch-status';
 import { Review } from '../../../entities/review';
 
-export const getReviews = (state: State): Review[] => state[NameSpace.Review].reviews;
+const getReviews = (state: State): Review[] => state[NameSpace.Review].reviews;
+
+export const getSortedReviewsNewToOld = createSelector(
+  getReviews,
+  (reviews) => [...reviews].sort( (a, b) => Date.parse(b.createAt) - Date.parse(a.createAt) )
+);
 
 export const getReviewsLoadingStatus = createSelector(
   (state: State): FetchStatus => state[NameSpace.Review].reviewsLoadingStatus,
