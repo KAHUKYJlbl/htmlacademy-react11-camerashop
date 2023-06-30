@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { fetchBanner } from '../model/api-actions/fetch-banner';
 import { getBanner } from '../model/banner-selectors';
 import { getCatalog } from '../../catalog/model/catalog-selectors';
+import { Link, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../../app/provider/router';
 
 export function Banner (): JSX.Element {
   const dispatch = useAppDispatch();
@@ -45,9 +47,9 @@ export function Banner (): JSX.Element {
         <span className="banner__text">
           {catalog.find((camera) => camera.id === banner.id)?.description}
         </span>
-        <a className="btn" href="#">
+        <Link className="btn" to={ generatePath( AppRoute.Camera, { cameraId: String(banner.id) } ) }>
           Подробнее
-        </a>
+        </Link>
       </p>
     </div>
   );

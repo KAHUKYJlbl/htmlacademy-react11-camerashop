@@ -1,4 +1,62 @@
-export function Similar (): JSX.Element {
+import { useEffect, useState } from 'react';
+import cn from 'classnames';
+
+import { getSimilar, getSimilarLoadingStatus } from '../model/similar-selectors';
+import { fetchSimilar } from '../model/api-actions/fetch-similar';
+import { SIMILAR_SHOWN_COUNT } from '../lib/const';
+import styles from './similar.module.sass';
+
+import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { CameraCard } from '../../../entities/camera';
+import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
+import { Oops } from '../../oops';
+
+type SimilarProps = {
+  cameraId: string;
+}
+
+export function Similar ({cameraId}: SimilarProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const similar = useAppSelector(getSimilar);
+  const similarLoadingStatus = useAppSelector(getSimilarLoadingStatus);
+  const [shown, setShown] = useState(0);
+  const [scroll, setScroll] = useState('');
+
+  useEffect(() => {
+    dispatch(fetchSimilar(cameraId));
+  }, [cameraId]);
+
+  const scrollRight = () => {
+    if (shown < similar.length - SIMILAR_SHOWN_COUNT) {
+      setScroll('right');
+
+      setTimeout(() => {
+        setScroll('');
+        setShown((a) => a === similar.length - SIMILAR_SHOWN_COUNT ? a : a + 1);
+      }, 300);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (shown > 0) {
+      setScroll('left');
+
+      setTimeout(() => {
+        setScroll('');
+        setShown((a) => a === 0 ? 0 : a - 1);
+      }, 300);
+    }
+  };
+
+  if (similar.length === 0) {
+    return <Oops type='similar' arg={cameraId} />;
+  }
+
+  if (similarLoadingStatus.isLoading) {
+    return <LoadingSpinner spinnerType='widget' />;
+  }
+
   return (
     <section className="product-similar">
       <div className="container">
@@ -7,156 +65,56 @@ export function Similar (): JSX.Element {
         </h2>
 
         <div className="product-similar__slider">
-          <div className="product-similar__slider-list">
-            <div className="product-card is-active">
-              <div className="product-card__img">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcSet="img/content/img9.webp, img/content/img9@2x.webp 2x"
-                  />
-                  <img
-                    src="img/content/img9.jpg"
-                    srcSet="img/content/img9@2x.jpg 2x"
-                    width="280"
-                    height="240"
-                    alt="Фотоаппарат FastShot MR-5"
-                  />
-                </picture>
-              </div>
-
-              <div className="product-card__info">
-                <div className="rate product-card__rate">
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-star.svg" />
-                  </svg>
-                  <p className="visually-hidden">
-                    Рейтинг: 4
-                  </p>
-
-                  <p className="rate__count">
-                    <span className="visually-hidden">
-                      Всего оценок:
-                    </span>
-                    12
-                  </p>
-                </div>
-
-                <p className="product-card__title">
-                  FastShot MR-5
-                </p>
-
-                <p className="product-card__price">
-                  <span className="visually-hidden">
-                    Цена:
-                  </span>
-                  18 970 ₽
-                </p>
-              </div>
-
-              <div className="product-card__buttons">
-                <button className="btn btn--purple product-card__btn" type="button">
-                  Купить
-                </button>
-
-                <a className="btn btn--transparent" href="#">
-                  Подробнее
-                </a>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <div className="product-card__img">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcSet="img/content/img4.webp, img/content/img4@2x.webp 2x"
-                  />
-
-                  <img
-                    src="img/content/img4.jpg"
-                    srcSet="img/content/img4@2x.jpg 2x"
-                    width="280"
-                    height="240"
-                    alt="Фотоаппарат FastShot MR-5"
-                  />
-                </picture>
-              </div>
-              <div className="product-card__info">
-                <div className="rate product-card__rate">
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-full-star.svg" />
-                  </svg>
-                  <svg width="17" height="16" aria-hidden="true">
-                    <image href="/img/sprite/icon-star.svg" />
-                  </svg>
-
-                  <p className="visually-hidden">
-                    Рейтинг: 4
-                  </p>
-
-                  <p className="rate__count">
-                    <span className="visually-hidden">
-                      Всего оценок:
-                    </span>
-                    12
-                  </p>
-                </div>
-
-                <p className="product-card__title">
-                  FastShot MR-5
-                </p>
-
-                <p className="product-card__price">
-                  <span className="visually-hidden">
-                    Цена:
-                  </span>
-                  18 970 ₽
-                </p>
-              </div>
-
-              <div className="product-card__buttons">
-                <button className="btn btn--purple product-card__btn" type="button">
-                  Купить
-                </button>
-
-                <a className="btn btn--transparent" href="#">
-                  Подробнее
-                </a>
-              </div>
-            </div>
+          <div
+            className={
+              cn(
+                'product-similar__slider-list',
+                scroll === 'left' && styles.left,
+                scroll === 'right' && styles.right,
+              )
+            }
+          >
+            {
+              similar.map((camera, index) => (
+                <CameraCard
+                  camera={camera}
+                  key={camera.id}
+                  className={
+                    cn(
+                      styles.mount,
+                      (index >= shown && index < shown + SIMILAR_SHOWN_COUNT) && 'is-active',
+                      (index === shown && scroll === 'right') && styles.unmount,
+                      (index === shown + SIMILAR_SHOWN_COUNT - 1 && scroll === 'left') && styles.unmount
+                    )
+                  }
+                />
+              ))
+            }
           </div>
 
-          <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled>
+          <button
+            className="slider-controls slider-controls--prev"
+            type="button"
+            aria-label="Предыдущий слайд"
+            onClick={scrollLeft}
+            disabled={shown === 0}
+            style={{pointerEvents: 'auto'}}
+          >
             <svg width="7" height="12" aria-hidden="true">
-              <image href="/img/sprite/icon-arrow.svg" />
+              <use xlinkHref="#icon-arrow"></use>
             </svg>
           </button>
 
-          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд">
+          <button
+            className="slider-controls slider-controls--next"
+            type="button"
+            aria-label="Следующий слайд"
+            onClick={scrollRight}
+            disabled={shown === similar.length - SIMILAR_SHOWN_COUNT}
+            style={{pointerEvents: 'auto'}}
+          >
             <svg width="7" height="12" aria-hidden="true">
-              <image href="/img/sprite/icon-arrow.svg" />
+              <use xlinkHref="#icon-arrow"></use>
             </svg>
           </button>
         </div>

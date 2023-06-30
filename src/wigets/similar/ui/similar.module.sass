@@ -1,0 +1,46 @@
+.left
+  animation-name: moveLeft
+  animation-duration: 0.3s
+
+.right
+  animation-name: moveRight
+  animation-duration: 0.3s
+
+.mount
+  animation-name: appearance
+  animation-duration: 0.25s
+
+.unmount
+  animation-name: disappearance
+  animation-duration: 0.31s
+
+@keyframes moveLeft
+  from
+    transform: translateX(0)
+
+  to
+    transform: translateX(33.33%)
+
+@keyframes moveRight
+  from
+    transform: translateX(0)
+
+  to
+    transform: translateX(-33.33%)
+
+@keyframes appearance
+  from
+    transform: scaleX(0)
+
+  to
+    transform: scaleX(1)
+
+@keyframes disappearance
+  from
+    transform: scaleX(1)
+
+  28%
+    transform: scaleX(0)
+
+  to
+    transform: scaleX(0)

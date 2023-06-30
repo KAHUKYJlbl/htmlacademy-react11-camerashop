@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
+import { Oops } from '../../oops';
 
 export function Catalog (): JSX.Element {
   const { page } = useParams();
@@ -24,11 +25,11 @@ export function Catalog (): JSX.Element {
   }, []);
 
   if (catalogLoadingStatus.isLoading) {
-    return <LoadingSpinner spinnerType='page' />;
+    return <LoadingSpinner spinnerType='widget' />;
   }
 
-  if (catalog.length === 0 || !page) {
-    return <span>Oops ...</span>;
+  if (!page || !catalog.length) {
+    return <Oops type='catalog' />;
   }
 
   return (
@@ -48,9 +49,11 @@ export function Catalog (): JSX.Element {
 
             <div className="cards catalog__cards">
               {
-                catalog.slice( (+page - 1) * CARDS_PER_PAGE, +page * CARDS_PER_PAGE ).map((camera) => (
-                  <CameraCard camera={camera} key={camera.id} />
-                ))
+                catalog
+                  .slice( (+page - 1) * CARDS_PER_PAGE, +page * CARDS_PER_PAGE )
+                  .map((camera) =>
+                    <CameraCard camera={camera} key={camera.id} />
+                  )
               }
             </div>
 

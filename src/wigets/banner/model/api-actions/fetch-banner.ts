@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 
-import { BannerCamera } from '../../../../entities/camera';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
 import { APIRoute } from '../../../../shared/lib/const/api-routes';
+import { BannerCamera } from '../../../../entities/camera';
 
 export const fetchBanner = createAsyncThunk<BannerCamera, undefined, {
   dispatch: AppDispatch;

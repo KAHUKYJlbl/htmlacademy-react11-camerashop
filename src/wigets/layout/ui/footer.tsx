@@ -1,3 +1,6 @@
+import { Link, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../../app/provider/router';
+
 export default function Footer (): JSX.Element {
   return (
     <footer className="footer">
@@ -5,7 +8,7 @@ export default function Footer (): JSX.Element {
         <div className="footer__info">
           <a className="footer__logo" href="index.html" aria-label="Переход на главную">
             <svg width="100" height="36" aria-hidden="true">
-              <image href="/img/sprite/icon-logo-mono.svg" />
+              <use xlinkHref="#icon-logo-mono"></use>
             </svg>
           </a>
           <p className="footer__description">
@@ -15,21 +18,21 @@ export default function Footer (): JSX.Element {
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу вконтатке">
                 <svg width="20" height="20" aria-hidden="true">
-                  <image href="/img/sprite/icon-vk.svg" />
+                  <use xlinkHref="#icon-vk"></use>
                 </svg>
               </a>
             </li>
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу pinterest">
                 <svg width="20" height="20" aria-hidden="true">
-                  <image href="/img/sprite/icon-pinterest.svg" />
+                  <use xlinkHref="#icon-pinterest"></use>
                 </svg>
               </a>
             </li>
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу reddit">
                 <svg width="20" height="20" aria-hidden="true">
-                  <image href="/img/sprite/icon-reddit.svg" />
+                  <use xlinkHref="#icon-reddit"></use>
                 </svg>
               </a>
             </li>
@@ -42,9 +45,9 @@ export default function Footer (): JSX.Element {
             </p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">
+                <Link className="link" to={generatePath(AppRoute.Catalog, {page: '1'})}>
                   Каталог
-                </a>
+                </Link>
               </li>
               <li className="footer__item">
                 <a className="link" href="#">

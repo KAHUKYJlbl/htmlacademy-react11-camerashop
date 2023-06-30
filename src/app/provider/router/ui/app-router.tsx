@@ -1,29 +1,48 @@
-import { BrowserHistory } from 'history';
-import { useLayoutEffect, useState } from 'react';
-import { Router } from 'react-router-dom';
+import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
-export interface HistoryRouterProps {
-  history: BrowserHistory;
-  basename?: string;
-  children?: React.ReactNode;
-}
+import { MainPage } from '../../../../pages/main-page';
+import { CatalogPage } from '../../../../pages/catalog-page';
+import { CameraPage } from '../../../../pages/camera-page';
+import { CameraInfo } from '../../../../wigets/camera-info';
+import { CameraTabs } from '../../../../entities/camera';
 
-export default function HistoryRouter({basename, children, history}: HistoryRouterProps) {
-  const [state, setState] = useState({
-    action: history.action,
-    location: history.location,
-  });
+import { AppRoute } from '../lib/routes';
+import { NotFound } from '../../../../pages/not-found';
 
-  useLayoutEffect(() => history.listen(setState), [history]);
-
-  return (
-    <Router
-      basename={basename}
-      location={state.location}
-      navigationType={state.action}
-      navigator={history}
-    >
-      {children}
-    </Router>
-  );
-}
+export const AppRouter = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route
+        path={AppRoute.Main}
+        element={
+          <MainPage />
+        }
+      />
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
+      <Route
+        path={AppRoute.Catalog}
+        element={<CatalogPage />}
+      />
+      <Route
+        path={AppRoute.Camera}
+        element={<CameraPage />}
+      >
+        <Route
+          index
+          element={<CameraInfo cameraTab={CameraTabs.Description} />}
+        />
+        <Route
+          path={AppRoute.CameraDescription}
+          element={<CameraInfo cameraTab={CameraTabs.Description} />}
+        />
+        <Route
+          path={AppRoute.CameraProperties}
+          element={<CameraInfo cameraTab={CameraTabs.Properties} />}
+        />
+      </Route>
+    </>
+  )
+);
