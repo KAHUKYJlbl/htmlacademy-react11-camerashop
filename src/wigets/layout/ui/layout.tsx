@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import { SvgSprite } from '../../../shared/ui/svg-sprite';
 import { UpHeader } from '../../../shared/ui/up-header';

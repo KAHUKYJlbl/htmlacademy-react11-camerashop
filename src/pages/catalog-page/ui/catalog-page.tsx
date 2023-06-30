@@ -26,5 +26,4 @@ const CatalogPage = (): JSX.Element => {
   );
 };
 
-
 export default CatalogPage;

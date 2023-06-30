@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { CameraCard } from '../../../entities/camera';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
+import { Oops } from '../../oops';
 
 type SimilarProps = {
   cameraId: string;
@@ -49,7 +50,7 @@ export function Similar ({cameraId}: SimilarProps): JSX.Element {
   };
 
   if (similar.length === 0) {
-    return <p>Oops ...</p>;
+    return <Oops type='similar' arg={cameraId} />;
   }
 
   if (similarLoadingStatus.isLoading) {

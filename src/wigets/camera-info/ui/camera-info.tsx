@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { CameraCardBig, CameraTabs } from '../../../entities/camera';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { useOutletContext } from 'react-router-dom';
+import { Oops } from '../../oops';
 
 type CameraInfoProps = {
   cameraTab: CameraTabs;
@@ -24,11 +25,7 @@ export function CameraInfo ({cameraTab}: CameraInfoProps): JSX.Element {
   }, [cameraId]);
 
   if (!camera) {
-    return (
-      <p>
-        Oops ...
-      </p>
-    );
+    return <Oops type='camera' arg={cameraId} />;
   }
 
 

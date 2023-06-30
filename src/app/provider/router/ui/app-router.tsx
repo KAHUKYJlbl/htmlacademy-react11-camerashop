@@ -7,6 +7,7 @@ import { CameraInfo } from '../../../../wigets/camera-info';
 import { CameraTabs } from '../../../../entities/camera';
 
 import { AppRoute } from '../lib/routes';
+import { NotFound } from '../../../../pages/not-found';
 
 export const AppRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,10 @@ export const AppRouter = createBrowserRouter(
         element={
           <MainPage />
         }
+      />
+      <Route
+        path="*"
+        element={<NotFound />}
       />
       <Route
         path={AppRoute.Catalog}
@@ -38,10 +43,6 @@ export const AppRouter = createBrowserRouter(
           element={<CameraInfo cameraTab={CameraTabs.Properties} />}
         />
       </Route>
-      {/* <Route
-        path="*"
-        element={<NotFound />}
-      /> */}
     </>
   )
 );

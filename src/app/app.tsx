@@ -7,15 +7,18 @@ import { RouterProvider } from 'react-router-dom';
 import { LoadingSpinner } from '../shared/ui/loading-spinner';
 import { store } from './provider/store/ui/store';
 import { AppRouter } from './provider/router';
+import { HelmetProvider } from 'react-helmet-async';
+import { Oops } from '../wigets/oops';
 
 export default function App(): JSX.Element {
   return (
-    // <Oops type='error-boundary' />
-    <ErrorBoundary fallback={<div>Oops...</div>}>
+    <ErrorBoundary fallback={<Oops type='error-boundary' />}>
       <Suspense fallback={<LoadingSpinner spinnerType='page' />}>
         <Provider store={store}>
-          {/* <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} /> */}
-          <RouterProvider router={AppRouter} />
+          <HelmetProvider>
+            {/* <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} /> */}
+            <RouterProvider router={AppRouter} />
+          </HelmetProvider>
         </Provider>
       </Suspense>
     </ErrorBoundary>
