@@ -10,14 +10,12 @@ export function AddBasket (): JSX.Element {
 
   if (!currentCamera) {
     return (
-      <Modal>
-        <p>Oops ...</p>
-      </Modal>
+      <p>Oops ...</p>
     );
   }
 
   return (
-    <Modal>
+    <Modal onClose={() => dispatch(hideAddBasket(null))} >
       <>
         <p className="title title--h4">Добавить товар в корзину</p>
 

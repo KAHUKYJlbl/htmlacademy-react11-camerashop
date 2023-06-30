@@ -27,9 +27,7 @@ export function PostReview (): JSX.Element {
 
   if (!currentCameraId) {
     return (
-      <Modal>
-        <p>Oops ...</p>
-      </Modal>
+      <p>Oops ...</p>
     );
   }
 
@@ -52,7 +50,7 @@ export function PostReview (): JSX.Element {
   };
 
   return (
-    <Modal>
+    <Modal onClose={() => dispatch(hidePostReview())} >
       <>
         <p className="title title--h4">Оставить отзыв</p>
         <div className="form-review">

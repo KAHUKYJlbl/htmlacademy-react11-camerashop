@@ -6,7 +6,7 @@ export function SuccessReview (): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <Modal>
+    <Modal onClose={() => dispatch(hideSuccessReview())} >
       <>
         <p className="title title--h4">
           Спасибо за отзыв
