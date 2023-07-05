@@ -18,11 +18,11 @@ export const addBasketSlice = createSlice({
   initialState,
   reducers: {
     showAddBasket: (state, action: PayloadAction<Camera>) => {
-      state.isAddBasketShown = !state.isAddBasketShown;
+      state.isAddBasketShown = true;
       state.currentCamera = action.payload;
     },
-    hideAddBasket: (state, action: PayloadAction<null>) => {
-      state.isAddBasketShown = !state.isAddBasketShown;
+    hideAddBasket: (state) => {
+      state.isAddBasketShown = false;
       state.currentCamera = null;
     },
   },
