@@ -23,18 +23,18 @@ export const postReviewSlice = createSlice({
   initialState,
   reducers: {
     showPostReview: (state, action: PayloadAction<string>) => {
-      state.isPostReviewShown = !state.isPostReviewShown;
+      state.isPostReviewShown = true;
       state.currentCameraId = action.payload;
     },
     hidePostReview: (state) => {
-      state.isPostReviewShown = !state.isPostReviewShown;
+      state.isPostReviewShown = false;
       state.currentCameraId = null;
     },
     showSuccessReview: (state) => {
-      state.isSuccessReviewShown = !state.isSuccessReviewShown;
+      state.isSuccessReviewShown = true;
     },
     hideSuccessReview: (state) => {
-      state.isSuccessReviewShown = !state.isSuccessReviewShown;
+      state.isSuccessReviewShown = false;
     },
   },
   extraReducers(builder) {

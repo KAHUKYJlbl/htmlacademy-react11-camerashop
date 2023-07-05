@@ -15,7 +15,7 @@ export function AddBasket (): JSX.Element {
   }
 
   return (
-    <Modal onClose={() => dispatch(hideAddBasket(null))} >
+    <Modal onClose={() => dispatch(hideAddBasket())} >
       <>
         <p className="title title--h4">Добавить товар в корзину</p>
 
@@ -85,7 +85,7 @@ export function AddBasket (): JSX.Element {
           className="cross-btn"
           type="button"
           aria-label="Закрыть попап"
-          onClick={() => dispatch(hideAddBasket(null))}
+          onClick={() => dispatch(hideAddBasket())}
         >
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>
