@@ -17,13 +17,14 @@ type ReviewBlockProps = {
 export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
   const dispath = useAppDispatch();
   const reviews = useAppSelector(getSortedReviewsNewToOld);
-  const [shownReviewsCount, setShownReviewsCount] = useState<number>(REVIEWS_PER_STEP);
-  const reviewsToShow = reviews.slice(0, shownReviewsCount);
   const reviewsLoadingStatus = useAppSelector(getReviewsLoadingStatus);
+  const [shownReviewsCount, setShownReviewsCount] = useState<number>(REVIEWS_PER_STEP);
 
   useEffect(() => {
     dispath( fetchReviews( String(cameraId) ) );
   }, [cameraId]);
+
+  const reviewsToShow = reviews.slice(0, shownReviewsCount);
 
   const handleButtonClick = () => {
     setShownReviewsCount((current) => current + REVIEWS_PER_STEP);
@@ -40,6 +41,7 @@ export function ReviewBlock ({cameraId}: ReviewBlockProps): JSX.Element {
           <h2 className="title title--h3">
             Отзывы
           </h2>
+
           <button
             className="btn"
             type="button"

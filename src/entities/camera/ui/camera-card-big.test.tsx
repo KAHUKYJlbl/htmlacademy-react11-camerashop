@@ -12,7 +12,7 @@ const mockStore = configureMockStore();
 const store = mockStore({});
 
 const camera: Camera = {
-  id: 0,
+  id: 1,
   name: '',
   previewImg: '',
   previewImg2x: '',
@@ -23,8 +23,8 @@ const camera: Camera = {
   category: 'Видеокамера',
   level: 'Нулевой',
   description: '',
-  price: 0,
-  reviewCount: 0,
+  price: 1,
+  reviewCount: 1,
 };
 
 const history = createMemoryHistory();
