@@ -70,7 +70,7 @@ export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.El
             <span className="visually-hidden">
               Цена:
             </span>
-            {camera.price}
+            {camera.price} ₽
           </p>
 
           <button
