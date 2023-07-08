@@ -11,9 +11,11 @@ export default function Footer (): JSX.Element {
               <use xlinkHref="#icon-logo-mono"></use>
             </svg>
           </a>
+
           <p className="footer__description">
             Интернет-магазин фото- и видеотехники
           </p>
+
           <ul className="social">
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу вконтатке">
@@ -22,6 +24,7 @@ export default function Footer (): JSX.Element {
                 </svg>
               </a>
             </li>
+
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу pinterest">
                 <svg width="20" height="20" aria-hidden="true">
@@ -29,6 +32,7 @@ export default function Footer (): JSX.Element {
                 </svg>
               </a>
             </li>
+
             <li className="social__item">
               <a className="link" href="#" aria-label="Переход на страницу reddit">
                 <svg width="20" height="20" aria-hidden="true">
@@ -38,27 +42,32 @@ export default function Footer (): JSX.Element {
             </li>
           </ul>
         </div>
+
         <ul className="footer__nav">
           <li className="footer__nav-item">
             <p className="footer__title">
               Навигация
             </p>
+
             <ul className="footer__list">
               <li className="footer__item">
                 <Link className="link" to={generatePath(AppRoute.Catalog, {page: '1'})}>
                   Каталог
                 </Link>
               </li>
+
               <li className="footer__item">
                 <a className="link" href="#">
                   Гарантии
                 </a>
               </li>
+
               <li className="footer__item">
                 <a className="link" href="#">
                   Доставка
                 </a>
               </li>
+
               <li className="footer__item">
                 <a className="link" href="#">
                   О компании
@@ -66,21 +75,25 @@ export default function Footer (): JSX.Element {
               </li>
             </ul>
           </li>
+
           <li className="footer__nav-item">
             <p className="footer__title">
               Ресурсы
             </p>
+
             <ul className="footer__list">
               <li className="footer__item">
                 <a className="link" href="#">
                   Курсы операторов
                 </a>
               </li>
+
               <li className="footer__item">
                 <a className="link" href="#">
                   Блог
                 </a>
               </li>
+
               <li className="footer__item">
                 <a className="link" href="#">
                   Сообщество
@@ -88,17 +101,22 @@ export default function Footer (): JSX.Element {
               </li>
             </ul>
           </li>
+
           <li className="footer__nav-item">
             <p className="footer__title">
               Поддержка
             </p>
+
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">FAQ
+                <a className="link" href="#">
+                  FAQ
                 </a>
               </li>
+
               <li className="footer__item">
-                <a className="link" href="#">Задать вопрос
+                <a className="link" href="#">
+                  Задать вопрос
                 </a>
               </li>
             </ul>
