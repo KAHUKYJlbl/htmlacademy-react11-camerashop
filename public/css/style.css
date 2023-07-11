@@ -3145,13 +3145,13 @@ button,
   height: 12px;
 }
 
-.slider-controls:disabled {
+button.slider-controls:disabled {
   color: #dddddd;
   background-color: #f8f8f8;
   pointer-events: none;
 }
 
-.slider-controls.disabled {
+button.slider-controls.disabled {
   color: #dddddd;
   background-color: #f8f8f8;
   pointer-events: none;

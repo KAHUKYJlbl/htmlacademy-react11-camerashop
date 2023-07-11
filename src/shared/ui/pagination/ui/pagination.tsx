@@ -39,17 +39,24 @@ export function Pagination ({ page, pagesCount }: PaginationProps): JSX.Element 
           ))
         }
 
-        <li className="pagination__item">
-          <Link
-            className={cn(
-              'pagination__link pagination__link--text',
-              {'pagination__link--text--disabled': page === String(pagesCount)}
-            )}
-            to={ generatePath( AppRoute.Catalog, { page: String(+page + 1) } ) }
-          >
-            Далее
-          </Link>
-        </li>
+        {
+          page !== String(pagesCount) &&
+          <li className="pagination__item">
+            <Link
+              className='pagination__link pagination__link--text'
+              to={ generatePath( AppRoute.Catalog, { page: String(+page + 1) } ) }
+            >
+              Далее
+            </Link>
+          </li>
+        }
+
+        {
+          page === String(pagesCount) &&
+          <li className="pagination__item">
+            <div className="pagination__link pagination__link--text pagination__link--text--disabled"></div>
+          </li>
+        }
       </ul>
     </div>
   );
