@@ -3,15 +3,16 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 
 import { CameraCard } from './camera-card';
-import { Camera } from '../types/camera';
+import { RatedCamera } from '../types/camera';
 import { HistoryRouter } from '../../../app/provider/history-router';
 import { createMemoryHistory } from 'history';
 
 const mockStore = configureMockStore();
 const store = mockStore({});
 
-const camera: Camera = {
+const camera: RatedCamera = {
   id: 1,
+  rating: 1,
   name: '',
   previewImg: '',
   previewImg2x: '',

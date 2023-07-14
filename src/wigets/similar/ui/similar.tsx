@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import cn from 'classnames';
 
-import { getSimilar, getSimilarLoadingStatus } from '../model/similar-selectors';
+import { getSimilar, getSimilarIDs, getSimilarLoadingStatus } from '../model/similar-selectors';
 import { fetchSimilar } from '../model/api-actions/fetch-similar';
 import { SIMILAR_SHOWN_COUNT } from '../lib/const';
 import styles from './similar.module.sass';
@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { CameraCard } from '../../../entities/camera';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { Oops } from '../../oops';
+import { fetchRating } from '../model/api-actions/fetch-rating';
 
 type SimilarProps = {
   cameraId: string;
@@ -19,13 +20,20 @@ type SimilarProps = {
 export function Similar ({cameraId}: SimilarProps): JSX.Element {
   const dispatch = useAppDispatch();
   const similar = useAppSelector(getSimilar);
+  const similarIDs = useAppSelector(getSimilarIDs);
   const similarLoadingStatus = useAppSelector(getSimilarLoadingStatus);
   const [shown, setShown] = useState(0);
   const [scroll, setScroll] = useState('');
 
   useEffect(() => {
     dispatch(fetchSimilar(cameraId));
-  }, [cameraId]);
+  }, []);
+
+  useEffect(() => {
+    similarIDs.forEach((ID) => {
+      dispatch(fetchRating( String(ID) ));
+    });
+  }, [similarIDs]);
 
   const scrollRight = () => {
     if (shown < similar.length - SIMILAR_SHOWN_COUNT) {

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { fetchCatalog } from '../model/api-actions/fetch-catalog';
-import { getCatalog, getCatalogLoadingStatus } from '../model/catalog-selectors';
+import { fetchRating } from '../model/api-actions/fetch-rating';
+import { getCatalog, getCatalogIDs, getCatalogLoadingStatus } from '../model/catalog-selectors';
 
 import { CatalogFilter } from '../../../features/catalog-filter';
 import { CatalogSort } from '../../../features/catalog-sort';
@@ -18,11 +19,18 @@ export function Catalog (): JSX.Element {
   const { page } = useParams();
   const dispatch = useAppDispatch();
   const catalog = useAppSelector(getCatalog);
+  const catalogIDs = useAppSelector(getCatalogIDs);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
 
   useEffect(() => {
     dispatch(fetchCatalog());
   }, []);
+
+  useEffect(() => {
+    catalogIDs.forEach((ID) => {
+      dispatch(fetchRating( String(ID) ));
+    });
+  }, [catalogIDs]);
 
   if (catalogLoadingStatus.isLoading) {
     return <LoadingSpinner spinnerType='widget' />;

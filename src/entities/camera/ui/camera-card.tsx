@@ -1,13 +1,13 @@
 import { Link, generatePath } from 'react-router-dom';
 import cn from 'classnames';
 
-import { Camera } from '../types/camera';
+import { RatedCamera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { showAddBasket } from '../../../features/add-basket';
 
 type CameraCardProps = {
-  camera: Camera;
+  camera: RatedCamera;
   className?: string;
 }
 
@@ -50,7 +50,7 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
             <use xlinkHref="#icon-star"></use>
           </svg>
           <p className="visually-hidden">
-            Рейтинг: {camera.id}
+            Рейтинг: {camera.rating}
           </p>
           <p className="rate__count">
             <span className="visually-hidden">
