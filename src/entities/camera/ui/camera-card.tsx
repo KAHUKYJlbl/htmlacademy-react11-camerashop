@@ -5,6 +5,7 @@ import { RatedCamera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { showAddBasket } from '../../../features/add-basket';
+import { RATING_SCALE_MAX } from '../../review';
 
 type CameraCardProps = {
   camera: RatedCamera;
@@ -34,24 +35,25 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
 
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
+          {
+            new Array(RATING_SCALE_MAX)
+              .fill('')
+              .map((_, index) => (
+                <svg key={`${RATING_SCALE_MAX + index}`} width="17" height="16" aria-hidden="true">
+                  <use
+                    xlinkHref={cn({
+                      '#icon-full-star': index < camera.rating,
+                      '#icon-star': index >= camera.rating
+                    })}
+                  />
+                </svg>
+              ))
+          }
+
           <p className="visually-hidden">
             Рейтинг: {camera.rating}
           </p>
+
           <p className="rate__count">
             <span className="visually-hidden">
               Всего оценок:

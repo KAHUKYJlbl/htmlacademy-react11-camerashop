@@ -38,9 +38,9 @@ export const catalogSlice = createSlice({
       .addCase(fetchRating.fulfilled, (state, action) => {
         state.catalogLoadingStatus = FetchStatus.Success;
 
-        const ratedCamera = state.catalog.find((camera) => camera.id === action.payload.id);
-        if (ratedCamera && !state.ratedCatalog.some((camera) => camera.id === action.payload.id)) {
-          state.ratedCatalog.push( {...ratedCamera, rating: action.payload.rating} );
+        const cameraToRate = state.catalog.find((camera) => camera.id === action.payload.id);
+        if (cameraToRate && !state.ratedCatalog.some((camera) => camera.id === action.payload.id)) {
+          state.ratedCatalog.push( {...cameraToRate, rating: action.payload.rating} );
         }
       })
       .addCase(fetchRating.pending, (state) => {
