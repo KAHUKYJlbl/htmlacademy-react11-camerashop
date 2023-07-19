@@ -1640,7 +1640,7 @@ button,
   transition: background-color 0.3s ease;
 }
 
-.form-search__select-item:hover {
+.form-search__select-item.curent {
   background-color: #f4f4fc;
 }
 

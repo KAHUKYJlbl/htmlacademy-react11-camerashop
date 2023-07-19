@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { fetchCatalog } from '../model/api-actions/fetch-catalog';
 import { fetchRating } from '../model/api-actions/fetch-rating';
 import { getCatalog, getCatalogIDs, getCatalogLoadingStatus } from '../model/catalog-selectors';
 
@@ -14,6 +13,7 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 import { Oops } from '../../oops';
+import { fetchCatalog } from '../model/api-actions/fetch-catalog';
 
 export function Catalog (): JSX.Element {
   const { page } = useParams();
