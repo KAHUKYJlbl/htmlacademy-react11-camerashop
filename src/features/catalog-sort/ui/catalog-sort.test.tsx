@@ -16,7 +16,7 @@ describe('Component: CatalogSort', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <CatalogSort />
+          <CatalogSort currentSort={{type: null, order: null}} setCurrentSort={jest.fn()} />
         </HistoryRouter>
       </Provider>,
     );

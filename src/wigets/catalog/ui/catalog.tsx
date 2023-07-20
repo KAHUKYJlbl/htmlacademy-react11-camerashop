@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 import { fetchRating } from '../model/api-actions/fetch-rating';
-import { getCatalog, getCatalogIDs, getCatalogLoadingStatus } from '../model/catalog-selectors';
+import { fetchCatalog } from '../model/api-actions/fetch-catalog';
+import { getCatalogIDs, getCatalogLoadingStatus, getSortedCatalog } from '../model/catalog-selectors';
 
 import { CatalogFilter } from '../../../features/catalog-filter';
 import { CatalogSort } from '../../../features/catalog-sort';
@@ -11,14 +13,14 @@ import { Pagination } from '../../../shared/ui/pagination';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
-import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 import { Oops } from '../../oops';
-import { fetchCatalog } from '../model/api-actions/fetch-catalog';
+import { CurrentSort } from '../lib/types/current-sort';
 
 export function Catalog (): JSX.Element {
   const { page } = useParams();
+  const [currentSort, setCurrentSort] = useState<CurrentSort>({type: null, order: null});
   const dispatch = useAppDispatch();
-  const catalog = useAppSelector(getCatalog);
+  const catalog = useAppSelector((state) => getSortedCatalog(state, currentSort));
   const catalogIDs = useAppSelector(getCatalogIDs);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
 
@@ -53,7 +55,7 @@ export function Catalog (): JSX.Element {
           </div>
 
           <div className="catalog__content">
-            <CatalogSort />
+            <CatalogSort currentSort={currentSort} setCurrentSort={setCurrentSort} />
 
             <div className="cards catalog__cards">
               {

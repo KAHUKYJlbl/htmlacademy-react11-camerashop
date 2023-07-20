@@ -1,5 +1,4 @@
 import { Camera } from '../../../entities/camera';
-// import { LIST_ITEMS_COUNT } from './const';
 
 type handleNavigationKeysProps = {
   e: React.KeyboardEvent<HTMLFormElement>;

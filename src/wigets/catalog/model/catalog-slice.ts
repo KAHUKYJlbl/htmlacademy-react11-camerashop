@@ -39,6 +39,7 @@ export const catalogSlice = createSlice({
         state.catalogLoadingStatus = FetchStatus.Success;
 
         const cameraToRate = state.catalog.find((camera) => camera.id === action.payload.id);
+
         if (cameraToRate && !state.ratedCatalog.some((camera) => camera.id === action.payload.id)) {
           state.ratedCatalog.push( {...cameraToRate, rating: action.payload.rating} );
         }
