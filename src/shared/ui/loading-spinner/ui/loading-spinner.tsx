@@ -23,7 +23,7 @@ const spinnerTypes = {
   button: {
     height: '15',
     width: '15',
-    color: '#333333',
+    color: '#ffffff',
     wrapperStyle: {
       height: '100%'
     },

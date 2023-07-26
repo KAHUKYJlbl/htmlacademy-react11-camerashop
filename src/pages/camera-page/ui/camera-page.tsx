@@ -26,7 +26,7 @@ const CameraPage = (): JSX.Element => {
   }
 
   return (
-    <Layout title={Titles.Product} camera={camera} isUpHeader>
+    <Layout title={Titles.Product} camera={camera} isUpHeader isScrollRestoration >
       <main>
         <div className="page-content">
           <Breadcrumbs title={Titles.Product} camera={camera} />

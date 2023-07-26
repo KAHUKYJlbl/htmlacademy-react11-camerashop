@@ -46,6 +46,7 @@ const store = mockStore({
   },
   [NameSpace.Catalog]: {
     catalog: [],
+    ratedCatalog: [],
     catalogLoadingStatus: FetchStatus.Success,
   }
 });

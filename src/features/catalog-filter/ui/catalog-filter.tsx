@@ -1,4 +1,96 @@
-export function CatalogFilter (): JSX.Element {
+import { CATALOG_INITIAL_FILTER, CurrentPrice } from '../../../wigets/catalog';
+
+import { filters } from '../lib/const';
+import { CatalogFilterType } from '../lib/types';
+
+type CatalogFilterProps = {
+  currentPricePlaceholder: CurrentPrice;
+  currentPrice: CurrentPrice;
+  setCurrentPrice: React.Dispatch< React.SetStateAction<CurrentPrice>>;
+  currentFilter: CatalogFilterType;
+  setCurrentFilter: React.Dispatch< React.SetStateAction<CatalogFilterType>>;
+}
+
+export function CatalogFilter ({
+  currentPricePlaceholder,
+  currentPrice,
+  setCurrentPrice,
+  currentFilter,
+  setCurrentFilter
+}: CatalogFilterProps): JSX.Element {
+  const onMinPriceBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      if (currentPrice.min < 0) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            min: 0
+          }
+        ));
+      }
+
+      if (currentPrice.min > currentPrice.max && currentPrice.max && e.relatedTarget?.id !== 'max') {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            min: currentPrice.max
+          }
+        ));
+      }
+
+      if (currentPrice.min < currentPricePlaceholder.min) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            min: currentPricePlaceholder.min
+          }
+        ));
+      }
+    }
+  };
+
+  const onMaxPriceBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      if (currentPrice.max < 0) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            max: 0
+          }
+        ));
+      }
+
+      if (currentPrice.max < currentPrice.min && currentPrice.min && e.relatedTarget?.id !== 'min') {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            max: currentPrice.min
+          }
+        ));
+      }
+
+      if (currentPrice.max > currentPricePlaceholder.max) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            max: currentPricePlaceholder.max
+          }
+        ));
+      }
+    }
+  };
+
+  const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentPrice((current) => (
+      {...current, [e.target.name]: +e.target.value}
+    ));
+  };
+
+  const onFilterReset = () => {
+    setCurrentPrice({min: 0, max: 0});
+    setCurrentFilter(CATALOG_INITIAL_FILTER);
+  };
+
   return (
     <div className="catalog-filter">
 
@@ -11,128 +103,118 @@ export function CatalogFilter (): JSX.Element {
           <legend className="title title--h5">
             Цена, ₽
           </legend>
+
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder="от" />
+                <input
+                  type="number"
+                  name="min"
+                  id='min'
+                  placeholder={String(currentPricePlaceholder.min)}
+                  onChange={onPriceChange}
+                  onBlur={onMinPriceBlur}
+                  value={currentPrice.min || ''}
+                />
               </label>
             </div>
+
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder="до" />
+                <input
+                  type="number"
+                  name="max"
+                  id='max'
+                  placeholder={String(currentPricePlaceholder.max)}
+                  onChange={onPriceChange}
+                  onBlur={onMaxPriceBlur}
+                  value={currentPrice.max || ''}
+                />
               </label>
             </div>
           </div>
         </fieldset>
 
-        <fieldset className="catalog-filter__block">
-          <legend className="title title--h5">
-            Категория
-          </legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="photocamera" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Фотокамера
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="videocamera" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Видеокамера
-              </span>
-            </label>
-          </div>
-        </fieldset>
+        {
+          Array.from(Object.keys(filters)).map((filter) => (
+            <fieldset key={filter} className="catalog-filter__block">
+              <legend className="title title--h5">
+                {filters[filter].name}
+              </legend>
 
-        <fieldset className="catalog-filter__block">
-          <legend className="title title--h5">
-            Тип камеры
-          </legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="digital" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Цифровая
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="film" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Плёночная
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="snapshot" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Моментальная
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="collection" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Коллекционная
-              </span>
-            </label>
-          </div>
-        </fieldset>
+              {
+                Array.from(Object.keys(filters[filter].filterElements)).map((filterElement) => (
+                  <div key={filterElement} className="custom-checkbox catalog-filter__item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        name={filterElement}
+                        disabled = {currentFilter.category.videocamera && (
+                          filters[filter].filterElements[filterElement] === 'Пленочная'
+                          || filters[filter].filterElements[filterElement] === 'Моментальная'
+                        )}
+                        checked={currentFilter[filter][filterElement]}
+                        onChange={() => {
+                          setCurrentFilter((current) => (
+                            {
+                              ...current,
+                              [filter]: {
+                                ...current[filter],
+                                [filterElement]: !current[filter][filterElement]
+                              }
+                            }
+                          ));
 
-        <fieldset className="catalog-filter__block">
-          <legend className="title title--h5">
-            Уровень
-          </legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="zero" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Нулевой
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="non-professional" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Любительский
-              </span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="professional" />
-              <span className="custom-checkbox__icon">
-              </span>
-              <span className="custom-checkbox__label">
-                Профессиональный
-              </span>
-            </label>
-          </div>
-        </fieldset>
-        <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры
+                          if (filters[filter].filterElements[filterElement] === 'Фотокамера') {
+                            setCurrentFilter((current) => (
+                              {
+                                ...current,
+                                category: {
+                                  ...current.category,
+                                  videocamera: false
+                                }
+                              }
+                            ));
+                          }
+
+                          if (filters[filter].filterElements[filterElement] === 'Видеокамера') {
+                            setCurrentFilter((current) => (
+                              {
+                                ...current,
+                                category: {
+                                  ...current.category,
+                                  photocamera: false
+                                },
+                                type: {
+                                  ...current.type,
+                                  film: false,
+                                  snapshot: false,
+                                }
+                              }
+                            ));
+                          }
+                        }}
+                      />
+
+                      <span className="custom-checkbox__icon" />
+
+                      <span className="custom-checkbox__label">
+                        {filters[filter].filterElements[filterElement]}
+                      </span>
+                    </label>
+                  </div>
+                ))
+              }
+            </fieldset>
+          ))
+        }
+
+        <button
+          className="btn catalog-filter__reset-btn"
+          type="reset"
+          onClick={onFilterReset}
+        >
+          Сбросить фильтры
         </button>
       </form>
     </div>

@@ -26,8 +26,8 @@ export type CameraRating = {
   rating: number;
 }
 
-export type CameraTypes = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
-
 export type CameraCategories = 'Видеокамера' | 'Фотоаппарат';
+
+export type CameraTypes = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
 
 export type CameraLevels = 'Нулевой' | 'Любительский' | 'Профессиональный';

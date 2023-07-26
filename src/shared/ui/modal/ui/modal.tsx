@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import ReactModal from 'react-modal';
+// import ReactModal from 'react-modal';
 import Modal from 'react-modal';
 import useClickOutside from '../../../lib/hooks/use-click-outside';
 
-ReactModal.setAppElement('#body');
+// ReactModal.setAppElement('#body');
 
 type ModalProps = {
   children: JSX.Element;

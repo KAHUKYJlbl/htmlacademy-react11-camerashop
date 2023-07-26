@@ -1,13 +1,21 @@
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import { createMemoryHistory } from 'history';
 import { HistoryRouter } from '../../../app/provider/history-router';
 import Header from './header';
+import { NameSpace } from '../../../app/provider/store';
 
-const mockStore = configureMockStore();
-const store = mockStore();
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+const store = mockStore({
+  [NameSpace.Catalog]: {
+    catalog: [],
+    ratedCatalog: [],
+  }
+});
 
 const history = createMemoryHistory();
 
