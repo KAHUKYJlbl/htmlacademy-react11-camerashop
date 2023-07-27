@@ -12,7 +12,7 @@ export const getCurrentCameraId = (state: State): string | null => state[NameSpa
 export const getPostReviewLoadingStatus = createSelector(
   (state: State): FetchStatus => state[NameSpace.PostReview].postReviewLoadingStatus,
   (status) => ({
-    isLoading: [FetchStatus.Idle, FetchStatus.Pending].includes(status),
+    isLoading: status === FetchStatus.Pending,
     isSuccess: status === FetchStatus.Success,
     isFailed: status === FetchStatus.Failed,
   })

@@ -5,16 +5,18 @@ import cn from 'classnames';
 
 import { RATING_SCALE_MAX, RatingScale, ReviewForm } from '../../../entities/review';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Modal } from '../../../shared/ui/modal';
 
 import { REVIEW_MIN_LENGTH } from '../lib/const';
-import { hidePostReview, showSuccessReview } from '../model/post-review-slice';
 import { postReview } from '../model/api-actions/post-review';
-import { getCurrentCameraId } from '../model/post-review-selectors';
-import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { hidePostReview, showSuccessReview } from '../model/post-review-slice';
+import { getCurrentCameraId, getPostReviewLoadingStatus } from '../model/post-review-selectors';
+import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 
 export function PostReview (): JSX.Element {
   const dispatch = useAppDispatch();
+  const reviewPostingStatus = useAppSelector(getPostReviewLoadingStatus);
   const { register, handleSubmit } = useForm<ReviewForm>();
   const currentCameraId = useAppSelector(getCurrentCameraId);
   const [fieldErrors, setFieldErrors] = useState({
@@ -223,7 +225,11 @@ export function PostReview (): JSX.Element {
               className="btn btn--purple form-review__btn"
               type="submit"
             >
-              Отправить отзыв
+              {
+                reviewPostingStatus.isLoading
+                  ? <LoadingSpinner spinnerType='button' />
+                  : 'Отправить отзыв'
+              }
             </button>
           </form>
         </div>

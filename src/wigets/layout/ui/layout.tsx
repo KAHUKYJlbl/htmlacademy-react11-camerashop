@@ -13,9 +13,10 @@ type LayoutProps = {
   isUpHeader?: boolean;
   title: Titles;
   camera?: Camera | null;
+  isScrollRestoration?: boolean;
 }
 
-export function Layout ({children, isUpHeader, title, camera}: LayoutProps): JSX.Element {
+export function Layout ({children, isUpHeader, title, camera, isScrollRestoration}: LayoutProps): JSX.Element {
   return (
     <div className="wrapper">
       <Helmet>
@@ -31,7 +32,8 @@ export function Layout ({children, isUpHeader, title, camera}: LayoutProps): JSX
       {isUpHeader && <UpHeader />}
 
       <Footer />
-      <ScrollRestoration />
+
+      {isScrollRestoration && <ScrollRestoration />}
     </div>
   );
 }

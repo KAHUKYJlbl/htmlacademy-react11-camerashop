@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
@@ -27,20 +26,15 @@ const store = mockStore({
   },
   [NameSpace.Catalog]: {
     catalog: [],
+    ratedCatalog: [],
     catalogLoadingStatus: FetchStatus.Success,
   }
 });
-
-// jest.mock('react-router-dom', () => ({
-//   ...jest.requireActual('react-router-dom'),
-//   useParams: jest.fn(),
-//  }));
 
 const history = createMemoryHistory();
 
 describe('Component: Catalog', () => {
   it('should render correctly', () => {
-    // jest.spyOn(HistoryRouter, 'useParams').mockReturnValue({ id: '1' });
 
     render(
       <Provider store={store}>

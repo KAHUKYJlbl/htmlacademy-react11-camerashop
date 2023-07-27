@@ -23,7 +23,7 @@ export const postReview = createAsyncThunk<Review, ReviewFormAPI, {
       return data;
     } catch (err) {
       if (err instanceof AxiosError && err.response?.status !== 401) {
-        toast.error('Catalog loading failed.');
+        toast.error('Review posting failed.');
       }
       throw err;
     }

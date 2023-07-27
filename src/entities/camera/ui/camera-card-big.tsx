@@ -2,13 +2,14 @@ import cn from 'classnames';
 
 import { showAddBasket } from '../../../features/add-basket';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { Camera } from '../types/camera';
+import { RatedCamera } from '../types/camera';
 import { CameraTabs } from '../lib/const';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../app/provider/router';
+import { RATING_SCALE_MAX } from '../../review';
 
 type CameraPageInfoProps = {
-  camera: Camera;
+  camera: RatedCamera;
   cameraTab: CameraTabs;
 }
 
@@ -39,24 +40,23 @@ export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.El
           <h1 className="title title--h3">{camera.name}</h1>
 
           <div className="rate product__rate">
-            <svg width="17" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-full-star"></use>
-            </svg>
-            <svg width="17" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-full-star"></use>
-            </svg>
-            <svg width="17" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-full-star"></use>
-            </svg>
-            <svg width="17" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-full-star"></use>
-            </svg>
-            <svg width="17" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-star"></use>
-            </svg>
+            {
+              new Array(RATING_SCALE_MAX)
+                .fill('')
+                .map((_, index) => (
+                  <svg key={`${RATING_SCALE_MAX + index}`} width="17" height="16" aria-hidden="true">
+                    <use
+                      xlinkHref={cn({
+                        '#icon-full-star': index < camera.rating,
+                        '#icon-star': index >= camera.rating
+                      })}
+                    />
+                  </svg>
+                ))
+            }
 
             <p className="visually-hidden">
-              Рейтинг: {camera.id}
+              Рейтинг: {camera.rating}
             </p>
             <p className="rate__count">
               <span className="visually-hidden">
