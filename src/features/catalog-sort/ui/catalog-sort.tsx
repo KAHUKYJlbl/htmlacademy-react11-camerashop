@@ -1,4 +1,5 @@
-import { CurrentSort, SortChoise } from '../../../wigets/catalog';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { CurrentSort, SortChoise, getCatalogLoadingStatus } from '../../../wigets/catalog';
 
 type CatalogSortProps = {
   currentSort: CurrentSort;
@@ -6,6 +7,8 @@ type CatalogSortProps = {
 }
 
 export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): JSX.Element {
+  const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
+
   const handleSort = (sort: SortChoise) => {
     setCurrentSort((current) => (
       current.type === null
@@ -30,6 +33,7 @@ export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): J
                 name="sort"
                 checked={currentSort.type === 'price'}
                 onChange={() => handleSort({type: 'price'})}
+                disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
               <label htmlFor="sortPrice">
@@ -44,6 +48,7 @@ export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): J
                 name="sort"
                 checked={currentSort.type === 'popular'}
                 onChange={() => handleSort({type: 'popular'})}
+                disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
               <label htmlFor="sortPopular">
@@ -61,6 +66,7 @@ export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): J
                 aria-label="По возрастанию"
                 checked={currentSort.order === 'up'}
                 onChange={() => handleSort({order: 'up'})}
+                disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
               <label htmlFor="up">
@@ -78,6 +84,7 @@ export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): J
                 aria-label="По убыванию"
                 checked={currentSort.order === 'down'}
                 onChange={() => handleSort({order: 'down'})}
+                disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
               <label htmlFor="down">

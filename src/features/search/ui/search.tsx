@@ -7,7 +7,7 @@ import { getSearch } from '../model/search-selectors';
 import { AppRoute } from '../../../app/provider/router';
 import { handleNavigationKeys } from '../lib/handleNavigationKeys';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { fetchCatalog, getCatalog } from '../../../wigets/catalog';
+import { fetchCatalog, getCatalog, getCatalogLoadingStatus } from '../../../wigets/catalog';
 
 export function Search (): JSX.Element {
   const listItemRef = useRef( new Array<HTMLLIElement | null>() );
@@ -16,6 +16,7 @@ export function Search (): JSX.Element {
   const [searchInput, setSearchInput] = useState('');
   const [currentSearchItemID, setCurrentSearchItemID] = useState<number | null>(null);
   const catalog = useAppSelector(getCatalog);
+  const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
   const searchList = useAppSelector((state) => getSearch(state, searchInput));
 
   useEffect(() => {
@@ -72,6 +73,7 @@ export function Search (): JSX.Element {
             placeholder="Поиск по сайту"
             value={searchInput}
             onChange={( e: ChangeEvent<HTMLInputElement> ) => setSearchInput(e.target.value)}
+            disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
           />
         </label>
 
