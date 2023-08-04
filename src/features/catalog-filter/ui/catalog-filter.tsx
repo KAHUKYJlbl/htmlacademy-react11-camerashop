@@ -29,15 +29,6 @@ export function CatalogFilter ({
         ));
       }
 
-      if (currentPrice.min > currentPrice.max && currentPrice.max && e.relatedTarget?.id !== 'max') {
-        setCurrentPrice((current) => (
-          {
-            ...current,
-            min: currentPrice.max
-          }
-        ));
-      }
-
       if (currentPrice.min < currentPricePlaceholder.min) {
         setCurrentPrice((current) => (
           {
@@ -46,6 +37,24 @@ export function CatalogFilter ({
           }
         ));
       }
+
+      if (currentPrice.min > currentPricePlaceholder.max) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            min: currentPricePlaceholder.max
+          }
+        ));
+      }
+    }
+
+    if (currentPrice.min > currentPrice.max && currentPrice.max && e.relatedTarget?.id !== 'max') {
+      setCurrentPrice((current) => (
+        {
+          ...current,
+          min: currentPrice.max
+        }
+      ));
     }
   };
 
@@ -56,6 +65,15 @@ export function CatalogFilter ({
           {
             ...current,
             max: 0
+          }
+        ));
+      }
+
+      if (currentPrice.max < currentPricePlaceholder.min) {
+        setCurrentPrice((current) => (
+          {
+            ...current,
+            max: currentPricePlaceholder.min
           }
         ));
       }
@@ -82,7 +100,9 @@ export function CatalogFilter ({
 
   const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentPrice((current) => (
-      {...current, [e.target.name]: +e.target.value}
+      Number.isNaN( Number(e.target.value) )
+        ? current
+        : {...current, [e.target.name]: Number(e.target.value)}
     ));
   };
 
@@ -108,7 +128,7 @@ export function CatalogFilter ({
             <div className="custom-input">
               <label>
                 <input
-                  type="number"
+                  type="text"
                   name="min"
                   id='min'
                   placeholder={String(currentPricePlaceholder.min)}
@@ -122,7 +142,7 @@ export function CatalogFilter ({
             <div className="custom-input">
               <label>
                 <input
-                  type="number"
+                  type="text"
                   name="max"
                   id='max'
                   placeholder={String(currentPricePlaceholder.max)}

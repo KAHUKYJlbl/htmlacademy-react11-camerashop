@@ -25,9 +25,11 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { Oops } from '../../oops';
 import { AppRoute } from '../../../app/provider/router';
+import { useQuery } from '../lib/hooks/use-query';
 
 export function Catalog (): JSX.Element {
   const { page } = useParams();
+  const query = useQuery();
   const [currentPrice, setCurrentPrice] = useState<CurrentPrice>({min: 0, max: 0});
   const [currentPricePlaceholder, setCurrentPricePlaceholder] = useState<CurrentPrice>({min: 0, max: 0});
   const [currentSort, setCurrentSort] = useState<CurrentSort>({type: null, order: null});

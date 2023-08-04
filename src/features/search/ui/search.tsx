@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState } from 'react';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { Link, generatePath } from 'react-router-dom';
 import cn from 'classnames';
 
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
@@ -10,8 +10,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { fetchCatalog, getCatalog, getCatalogLoadingStatus } from '../../../wigets/catalog';
 
 export function Search (): JSX.Element {
-  const listItemRef = useRef( new Array<HTMLLIElement | null>() );
-  const navigate = useNavigate();
+  const listItemRef = useRef( new Array<HTMLAnchorElement | null>() );
   const dispatch = useAppDispatch();
   const [searchInput, setSearchInput] = useState('');
   const [currentSearchItemID, setCurrentSearchItemID] = useState<number | null>(null);
@@ -25,11 +24,10 @@ export function Search (): JSX.Element {
     }
   }, []);
 
-  const onNavKeysDown: KeyboardEventHandler<HTMLFormElement> = (e) => {
+  const onNavKeysDown: KeyboardEventHandler<HTMLAnchorElement> = (e) => {
     const navKeys = [
       'ArrowDown',
       'ArrowUp',
-      'Tab',
     ];
 
     if (navKeys.includes(e.key) && searchInput) {
@@ -41,7 +39,7 @@ export function Search (): JSX.Element {
       e,
       list: searchList,
       listItemRef,
-      setCurrent: setCurrentSearchItemID
+      current: currentSearchItemID,
     });
   };
 
@@ -52,15 +50,7 @@ export function Search (): JSX.Element {
         {'list-opened': searchList.length && searchInput.length}
       )}
     >
-      <form
-        onKeyDown={onNavKeysDown}
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSearchInput('');
-          setCurrentSearchItemID(null);
-          navigate( generatePath( AppRoute.Camera, { cameraId: String(currentSearchItemID) } ) );
-        }}
-      >
+      <form>
         <label>
           <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-lens"></use>
@@ -81,28 +71,35 @@ export function Search (): JSX.Element {
           {
             searchList.map((camera) => (
               <li
-                ref={(element) => listItemRef.current.push(element)}
-                id={String(camera.id)}
                 key={camera.id}
                 className={cn(
                   'form-search__select-item',
                   {'current': camera.id === currentSearchItemID}
                 )}
-                tabIndex={0}
-                onMouseEnter={() => setCurrentSearchItemID(camera.id)}
-                onMouseLeave={() => setCurrentSearchItemID(null)}
-                onClick={() => {
-                  setSearchInput('');
-                  setCurrentSearchItemID(null);
-                  navigate( generatePath( AppRoute.Camera, { cameraId: String(camera.id) } ) );
-                }}
               >
-                {camera.name}
+                <Link
+                  ref={(element) => listItemRef.current.push(element)}
+                  id={String(camera.id)}
+                  to={generatePath( AppRoute.Camera, { cameraId: String(camera.id) } )}
+                  style={{outline: 'none', width: '100%', height: '100%'}}
+                  onFocus={() => setCurrentSearchItemID(camera.id)}
+                  onBlur={() => setCurrentSearchItemID(null)}
+                  onKeyDown={onNavKeysDown}
+                  onMouseEnter={() => setCurrentSearchItemID(camera.id)}
+                  onMouseLeave={() => setCurrentSearchItemID(null)}
+                  onClick={() => {
+                    setSearchInput('');
+                    setCurrentSearchItemID(null);
+                  }}
+                >
+                  {camera.name}
+                </Link>
               </li>
             ))
           }
         </ul>
       </form>
+
       <button
         className="form-search__reset"
         type="reset"
@@ -114,6 +111,7 @@ export function Search (): JSX.Element {
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>
+
         <span className="visually-hidden">
           Сбросить поиск
         </span>
