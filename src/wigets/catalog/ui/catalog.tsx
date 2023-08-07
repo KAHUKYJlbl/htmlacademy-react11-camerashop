@@ -4,7 +4,6 @@ import { useSearchParams } from 'react-router-dom';
 import { CurrentSort, SortOrder, SortType } from '../lib/types/current-sort';
 import { getCurrentFilters } from '../lib/get-current-filters';
 import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
-import { CATALOG_INITIAL_FILTER } from '../lib/const/catalog-initial-filter';
 import { CurrentPrice } from '../lib/types/current-price';
 import { fetchRating } from '../model/api-actions/fetch-rating';
 import { fetchCatalog } from '../model/api-actions/fetch-catalog';
@@ -25,17 +24,44 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { Oops } from '../../oops';
 import { CatalogSearchParams } from '../lib/const/catalog-search-params';
+import { usePlaceholders } from '../lib/hooks/use-placeholders';
+import { useFiltersSearchParams } from '../lib/hooks/use-filters-search-params';
+import { useSortSearchParams } from '../lib/hooks/use-sort-search-params';
+import { usePageSearchParams } from '../lib/hooks/use-page-search-params';
 
 export function Catalog (): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get(CatalogSearchParams.Page) || '1';
-  const currentSort: CurrentSort = {
-    type: searchParams.get(CatalogSearchParams.SortType) as SortType,
-    order: searchParams.get(CatalogSearchParams.SortOrder) as SortOrder,
+  const searchParamsPage = searchParams.get(CatalogSearchParams.Page) || '1';
+  const searchParamsSort: CurrentSort = {
+    type: searchParams.get(CatalogSearchParams.SortType) as SortType || null,
+    order: searchParams.get(CatalogSearchParams.SortOrder) as SortOrder || null,
   };
-  const [currentPrice, setCurrentPrice] = useState<CurrentPrice>({min: 0, max: 0});
-  const [currentPricePlaceholder, setCurrentPricePlaceholder] = useState<CurrentPrice>({min: 0, max: 0});
-  const [currentFilter, setCurrentFilter] = useState<CatalogFilterType>(CATALOG_INITIAL_FILTER);
+  const searchParamsPrice: CurrentPrice = {
+    min: Number(searchParams.get(CatalogSearchParams.FilterPriceMin)) || 0,
+    max: Number(searchParams.get(CatalogSearchParams.FilterPriceMax)) || 0,
+  };
+  const searchParamsFilter: CatalogFilterType = {
+    category: {
+      photocamera: !!searchParams.get(CatalogSearchParams.FilterCategory)?.includes('photocamera'),
+      videocamera: !!searchParams.get(CatalogSearchParams.FilterCategory)?.includes('videocamera'),
+    },
+    type: {
+      digital: !!searchParams.get(CatalogSearchParams.FilterType)?.includes('digital'),
+      film: !!searchParams.get(CatalogSearchParams.FilterType)?.includes('film'),
+      snapshot: !!searchParams.get(CatalogSearchParams.FilterType)?.includes('snapshot'),
+      collection: !!searchParams.get(CatalogSearchParams.FilterType)?.includes('collection'),
+    },
+    level: {
+      zero: !!searchParams.get(CatalogSearchParams.FilterLevel)?.includes('zero'),
+      nonprofessional: !!searchParams.get(CatalogSearchParams.FilterLevel)?.includes('nonprofessional'),
+      professional: !!searchParams.get(CatalogSearchParams.FilterLevel)?.includes('professional'),
+    },
+  };
+  const [page, setPage] = useState<string>(searchParamsPage);
+  const [currentSort, setCurrentSort] = useState<CurrentSort>(searchParamsSort);
+  const [currentPrice, setCurrentPrice] = useState<CurrentPrice>(searchParamsPrice);
+  const [currentPricePlaceholder, setCurrentPricePlaceholder] = useState<CurrentPrice>(searchParamsPrice);
+  const [currentFilter, setCurrentFilter] = useState<CatalogFilterType>(searchParamsFilter);
   const dispatch = useAppDispatch();
   const catalog = useAppSelector((state) =>
     getSortedFilteredCatalog(state, currentSort, getCurrentFilters(currentFilter))
@@ -46,32 +72,37 @@ export function Catalog (): JSX.Element {
   const catalogIDs = useAppSelector(getCatalogIDs);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
 
+  // фетчим каталог
   useEffect(() => {
     dispatch(fetchCatalog());
   }, []);
 
-  useEffect(() => {
-    if (page && +page > Math.ceil( catalogPriced.length / CARDS_PER_PAGE )) {
-      setSearchParams( (current) => new URLSearchParams( {...current, page: '1'} ) );
-    }
-  }, [catalogPriced.length]);
-
-  useEffect(() => {
-    if (catalog.length) {
-      const sorted = [...catalog].sort((a, b) => a.price - b.price);
-
-      setCurrentPricePlaceholder({
-        min: sorted[0].price,
-        max: sorted[sorted.length - 1].price,
-      });
-    }
-  }, [catalog.length]);
-
+  // фетчим рейтинги для каждой камеры
   useEffect(() => {
     catalogIDs.forEach((ID) => {
       dispatch(fetchRating( String(ID) ));
     });
   }, [catalogIDs]);
+
+  // переполнение пагинации
+  useEffect(() => {
+    if (page && +page > Math.ceil( catalogPriced.length / CARDS_PER_PAGE )) {
+      setPage('1');
+    }
+  }, [catalogPriced.length]);
+
+  // вносим фильтры в URL
+  useFiltersSearchParams(currentFilter, currentPrice, setSearchParams);
+
+  // вносим сортировку в URL
+  useSortSearchParams(currentSort, setSearchParams);
+
+  // вносим paginatioon в URL
+  usePageSearchParams(page, setSearchParams);
+
+
+  // вычисление плейсхолдеров цены
+  usePlaceholders(catalog, setCurrentPricePlaceholder);
 
   if (catalogLoadingStatus.isLoading) {
     return <LoadingSpinner spinnerType='widget' />;
@@ -100,7 +131,7 @@ export function Catalog (): JSX.Element {
           </div>
 
           <div className="catalog__content">
-            <CatalogSort currentSort={currentSort} setSearchParams={setSearchParams} />
+            <CatalogSort currentSort={currentSort} setCurrentSort={setCurrentSort} />
 
             {
               catalogPriced.length
@@ -121,7 +152,7 @@ export function Catalog (): JSX.Element {
               !!catalogPriced.length
               &&
               <Pagination
-                setSearchParams={setSearchParams}
+                setPage={setPage}
                 page={page}
                 pagesCount={ Math.ceil( catalogPriced.length / CARDS_PER_PAGE ) }
               />

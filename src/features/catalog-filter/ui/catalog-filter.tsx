@@ -169,10 +169,13 @@ export function CatalogFilter ({
                       <input
                         type="checkbox"
                         name={filterElement}
-                        disabled = {currentFilter.category.videocamera && (
-                          filters[filter].filterElements[filterElement] === 'Пленочная'
-                          || filters[filter].filterElements[filterElement] === 'Моментальная'
-                        )}
+                        disabled = {
+                          currentFilter.category.videocamera
+                          && (
+                            filters[filter].filterElements[filterElement] === 'Пленочная'
+                            || filters[filter].filterElements[filterElement] === 'Моментальная'
+                          )
+                        }
                         checked={currentFilter[filter][filterElement]}
                         onChange={() => {
                           setCurrentFilter((current) => (

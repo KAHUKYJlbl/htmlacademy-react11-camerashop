@@ -1,16 +1,15 @@
-import { Link, SetURLSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import { AppRoute } from '../../../../app/provider/router';
-import { CatalogSearchParams } from '../../../../wigets/catalog';
 
 type PaginationProps = {
   page: string;
   pagesCount: number;
-  setSearchParams: SetURLSearchParams;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function Pagination ({ page, pagesCount, setSearchParams }: PaginationProps): JSX.Element {
+export function Pagination ({ page, pagesCount, setPage }: PaginationProps): JSX.Element {
   const buttons = Array(pagesCount).fill('').map((element, index) => index + 1);
 
   return (
@@ -25,12 +24,7 @@ export function Pagination ({ page, pagesCount, setSearchParams }: PaginationPro
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setSearchParams((current) =>
-                  new URLSearchParams({
-                    ...Object.fromEntries( current.entries() ),
-                    [CatalogSearchParams.Page]: String(+page - 1),
-                  })
-                );
+                setPage((current) => String( +current - 1 ));
               }}
             >
               Назад
@@ -47,12 +41,7 @@ export function Pagination ({ page, pagesCount, setSearchParams }: PaginationPro
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setSearchParams((current) =>
-                    new URLSearchParams({
-                      ...Object.fromEntries( current.entries() ),
-                      [CatalogSearchParams.Page]: String(button),
-                    })
-                  );
+                  setPage( String(button) );
                 }}
               >
                 {button}
@@ -70,12 +59,13 @@ export function Pagination ({ page, pagesCount, setSearchParams }: PaginationPro
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setSearchParams((current) =>
-                  new URLSearchParams({
-                    ...Object.fromEntries( current.entries() ),
-                    [CatalogSearchParams.Page]: String(+page + 1),
-                  })
-                );
+                setPage((current) => String( +current + 1 ));
+                // setSearchParams((current) =>
+                //   new URLSearchParams({
+                //     ...Object.fromEntries( current.entries() ),
+                //     [CatalogSearchParams.Page]: String(+page + 1),
+                //   })
+                // );
               }}
             >
               Далее

@@ -1,26 +1,19 @@
-import { SetURLSearchParams } from 'react-router-dom';
-
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { CatalogSearchParams, CurrentSort, SortChoise, getCatalogLoadingStatus } from '../../../wigets/catalog';
+import { CurrentSort, SortChoise, getCatalogLoadingStatus } from '../../../wigets/catalog';
 
 type CatalogSortProps = {
   currentSort: CurrentSort;
-  setSearchParams: SetURLSearchParams;
+  setCurrentSort: React.Dispatch<React.SetStateAction<CurrentSort>>;
 }
 
-export function CatalogSort ({currentSort, setSearchParams}: CatalogSortProps): JSX.Element {
+export function CatalogSort ({currentSort, setCurrentSort}: CatalogSortProps): JSX.Element {
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
 
   const handleSort = (sort: SortChoise) => {
-    setSearchParams((current) => (
-      current.get(CatalogSearchParams.SortType) === null
-        ? new URLSearchParams({
-          ...Object.fromEntries( current.entries() ),
-          [CatalogSearchParams.SortType]: 'price',
-          [CatalogSearchParams.SortOrder]: 'up',
-          ...sort
-        })
-        : new URLSearchParams( {...Object.fromEntries( current.entries() ), ...sort } )
+    setCurrentSort((current) => (
+      current.type === null
+        ? {type: 'price', order: 'up', ...sort}
+        : {...current, ...sort}
     ));
   };
 
@@ -39,7 +32,7 @@ export function CatalogSort ({currentSort, setSearchParams}: CatalogSortProps): 
                 id="sortPrice"
                 name="sort"
                 checked={currentSort.type === 'price'}
-                onChange={() => handleSort({[CatalogSearchParams.SortType]: 'price'})}
+                onChange={() => handleSort({type: 'price'})}
                 disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
@@ -54,7 +47,7 @@ export function CatalogSort ({currentSort, setSearchParams}: CatalogSortProps): 
                 id="sortPopular"
                 name="sort"
                 checked={currentSort.type === 'popular'}
-                onChange={() => handleSort({[CatalogSearchParams.SortType]: 'popular'})}
+                onChange={() => handleSort({type: 'popular'})}
                 disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
@@ -72,7 +65,7 @@ export function CatalogSort ({currentSort, setSearchParams}: CatalogSortProps): 
                 name="sort-icon"
                 aria-label="По возрастанию"
                 checked={currentSort.order === 'up'}
-                onChange={() => handleSort({[CatalogSearchParams.SortOrder]: 'up'})}
+                onChange={() => handleSort({order: 'up'})}
                 disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 
@@ -90,7 +83,7 @@ export function CatalogSort ({currentSort, setSearchParams}: CatalogSortProps): 
                 name="sort-icon"
                 aria-label="По убыванию"
                 checked={currentSort.order === 'down'}
-                onChange={() => handleSort({[CatalogSearchParams.SortOrder]: 'down'})}
+                onChange={() => handleSort({order: 'down'})}
                 disabled={catalogLoadingStatus.isLoading || catalogLoadingStatus.isFailed}
               />
 

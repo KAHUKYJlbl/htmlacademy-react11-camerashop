@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 const paginationProps = {
   page: '2',
   pagesCount: 5,
-  setSearchParams: jest.fn(),
+  setPage: jest.fn(),
 };
 
 describe('Component: Pagination', () => {

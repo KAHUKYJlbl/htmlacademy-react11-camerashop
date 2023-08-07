@@ -8,6 +8,6 @@ export type CurrentSort = {
 };
 
 export type SortChoise = {
-  sortType?: SortType;
-  sortOrder?: SortOrder;
+  type?: SortType;
+  order?: SortOrder;
 }
