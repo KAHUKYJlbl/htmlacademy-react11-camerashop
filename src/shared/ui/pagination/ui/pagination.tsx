@@ -1,14 +1,16 @@
-import { Link, generatePath } from 'react-router-dom';
+import { Link, SetURLSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import { AppRoute } from '../../../../app/provider/router';
+import { CatalogSearchParams } from '../../../../wigets/catalog';
 
 type PaginationProps = {
   page: string;
   pagesCount: number;
+  setSearchParams: SetURLSearchParams;
 }
 
-export function Pagination ({ page, pagesCount }: PaginationProps): JSX.Element {
+export function Pagination ({ page, pagesCount, setSearchParams }: PaginationProps): JSX.Element {
   const buttons = Array(pagesCount).fill('').map((element, index) => index + 1);
 
   return (
@@ -19,7 +21,17 @@ export function Pagination ({ page, pagesCount }: PaginationProps): JSX.Element 
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={ generatePath( AppRoute.Catalog, { page: String(+page - 1) } ) }
+              to={AppRoute.Catalog}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setSearchParams((current) =>
+                  new URLSearchParams({
+                    ...Object.fromEntries( current.entries() ),
+                    [CatalogSearchParams.Page]: String(+page - 1),
+                  })
+                );
+              }}
             >
               Назад
             </Link>
@@ -31,7 +43,17 @@ export function Pagination ({ page, pagesCount }: PaginationProps): JSX.Element 
             <li className="pagination__item" key={button}>
               <Link
                 className={cn('pagination__link', {'pagination__link--active': page === String(button) })}
-                to={generatePath(AppRoute.Catalog, {page: String(button)})}
+                to={AppRoute.Catalog}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSearchParams((current) =>
+                    new URLSearchParams({
+                      ...Object.fromEntries( current.entries() ),
+                      [CatalogSearchParams.Page]: String(button),
+                    })
+                  );
+                }}
               >
                 {button}
               </Link>
@@ -44,7 +66,17 @@ export function Pagination ({ page, pagesCount }: PaginationProps): JSX.Element 
           <li className="pagination__item">
             <Link
               className='pagination__link pagination__link--text'
-              to={ generatePath( AppRoute.Catalog, { page: String(+page + 1) } ) }
+              to={AppRoute.Catalog}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setSearchParams((current) =>
+                  new URLSearchParams({
+                    ...Object.fromEntries( current.entries() ),
+                    [CatalogSearchParams.Page]: String(+page + 1),
+                  })
+                );
+              }}
             >
               Далее
             </Link>

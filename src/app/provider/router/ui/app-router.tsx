@@ -27,6 +27,10 @@ export const AppRouter = createBrowserRouter(
         element={<CatalogPage />}
       />
       <Route
+        path={AppRoute.CatalogQuery}
+        element={<CatalogPage />}
+      />
+      <Route
         path={AppRoute.Camera}
         element={<CameraPage />}
       >

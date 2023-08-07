@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-import { CurrentSort } from '../lib/types/current-sort';
+import { CurrentSort, SortOrder, SortType } from '../lib/types/current-sort';
 import { getCurrentFilters } from '../lib/get-current-filters';
 import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 import { CATALOG_INITIAL_FILTER } from '../lib/const/catalog-initial-filter';
@@ -24,18 +24,19 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { Oops } from '../../oops';
-import { AppRoute } from '../../../app/provider/router';
-import { useQuery } from '../lib/hooks/use-query';
+import { CatalogSearchParams } from '../lib/const/catalog-search-params';
 
 export function Catalog (): JSX.Element {
-  const { page } = useParams();
-  const query = useQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get(CatalogSearchParams.Page) || '1';
+  const currentSort: CurrentSort = {
+    type: searchParams.get(CatalogSearchParams.SortType) as SortType,
+    order: searchParams.get(CatalogSearchParams.SortOrder) as SortOrder,
+  };
   const [currentPrice, setCurrentPrice] = useState<CurrentPrice>({min: 0, max: 0});
   const [currentPricePlaceholder, setCurrentPricePlaceholder] = useState<CurrentPrice>({min: 0, max: 0});
-  const [currentSort, setCurrentSort] = useState<CurrentSort>({type: null, order: null});
   const [currentFilter, setCurrentFilter] = useState<CatalogFilterType>(CATALOG_INITIAL_FILTER);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const catalog = useAppSelector((state) =>
     getSortedFilteredCatalog(state, currentSort, getCurrentFilters(currentFilter))
   );
@@ -51,7 +52,7 @@ export function Catalog (): JSX.Element {
 
   useEffect(() => {
     if (page && +page > Math.ceil( catalogPriced.length / CARDS_PER_PAGE )) {
-      navigate(generatePath(AppRoute.Catalog, {page: '1'}));
+      setSearchParams( (current) => new URLSearchParams( {...current, page: '1'} ) );
     }
   }, [catalogPriced.length]);
 
@@ -76,7 +77,7 @@ export function Catalog (): JSX.Element {
     return <LoadingSpinner spinnerType='widget' />;
   }
 
-  if (!page) {
+  if (catalogLoadingStatus.isFailed) {
     return <Oops type='catalog' />;
   }
 
@@ -99,7 +100,7 @@ export function Catalog (): JSX.Element {
           </div>
 
           <div className="catalog__content">
-            <CatalogSort currentSort={currentSort} setCurrentSort={setCurrentSort} />
+            <CatalogSort currentSort={currentSort} setSearchParams={setSearchParams} />
 
             {
               catalogPriced.length
@@ -118,7 +119,12 @@ export function Catalog (): JSX.Element {
 
             {
               !!catalogPriced.length
-              && <Pagination page={page} pagesCount={ Math.ceil( catalogPriced.length / CARDS_PER_PAGE ) } />
+              &&
+              <Pagination
+                setSearchParams={setSearchParams}
+                page={page}
+                pagesCount={ Math.ceil( catalogPriced.length / CARDS_PER_PAGE ) }
+              />
             }
           </div>
         </div>

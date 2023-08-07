@@ -1,9 +1,13 @@
+export type SortType = 'price' | 'popular';
+
+export type SortOrder = 'up' | 'down';
+
 export type CurrentSort = {
-  type: 'price' | 'popular' | null;
-  order: 'up' | 'down' | null;
+  type: SortType | null;
+  order: SortOrder | null;
 };
 
 export type SortChoise = {
-  type?: 'price' | 'popular';
-  order?: 'up' | 'down';
+  sortType?: SortType;
+  sortOrder?: SortOrder;
 }

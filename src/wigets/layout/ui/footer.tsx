@@ -1,4 +1,4 @@
-import { Link, generatePath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../app/provider/router';
 
 export default function Footer (): JSX.Element {
@@ -51,7 +51,7 @@ export default function Footer (): JSX.Element {
 
             <ul className="footer__list">
               <li className="footer__item">
-                <Link className="link" to={generatePath(AppRoute.Catalog, {page: '1'})}>
+                <Link className="link" to={AppRoute.Catalog}>
                   Каталог
                 </Link>
               </li>
