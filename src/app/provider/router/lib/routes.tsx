@@ -5,5 +5,6 @@ export enum AppRoute {
   Camera = '/camera/:cameraId',
   CameraDescription = '/camera/:cameraId/description',
   CameraProperties = '/camera/:cameraId/properties',
+  Cart = '/cart',
   NotFound = '/not-found',
 }
