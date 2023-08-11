@@ -26,7 +26,7 @@ const camera: Camera = {
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  [NameSpace.AddBasket]: {currentCamera: camera},
+  [NameSpace.AddCart]: {currentCamera: camera},
 });
 
 const history = createMemoryHistory();

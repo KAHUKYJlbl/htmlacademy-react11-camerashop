@@ -1,7 +1,7 @@
-import { Camera } from '../../../entities/camera';
+import { RatedCamera } from '../../../entities/camera';
 import { addCartSlice, hideAddCart, showAddCart } from './add-cart-slice';
 
-const camera: Camera = {
+const camera: RatedCamera = {
   id: 0,
   name: '',
   previewImg: '',
@@ -15,6 +15,7 @@ const camera: Camera = {
   description: '',
   price: 0,
   reviewCount: 0,
+  rating: 5,
 };
 
 describe('Reducer: addCartSlice', () => {
