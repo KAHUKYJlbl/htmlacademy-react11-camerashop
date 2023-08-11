@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import { HistoryRouter } from '../../../app/provider/history-router';
 import { createMemoryHistory } from 'history';
-import { AddBasket } from './add-basket';
+import { AddCart } from './add-cart';
 import { Camera } from '../../../entities/camera';
 import { NameSpace } from '../../../app/provider/store';
 
@@ -36,7 +36,7 @@ describe('Component: AddBasket', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddBasket />
+          <AddCart />
         </HistoryRouter>
       </Provider>,
     );

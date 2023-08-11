@@ -1,94 +1,97 @@
-import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { RatedCamera } from '../types/camera';
 
-export const CameraCardCart = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+type CameraCardCartProps = {
+  camera: RatedCamera;
+}
 
-  return (
-    <li className="basket-item">
-      <div className="basket-item__img">
-        <picture>
-          <source type="image/webp" srcSet="img/content/img9.webp, img/content/img9@2x.webp 2x" />
-          <img
-            src="img/content/img9.jpg"
-            srcSet="img/content/img9@2x.jpg 2x"
-            width="140"
-            height="120"
-            alt="Фотоаппарат «Орлёнок»"
-          />
-        </picture>
-      </div>
+export const CameraCardCart = ({camera}: CameraCardCartProps): JSX.Element => (
+  <li className="basket-item">
+    <div className="basket-item__img">
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={`/${camera.previewImgWebp} /${camera.previewImgWebp2x}`}
+        />
+        <img
+          src={`/${camera.previewImg}`}
+          srcSet={`/${camera.previewImg2x}`}
+          width="140"
+          height="120"
+          alt={camera.name}
+        />
+      </picture>
+    </div>
 
-      <div className="basket-item__description">
-        <p className="basket-item__title">
-          Орлёнок
-        </p>
-
-        <ul className="basket-item__list">
-          <li className="basket-item__list-item">
-            <span className="basket-item__article">
-              Артикул:
-            </span>
-
-            <span className="basket-item__number">
-              O78DFGSD832
-            </span>
-          </li>
-
-          <li className="basket-item__list-item">
-            Плёночная фотокамера
-          </li>
-
-          <li className="basket-item__list-item">
-            Любительский уровень
-          </li>
-        </ul>
-      </div>
-
-      <p className="basket-item__price">
-        <span className="visually-hidden">
-          Цена:
-        </span>
-
-        18 970 ₽
+    <div className="basket-item__description">
+      <p className="basket-item__title">
+        {camera.name}
       </p>
 
-      <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
-          <svg width="7" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-arrow"></use>
-          </svg>
-        </button>
+      <ul className="basket-item__list">
+        <li className="basket-item__list-item">
+          <span className="basket-item__article">
+            Артикул:
+          </span>
 
-        <label className="visually-hidden" htmlFor="counter1" />
-        <input
-          type="number"
-          id="counter1"
-          value="2"
-          min="1"
-          max="99"
-          aria-label="количество товара"
-        />
+          <span className="basket-item__number">
+            {camera.vendorCode}
+          </span>
+        </li>
 
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
-          <svg width="7" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-arrow"></use>
-          </svg>
-        </button>
-      </div>
+        <li className="basket-item__list-item">
+          {`${camera.type} ${camera.category.toLowerCase()}`}
+        </li>
 
-      <div className="basket-item__total-price">
-        <span className="visually-hidden">
-          Общая цена:
-        </span>
+        <li className="basket-item__list-item">
+          {camera.level}
+        </li>
+      </ul>
+    </div>
 
-        37 940 ₽
-      </div>
+    <p className="basket-item__price">
+      <span className="visually-hidden">
+        Цена:
+      </span>
 
-      <button className="cross-btn" type="button" aria-label="Удалить товар">
-        <svg width="10" height="10" aria-hidden="true">
-          <use xlinkHref="#icon-close"></use>
+      {camera.price}
+    </p>
+
+    <div className="quantity">
+      <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
+        <svg width="7" height="12" aria-hidden="true">
+          <use xlinkHref="#icon-arrow"></use>
         </svg>
       </button>
-    </li>
-  )
-}
+
+      <label className="visually-hidden" htmlFor="counter1" />
+      <input
+        type="number"
+        id="counter1"
+        value="2"
+        min="1"
+        max="99"
+        aria-label="количество товара"
+      />
+
+      <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
+        <svg width="7" height="12" aria-hidden="true">
+          <use xlinkHref="#icon-arrow"></use>
+        </svg>
+      </button>
+    </div>
+
+    <div className="basket-item__total-price">
+      <span className="visually-hidden">
+        Общая цена:
+      </span>
+
+      37 940 ₽
+    </div>
+
+    <button className="cross-btn" type="button" aria-label="Удалить товар">
+      <svg width="10" height="10" aria-hidden="true">
+        <use xlinkHref="#icon-close"></use>
+      </svg>
+    </button>
+  </li>
+);

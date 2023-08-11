@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { RatedCamera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { showAddBasket } from '../../../features/add-basket';
+import { showAddCart } from '../../../features/add-cart';
 import { RATING_SCALE_MAX } from '../../review';
 
 type CameraCardProps = {
@@ -76,7 +76,7 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
         <button
           className="btn btn--purple product-card__btn"
           type="button"
-          onClick={() => dispatch(showAddBasket(camera))}
+          onClick={() => dispatch(showAddCart(camera))}
         >
           Купить
         </button>

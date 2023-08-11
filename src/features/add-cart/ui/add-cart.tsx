@@ -1,10 +1,10 @@
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Modal } from '../../../shared/ui/modal';
-import { getCurrentCamera } from '../model/add-basket-selectors';
-import { hideAddBasket } from '../model/add-basket-slice';
+import { getCurrentCamera } from '../model/add-cart-selectors';
+import { hideAddCart } from '../model/add-cart-slice';
 
-export function AddBasket (): JSX.Element {
+export function AddCart (): JSX.Element {
   const dispatch = useAppDispatch();
   const currentCamera = useAppSelector(getCurrentCamera);
 
@@ -15,7 +15,7 @@ export function AddBasket (): JSX.Element {
   }
 
   return (
-    <Modal onClose={() => dispatch(hideAddBasket())} >
+    <Modal onClose={() => dispatch(hideAddCart())} >
       <>
         <p className="title title--h4">Добавить товар в корзину</p>
 
@@ -85,7 +85,7 @@ export function AddBasket (): JSX.Element {
           className="cross-btn"
           type="button"
           aria-label="Закрыть попап"
-          onClick={() => dispatch(hideAddBasket())}
+          onClick={() => dispatch(hideAddCart())}
         >
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>

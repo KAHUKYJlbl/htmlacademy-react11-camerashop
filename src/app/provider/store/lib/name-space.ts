@@ -1,9 +1,10 @@
 export enum NameSpace {
-  Catalog = 'Catalog',
   Banner = 'Banner',
-  AddBasket = 'AddBasket',
-  PostReview = 'PostReview',
+  Catalog = 'Catalog',
   CameraInfo = 'CameraInfo',
   Similar = 'Similar',
-  Review = 'Review'
+  Cart = 'Cart',
+  AddCart = 'AddCart',
+  Review = 'Review',
+  PostReview = 'PostReview',
 }
