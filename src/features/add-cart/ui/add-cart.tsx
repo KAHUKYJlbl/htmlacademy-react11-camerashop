@@ -1,8 +1,9 @@
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Modal } from '../../../shared/ui/modal';
+import { cartItemAdd } from '../../../wigets/cart';
 import { getCurrentCamera } from '../model/add-cart-selectors';
-import { hideAddCart } from '../model/add-cart-slice';
+import { hideAddCart, showSuccessCart } from '../model/add-cart-slice';
 
 export function AddCart (): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,6 +14,12 @@ export function AddCart (): JSX.Element {
       <p>Oops ...</p>
     );
   }
+
+  const onAddCartClick = () => {
+    dispatch(cartItemAdd(currentCamera));
+    dispatch(hideAddCart());
+    dispatch(showSuccessCart());
+  };
 
   return (
     <Modal onClose={() => dispatch(hideAddCart())} >
@@ -73,9 +80,13 @@ export function AddCart (): JSX.Element {
         </div>
 
         <div className="modal__buttons">
-          <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" >
+          <button
+            className="btn btn--purple modal__btn modal__btn--fit-width"
+            type="button"
+            onClick={onAddCartClick}
+          >
             <svg width="24" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-add-basket"></use>
+              <use xlinkHref="#icon-add-basket" />
             </svg>
             Добавить в корзину
           </button>

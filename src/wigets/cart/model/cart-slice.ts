@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../../app/provider/store';
-import { RatedCamera } from '../../../entities/camera';
+import { CartCamera, RatedCamera } from '../../../entities/camera';
 import { FetchStatus } from '../../../shared/types/fetch-status';
 
 type InitialState = {
   cartUploadingStatus: FetchStatus;
-  cartList: RatedCamera[];
+  cartList: CartCamera[];
 }
 
 const initialState: InitialState = {
@@ -19,10 +19,10 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     cartItemAdd: (state, action: PayloadAction<RatedCamera>) => {
-      state.cartList = [...state.cartList, action.payload];
+      state.cartList = [{camera: action.payload, quantity: 1}, ...state.cartList];
     },
     cartItemRemove: (state, action: PayloadAction<RatedCamera>) => {
-      state.cartList = state.cartList.filter((camera) => camera.id !== action.payload.id);
+      state.cartList = state.cartList.filter((item) => item.camera.id !== action.payload.id);
     },
   },
 });

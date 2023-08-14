@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
+
 import { AppRoute } from '../../../app/provider/router';
 import { Search } from '../../../features/search';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { getCartLength } from '../../cart';
 
 export default function Header (): JSX.Element {
+  const cartLength = useAppSelector(getCartLength);
+
   return (
     <header className="header" id="header">
       <div className="container">
@@ -43,9 +48,10 @@ export default function Header (): JSX.Element {
             <use xlinkHref="#icon-basket"></use>
           </svg>
 
-          <span className="header__basket-count">
-            3
-          </span>
+          {
+            !!cartLength
+            && <span className="header__basket-count">{cartLength}</span>
+          }
         </Link>
       </div>
     </header>

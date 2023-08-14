@@ -5,11 +5,13 @@ import { RatedCamera } from '../../../entities/camera';
 
 type InitialState = {
   isAddCartShown: boolean;
+  isSuccessCartShown: boolean;
   currentCamera: RatedCamera | null;
 }
 
 const initialState: InitialState = {
   isAddCartShown: false,
+  isSuccessCartShown: false,
   currentCamera: null
 };
 
@@ -25,7 +27,13 @@ export const addCartSlice = createSlice({
       state.isAddCartShown = false;
       state.currentCamera = null;
     },
+    showSuccessCart: (state) => {
+      state.isSuccessCartShown = true;
+    },
+    hideSuccessCart: (state) => {
+      state.isSuccessCartShown = false;
+    },
   },
 });
 
-export const { showAddCart, hideAddCart } = addCartSlice.actions;
+export const { showAddCart, hideAddCart, showSuccessCart, hideSuccessCart } = addCartSlice.actions;

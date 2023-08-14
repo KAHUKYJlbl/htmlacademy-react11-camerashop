@@ -3,7 +3,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Titles } from '../../../shared/lib/const/titles';
-import { AddCart, getAddCartShown } from '../../../features/add-cart';
+import { AddCart, SuccessCart, getAddCartShown, getSuccessCartShown } from '../../../features/add-cart';
 import { PostReview, SuccessReview, getPostReviewShown, getSuccessReviewShown } from '../../../features/post-review';
 import { Layout } from '../../../wigets/layout';
 import { Similar } from '../../../wigets/similar';
@@ -14,6 +14,7 @@ const CameraPage = (): JSX.Element => {
   const { cameraId } = useParams();
   const camera = useAppSelector(getCamera);
   const isAddCartShown = useAppSelector(getAddCartShown);
+  const isSuccessCartShown = useAppSelector(getSuccessCartShown);
   const isPostReviewShown = useAppSelector(getPostReviewShown);
   const isSuccessReviewShown = useAppSelector(getSuccessReviewShown);
 
@@ -43,6 +44,7 @@ const CameraPage = (): JSX.Element => {
         </div>
 
         {isAddCartShown && <AddCart />}
+        {isSuccessCartShown && <SuccessCart />}
         {isPostReviewShown && <PostReview />}
         {isSuccessReviewShown && <SuccessReview />}
       </main>

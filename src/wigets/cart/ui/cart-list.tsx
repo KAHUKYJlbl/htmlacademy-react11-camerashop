@@ -10,7 +10,7 @@ export const CartList = (): JSX.Element => {
       <li className="basket-item">
         <div className="basket-item__description">
           <p className="basket-item__title">
-            Корзина пуста
+            {`Корзина${'\u00A0'}пуста`}
           </p>
         </div>
       </li>
@@ -20,8 +20,8 @@ export const CartList = (): JSX.Element => {
   return (
     <ul className="basket__list">
       {
-        cartItems.map((camera) => (
-          <CameraCardCart key={camera.id} camera={camera} />
+        cartItems.map((item) => (
+          <CameraCardCart key={item.camera.id} camera={item.camera} quantity={item.quantity} />
         ))
       }
     </ul>

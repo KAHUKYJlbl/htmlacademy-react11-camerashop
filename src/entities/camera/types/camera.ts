@@ -21,6 +21,11 @@ export type RatedCamera = Camera & {
   rating: number;
 }
 
+export type CartCamera = {
+  camera: RatedCamera;
+  quantity: number;
+}
+
 export type CameraRating = {
   id: number;
   rating: number;
