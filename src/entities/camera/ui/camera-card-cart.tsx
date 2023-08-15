@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { showRemoveCart } from '../../../features/add-cart';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { cartItemSetQuantity } from '../../../wigets/cart';
 
 import { RatedCamera } from '../types/camera';
 
@@ -10,6 +12,19 @@ type CameraCardCartProps = {
 
 export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [stateQuantity, setStateQuantity] = useState(quantity);
+
+  useEffect(() => {
+    dispatch(cartItemSetQuantity({camera, quantity: stateQuantity}));
+  }, [stateQuantity]);
+
+  const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStateQuantity((prev) =>
+      Number(e.target.value) > 99
+        ? prev
+        : +e.target.value
+    );
+  };
 
   return (
     <li className="basket-item">
@@ -63,9 +78,14 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
         {camera.price}
       </p>
 
-      {/* TODO уменьшить увеличить удалить  */}
+      {/* TODO уменьшить увеличить */}
       <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
+        <button
+          className="btn-icon btn-icon--prev"
+          aria-label="уменьшить количество товара"
+          onClick={() => setStateQuantity(quantity - 1)}
+          disabled={quantity === 1}
+        >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
@@ -76,12 +96,19 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
           type="number"
           id="counter1"
           value={quantity}
+          onChange={(e) => onQuantityChange(e)}
+          onBlur={(e) => +e.target.value < 1 ? setStateQuantity(1) : null}
           min="1"
           max="99"
           aria-label="количество товара"
         />
 
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
+        <button
+          className="btn-icon btn-icon--next"
+          aria-label="увеличить количество товара"
+          onClick={() => setStateQuantity(quantity + 1)}
+          disabled={quantity === 99}
+        >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
