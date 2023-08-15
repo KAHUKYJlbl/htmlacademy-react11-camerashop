@@ -6,12 +6,14 @@ import { RatedCamera } from '../../../entities/camera';
 type InitialState = {
   isAddCartShown: boolean;
   isSuccessCartShown: boolean;
+  isRemoveCartShown: boolean;
   currentCamera: RatedCamera | null;
 }
 
 const initialState: InitialState = {
   isAddCartShown: false,
   isSuccessCartShown: false,
+  isRemoveCartShown: false,
   currentCamera: null
 };
 
@@ -27,6 +29,14 @@ export const addCartSlice = createSlice({
       state.isAddCartShown = false;
       state.currentCamera = null;
     },
+    showRemoveCart: (state, action: PayloadAction<RatedCamera>) => {
+      state.isRemoveCartShown = true;
+      state.currentCamera = action.payload;
+    },
+    hideRemoveCart: (state) => {
+      state.isRemoveCartShown = false;
+      state.currentCamera = null;
+    },
     showSuccessCart: (state) => {
       state.isSuccessCartShown = true;
     },
@@ -36,4 +46,4 @@ export const addCartSlice = createSlice({
   },
 });
 
-export const { showAddCart, hideAddCart, showSuccessCart, hideSuccessCart } = addCartSlice.actions;
+export const { showAddCart, hideAddCart, showSuccessCart, hideSuccessCart, showRemoveCart, hideRemoveCart } = addCartSlice.actions;

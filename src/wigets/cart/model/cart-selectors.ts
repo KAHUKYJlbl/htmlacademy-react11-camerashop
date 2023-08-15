@@ -19,7 +19,10 @@ export const getCameraCartStatus = createSelector(
 
 export const getCartLength = createSelector(
   getCartItems,
-  (items) => items.length
+  (items) =>
+    items.reduce((sum, item) =>
+      sum + item.quantity,
+    0)
 );
 
 export const getCartSumPrice = createSelector(

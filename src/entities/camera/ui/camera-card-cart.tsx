@@ -1,5 +1,5 @@
+import { showRemoveCart } from '../../../features/add-cart';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { cartItemRemove } from '../../../wigets/cart';
 
 import { RatedCamera } from '../types/camera';
 
@@ -100,7 +100,7 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
-        onClick={() => dispatch(cartItemRemove(camera))}
+        onClick={() => dispatch(showRemoveCart(camera))}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
