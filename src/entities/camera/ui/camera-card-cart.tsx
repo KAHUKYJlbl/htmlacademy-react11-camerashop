@@ -120,7 +120,7 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
           Общая цена:
         </span>
 
-        {camera.price * quantity}
+        {camera.price * (quantity ? quantity : 1)}
       </div>
 
       <button
