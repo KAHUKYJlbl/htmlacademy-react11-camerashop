@@ -32,7 +32,7 @@ export const getCartSumPrice = createSelector(
   getCartItems,
   (items) =>
     items.reduce((sum, item) =>
-      sum + item.quantity * item.camera.price,
+      sum + (item.quantity ? item.quantity : 1) * item.camera.price,
     0)
 );
 
