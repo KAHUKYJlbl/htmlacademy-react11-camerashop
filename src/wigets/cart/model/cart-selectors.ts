@@ -4,7 +4,10 @@ import { NameSpace, State } from '../../../app/provider/store';
 import { FetchStatus } from '../../../shared/types/fetch-status';
 import { CartCamera, RatedCamera } from '../../../entities/camera';
 
-export const getCartItems = (state: State): CartCamera[] => state[NameSpace.Cart].cartList;
+export const getCartItems = createSelector(
+  (state: State): CartCamera[] => state[NameSpace.Cart].cartList,
+  (list) => [...list].sort((a, b) => a.camera.price - b.camera.price)
+);
 
 export const getCameraCartStatus = createSelector(
   [
@@ -21,7 +24,7 @@ export const getCartLength = createSelector(
   getCartItems,
   (items) =>
     items.reduce((sum, item) =>
-      sum + item.quantity,
+      sum + (item.quantity ? item.quantity : 1),
     0)
 );
 
