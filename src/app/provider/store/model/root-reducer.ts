@@ -9,6 +9,7 @@ import { reviewSlice } from '../../../../wigets/review-block';
 import { postReviewSlice } from '../../../../features/post-review';
 import { cartSlice } from '../../../../wigets/cart/model/cart-slice';
 import { addCartSlice } from '../../../../features/add-cart';
+import { discountSlice } from '../../../../features/discount';
 
 export const rootReducer = combineReducers({
   [NameSpace.Catalog]: catalogSlice.reducer,
@@ -19,4 +20,5 @@ export const rootReducer = combineReducers({
   [NameSpace.PostReview]: postReviewSlice.reducer,
   [NameSpace.Cart]: cartSlice.reducer,
   [NameSpace.AddCart]: addCartSlice.reducer,
+  [NameSpace.Discount]: discountSlice.reducer,
 });

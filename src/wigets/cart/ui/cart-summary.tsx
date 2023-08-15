@@ -1,71 +1,58 @@
-export const CartSummary = (): JSX.Element => (
-  <div className="basket__summary">
-    <div className="basket__promo">
-      <p className="title title--h4">
-        Если у вас есть промокод на скидку, примените его в этом поле
-      </p>
+import cn from 'classnames';
 
-      <div className="basket-form">
-        <form action="#">
-          <div className="custom-input">
-            <label>
-              <span className="custom-input__label">
-                Промокод
-              </span>
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { Discount, getDiscount } from '../../../features/discount';
 
-              <input type="text" name="promo" placeholder="Введите промокод" />
-            </label>
+import { getCartSumPrice } from '../model/cart-selectors';
 
-            <p className="custom-input__error">
-              Промокод неверный
-            </p>
+export const CartSummary = (): JSX.Element => {
+  const cartSumPrice = useAppSelector(getCartSumPrice);
+  const discount = cartSumPrice * useAppSelector(getDiscount);
 
-            <p className="custom-input__success">
-              Промокод принят!
-            </p>
-          </div>
+  return (
+    <div className="basket__summary">
+      <Discount />
 
-          <button className="btn" type="submit">
-            Применить
-          </button>
-        </form>
+      <div className="basket__summary-order">
+        <p className="basket__summary-item">
+          <span className="basket__summary-text">
+            Всего:
+          </span>
+
+          <span className="basket__summary-value">
+            {cartSumPrice} ₽
+          </span>
+        </p>
+
+        <p className="basket__summary-item">
+          <span className="basket__summary-text">
+            Скидка:
+          </span>
+
+          <span
+            className={cn(
+              'basket__summary-value',
+              {'basket__summary-value--bonus': discount}
+            )}
+          >
+            {discount} ₽
+          </span>
+        </p>
+
+        <p className="basket__summary-item">
+          <span className="basket__summary-text basket__summary-text--total">
+            К оплате:
+          </span>
+
+          <span className="basket__summary-value basket__summary-value--total">
+            {cartSumPrice - discount} ₽
+          </span>
+        </p>
+
+        <button className="btn btn--purple" type="submit">
+          Оформить заказ
+        </button>
       </div>
     </div>
-
-    <div className="basket__summary-order">
-      <p className="basket__summary-item">
-        <span className="basket__summary-text">
-          Всего:
-        </span>
-
-        <span className="basket__summary-value">
-          111 390 ₽
-        </span>
-      </p>
-
-      <p className="basket__summary-item">
-        <span className="basket__summary-text">
-          Скидка:
-        </span>
-
-        <span className="basket__summary-value basket__summary-value--bonus">
-          0 ₽
-        </span>
-      </p>
-
-      <p className="basket__summary-item">
-        <span className="basket__summary-text basket__summary-text--total">
-          К оплате:
-        </span>
-
-        <span className="basket__summary-value basket__summary-value--total">
-          111 390 ₽
-        </span>
-      </p>
-
-      <button className="btn btn--purple" type="submit">
-        Оформить заказ
-      </button>
-    </div>
-  </div>
-);
+  );
+};
