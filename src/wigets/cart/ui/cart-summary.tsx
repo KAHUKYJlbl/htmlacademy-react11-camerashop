@@ -1,12 +1,15 @@
 import cn from 'classnames';
 
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { Discount, getDiscount } from '../../../features/discount';
+import { Discount, getDiscount, setCoupon, setDiscount, setDiscountStatus } from '../../../features/discount';
 
 import { getCartItemsIds, getCartSumPrice } from '../model/cart-selectors';
 import { getCoupon } from '../../../features/discount/model/discount-selectors';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { postOrder } from '../model/api-actions/post-order';
+import { cartClear } from '../model/cart-slice';
+import { toast } from 'react-toastify';
+import { FetchStatus } from '../../../shared/types/fetch-status';
 
 export const CartSummary = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -14,6 +17,25 @@ export const CartSummary = (): JSX.Element => {
   const cartItemsIds = useAppSelector(getCartItemsIds);
   const coupon = useAppSelector(getCoupon);
   const discount = cartSumPrice * useAppSelector(getDiscount);
+
+  const onPostOrderClick = () => {
+    dispatch(postOrder({
+      camerasIds: cartItemsIds,
+      coupon: coupon || null
+    }))
+      .then((responce) => {
+        if (responce.meta.requestStatus === 'fulfilled') {
+          toast.success('Заказ принят!');
+
+          dispatch(cartClear());
+          dispatch(setCoupon(''));
+          dispatch(setDiscount(0));
+          dispatch(setDiscountStatus(FetchStatus.Idle));
+        }
+
+        return null;
+      });
+  };
 
   return (
     <div className="basket__summary">
@@ -58,7 +80,7 @@ export const CartSummary = (): JSX.Element => {
         <button
           className="btn btn--purple"
           type="button"
-          onClick={() => dispatch(postOrder({camerasIds: cartItemsIds, coupon}))}
+          onClick={onPostOrderClick}
         >
           Оформить заказ
         </button>

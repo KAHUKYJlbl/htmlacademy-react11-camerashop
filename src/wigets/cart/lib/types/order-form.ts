@@ -1,4 +1,4 @@
 export type OrderForm = {
   camerasIds: number[];
-  coupon: string;
+  coupon: string | null;
 };

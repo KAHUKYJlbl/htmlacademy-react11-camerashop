@@ -29,6 +29,9 @@ export const discountSlice = createSlice({
     setCoupon: (state, action: PayloadAction<string>) => {
       state.coupon = action.payload;
     },
+    setDiscount: (state, action: PayloadAction<number>) => {
+      state.discount = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -52,4 +55,4 @@ export const discountSlice = createSlice({
   }
 });
 
-export const { setDiscountStatus, setCoupon } = discountSlice.actions;
+export const { setDiscountStatus, setCoupon, setDiscount } = discountSlice.actions;

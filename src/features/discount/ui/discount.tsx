@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import cn from 'classnames';
 import { toast } from 'react-toastify';
+import cn from 'classnames';
 
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { FetchStatus } from '../../../shared/types/fetch-status';
@@ -18,6 +18,10 @@ export const Discount = (): JSX.Element => {
   const [ fieldErrors, setFieldErrors ] = useState({coupon: false});
   const discountStatus = useAppSelector(getDiscountStatus);
   const discountLoadingStatus = useAppSelector(getCheckDiscountLoadingStatus);
+
+  useEffect(() => {
+    dispatch(setDiscountStatus(FetchStatus.Idle));
+  }, []);
 
   const onFormSubmit: SubmitHandler<DiscountForm> = (data) => {
     dispatch(checkDiscount(data))

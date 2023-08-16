@@ -18,23 +18,14 @@ export const cartSlice = createSlice({
   name: NameSpace.AddCart,
   initialState,
   reducers: {
+    cartClear: (state) => {
+      state.cartList = [];
+    },
     cartItemAdd: (state, action: PayloadAction<RatedCamera>) => {
       state.cartList = [{camera: action.payload, quantity: 1}, ...state.cartList];
     },
     cartItemRemove: (state, action: PayloadAction<RatedCamera>) => {
       state.cartList = state.cartList.filter((item) => item.camera.id !== action.payload.id);
-    },
-    cartItemIncrease: (state, action: PayloadAction<CartCamera>) => {
-      state.cartList = [
-        ...state.cartList.filter((item) => item.camera.id !== action.payload.camera.id),
-        {camera: action.payload.camera, quantity: action.payload.quantity + 1}
-      ];
-    },
-    cartItemDecrease: (state, action: PayloadAction<CartCamera>) => {
-      state.cartList = [
-        ...state.cartList.filter((item) => item.camera.id !== action.payload.camera.id),
-        {camera: action.payload.camera, quantity: action.payload.quantity - 1}
-      ];
     },
     cartItemSetQuantity: (state, action: PayloadAction<CartCamera>) => {
       state.cartList = [
@@ -45,4 +36,4 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { cartItemAdd, cartItemRemove, cartItemIncrease, cartItemDecrease, cartItemSetQuantity } = cartSlice.actions;
+export const { cartClear, cartItemAdd, cartItemRemove, cartItemSetQuantity } = cartSlice.actions;
