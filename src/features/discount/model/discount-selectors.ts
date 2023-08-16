@@ -5,6 +5,8 @@ import { FetchStatus } from '../../../shared/types/fetch-status';
 
 export const getDiscount = (state: State): number => state[NameSpace.Discount].discount;
 
+export const getCoupon = (state: State): string => state[NameSpace.Discount].coupon;
+
 export const getDiscountStatus = createSelector(
   (state: State): FetchStatus => state[NameSpace.Discount].discountStatus,
   (status) => ({

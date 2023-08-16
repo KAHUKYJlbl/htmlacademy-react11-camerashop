@@ -6,12 +6,14 @@ import { FetchStatus } from '../../../shared/types/fetch-status';
 import { checkDiscount } from './api-actions/check-discount';
 
 type InitialState = {
+  coupon: string;
   discount: number;
   discountStatus: FetchStatus;
   checkDiscountLoadingStatus: FetchStatus;
 }
 
 const initialState: InitialState = {
+  coupon: '',
   discount: 0,
   discountStatus: FetchStatus.Idle,
   checkDiscountLoadingStatus: FetchStatus.Idle,
@@ -23,7 +25,10 @@ export const discountSlice = createSlice({
   reducers: {
     setDiscountStatus: (state, action: PayloadAction<FetchStatus>) => {
       state.discountStatus = action.payload;
-    }
+    },
+    setCoupon: (state, action: PayloadAction<string>) => {
+      state.coupon = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -47,4 +52,4 @@ export const discountSlice = createSlice({
   }
 });
 
-export const { setDiscountStatus } = discountSlice.actions;
+export const { setDiscountStatus, setCoupon } = discountSlice.actions;

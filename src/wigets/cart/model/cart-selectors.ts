@@ -9,6 +9,11 @@ export const getCartItems = createSelector(
   (list) => [...list].sort((a, b) => a.camera.price - b.camera.price)
 );
 
+export const getCartItemsIds = createSelector(
+  (state: State): CartCamera[] => state[NameSpace.Cart].cartList,
+  (list) => list.map((item) => item.camera.id)
+);
+
 export const getCameraCartStatus = createSelector(
   [
     getCartItems,

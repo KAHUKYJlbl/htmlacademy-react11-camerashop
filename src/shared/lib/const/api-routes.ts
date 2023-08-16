@@ -6,4 +6,5 @@ export enum APIRoute {
   Review = '/cameras/:cameraId/reviews',
   PostReview = '/reviews',
   CheckDiscount = '/coupons',
+  PostOrder = '/orders',
 }

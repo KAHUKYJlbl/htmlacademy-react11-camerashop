@@ -9,21 +9,23 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 
 import { getCheckDiscountLoadingStatus, getDiscountStatus } from '../model/discount-selectors';
 import { checkDiscount } from '../model/api-actions/check-discount';
-import { setDiscountStatus } from '../model/discount-slice';
+import { setCoupon, setDiscountStatus } from '../model/discount-slice';
 import { DiscountForm } from '../lib/types/discount-form';
 
 export const Discount = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<DiscountForm>();
+  const { register, handleSubmit, setValue } = useForm<DiscountForm>();
   const [ fieldErrors, setFieldErrors ] = useState({coupon: false});
   const discountStatus = useAppSelector(getDiscountStatus);
   const discountLoadingStatus = useAppSelector(getCheckDiscountLoadingStatus);
 
   const onFormSubmit: SubmitHandler<DiscountForm> = (data) => {
-    dispatch(checkDiscount(data));
-    setFieldErrors({
-      coupon: false,
-    });
+    dispatch(checkDiscount(data))
+      .then(() => {
+        dispatch(setCoupon(data.coupon));
+        setValue('coupon', '');
+      });
+    setFieldErrors({coupon: false});
   };
 
   const onFormSubmitError: SubmitErrorHandler<DiscountForm> = (errors) => {
