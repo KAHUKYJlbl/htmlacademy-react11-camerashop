@@ -15,7 +15,7 @@ const initialState: InitialState = {
 };
 
 export const cartSlice = createSlice({
-  name: NameSpace.AddCart,
+  name: NameSpace.Cart,
   initialState,
   reducers: {
     cartClear: (state) => {

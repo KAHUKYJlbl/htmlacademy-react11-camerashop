@@ -8,7 +8,7 @@ import { HistoryRouter } from '../../../app/provider/history-router';
 import { NameSpace } from '../../../app/provider/store';
 
 import { CartCamera, RatedCamera } from '../types/camera';
-import { CameraCard } from './camera-card';
+import { CameraCardCart } from './camera-card-cart';
 
 const camera: RatedCamera = {
   id: 1,
@@ -40,17 +40,17 @@ const store = mockStore({
 
 const history = createMemoryHistory();
 
-describe('Component: CameraCard', () => {
+describe('Component: CameraCardCart', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <CameraCard camera={camera} />
+          <CameraCardCart camera={camera} quantity={1} />
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByText(/Всего оценок:/i)).toBeInTheDocument();
-    expect(screen.getAllByRole('link').some((link) => link.textContent === 'Подробнее')).toBe(true);
+    expect(screen.getByText(/Артикул:/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button').some((button) => button.className === 'cross-btn')).toBe(true);
   });
 });

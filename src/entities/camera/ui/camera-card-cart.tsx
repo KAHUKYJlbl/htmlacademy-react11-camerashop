@@ -78,7 +78,6 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
         {camera.price}
       </p>
 
-      {/* TODO уменьшить увеличить */}
       <div className="quantity">
         <button
           className="btn-icon btn-icon--prev"
