@@ -1,20 +1,19 @@
 import cn from 'classnames';
-
-import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { Discount, getDiscount, setCoupon, setDiscount, setDiscountStatus } from '../../../features/discount';
-
-import { getCartItemsIds, getCartSumPrice } from '../model/cart-selectors';
-import { getCoupon } from '../../../features/discount/model/discount-selectors';
-import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { postOrder } from '../model/api-actions/post-order';
-import { cartClear } from '../model/cart-slice';
 import { toast } from 'react-toastify';
+
+import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { FetchStatus } from '../../../shared/types/fetch-status';
+import { Discount, getCoupon, getDiscount, setCoupon, setDiscount, setDiscountStatus } from '../../../features/discount';
+
+import { getCartItemsIds, getCartSumPrice, getCartUploadingStatus } from '../model/cart-selectors';
+import { postOrder } from '../model/api-actions/post-order';
 
 export const CartSummary = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const cartSumPrice = useAppSelector(getCartSumPrice);
   const cartItemsIds = useAppSelector(getCartItemsIds);
+  const cartUploadingStatus = useAppSelector(getCartUploadingStatus);
   const coupon = useAppSelector(getCoupon);
   const discount = cartSumPrice * useAppSelector(getDiscount);
 
@@ -27,7 +26,6 @@ export const CartSummary = (): JSX.Element => {
         if (responce.meta.requestStatus === 'fulfilled') {
           toast.success('Заказ принят!');
 
-          dispatch(cartClear());
           dispatch(setCoupon(''));
           dispatch(setDiscount(0));
           dispatch(setDiscountStatus(FetchStatus.Idle));
@@ -81,6 +79,7 @@ export const CartSummary = (): JSX.Element => {
           className="btn btn--purple"
           type="button"
           onClick={onPostOrderClick}
+          disabled={cartUploadingStatus.isLoading}
         >
           Оформить заказ
         </button>

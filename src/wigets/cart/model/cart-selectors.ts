@@ -44,7 +44,7 @@ export const getCartSumPrice = createSelector(
 export const getCartUploadingStatus = createSelector(
   (state: State): FetchStatus => state[NameSpace.Cart].cartUploadingStatus,
   (status) => ({
-    isLoading: [FetchStatus.Idle, FetchStatus.Pending].includes(status),
+    isLoading: status === FetchStatus.Pending,
     isSuccess: status === FetchStatus.Success,
     isFailed: status === FetchStatus.Failed,
   })

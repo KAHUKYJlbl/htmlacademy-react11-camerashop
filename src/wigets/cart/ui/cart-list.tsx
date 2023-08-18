@@ -7,7 +7,7 @@ export const CartList = (): JSX.Element => {
 
   if (!cartItems.length) {
     return (
-      <li className="basket-item">
+      <li className="basket-item" data-testid="test">
         <div className="basket-item__description">
           <p className="basket-item__title">
             {`Корзина${'\u00A0'}пуста`}

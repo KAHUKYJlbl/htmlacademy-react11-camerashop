@@ -27,7 +27,7 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
   };
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid="test">
       <div className="basket-item__img">
         <picture>
           <source

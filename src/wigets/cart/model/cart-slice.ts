@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../app/provider/store';
 import { CartCamera, RatedCamera } from '../../../entities/camera';
 import { FetchStatus } from '../../../shared/types/fetch-status';
+import { postOrder } from './api-actions/post-order';
 
 type InitialState = {
   cartUploadingStatus: FetchStatus;
@@ -18,9 +19,6 @@ export const cartSlice = createSlice({
   name: NameSpace.Cart,
   initialState,
   reducers: {
-    cartClear: (state) => {
-      state.cartList = [];
-    },
     cartItemAdd: (state, action: PayloadAction<RatedCamera>) => {
       state.cartList = [{camera: action.payload, quantity: 1}, ...state.cartList];
     },
@@ -34,6 +32,19 @@ export const cartSlice = createSlice({
       ];
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(postOrder.fulfilled, (state) => {
+        state.cartUploadingStatus = FetchStatus.Success;
+        state.cartList = [];
+      })
+      .addCase(postOrder.pending, (state) => {
+        state.cartUploadingStatus = FetchStatus.Pending;
+      })
+      .addCase(postOrder.rejected, (state) => {
+        state.cartUploadingStatus = FetchStatus.Failed;
+      });
+  }
 });
 
-export const { cartClear, cartItemAdd, cartItemRemove, cartItemSetQuantity } = cartSlice.actions;
+export const { cartItemAdd, cartItemRemove, cartItemSetQuantity } = cartSlice.actions;

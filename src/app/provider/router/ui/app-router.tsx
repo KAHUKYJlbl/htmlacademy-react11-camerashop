@@ -6,10 +6,9 @@ import { CameraPage } from '../../../../pages/camera-page';
 import { CartPage } from '../../../../pages/cart-page';
 import { NotFound } from '../../../../pages/not-found';
 import { CameraInfo } from '../../../../wigets/camera-info';
-// import { CameraTabs } from '../../../../entities/camera';
+import { CameraTabs } from '../../../../entities/camera/lib/const';
 
 import { AppRoute } from '../lib/routes';
-import { CameraTabs } from '../../../../entities/camera/lib/const';
 
 export const AppRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -26,10 +25,6 @@ export const AppRouter = createBrowserRouter(
       />
       <Route
         path={AppRoute.Catalog}
-        element={<CatalogPage />}
-      />
-      <Route
-        path={AppRoute.CatalogQuery}
         element={<CatalogPage />}
       />
       <Route
