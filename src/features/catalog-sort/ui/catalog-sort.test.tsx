@@ -5,9 +5,13 @@ import { Provider } from 'react-redux';
 import { HistoryRouter } from '../../../app/provider/history-router';
 import { createMemoryHistory } from 'history';
 import { CatalogSort } from './catalog-sort';
+import { NameSpace } from '../../../app/provider/store';
+import { FetchStatus } from '../../../shared/types/fetch-status';
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({
+  [NameSpace.Catalog]: {catalogLoadingStatus: FetchStatus.Success},
+});
 
 const history = createMemoryHistory();
 

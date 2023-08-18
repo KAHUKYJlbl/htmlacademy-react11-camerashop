@@ -3,11 +3,12 @@ import { Route, createBrowserRouter, createRoutesFromElements } from 'react-rout
 import { MainPage } from '../../../../pages/main-page';
 import { CatalogPage } from '../../../../pages/catalog-page';
 import { CameraPage } from '../../../../pages/camera-page';
+import { CartPage } from '../../../../pages/cart-page';
+import { NotFound } from '../../../../pages/not-found';
 import { CameraInfo } from '../../../../wigets/camera-info';
-import { CameraTabs } from '../../../../entities/camera';
+import { CameraTabs } from '../../../../entities/camera/lib/const';
 
 import { AppRoute } from '../lib/routes';
-import { NotFound } from '../../../../pages/not-found';
 
 export const AppRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +28,8 @@ export const AppRouter = createBrowserRouter(
         element={<CatalogPage />}
       />
       <Route
-        path={AppRoute.CatalogQuery}
-        element={<CatalogPage />}
+        path={AppRoute.Cart}
+        element={<CartPage />}
       />
       <Route
         path={AppRoute.Camera}

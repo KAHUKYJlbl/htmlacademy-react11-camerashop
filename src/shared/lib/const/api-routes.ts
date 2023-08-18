@@ -5,4 +5,6 @@ export enum APIRoute {
   Similar = '/cameras/:cameraId/similar',
   Review = '/cameras/:cameraId/reviews',
   PostReview = '/reviews',
+  CheckDiscount = '/coupons',
+  PostOrder = '/orders',
 }

@@ -1,10 +1,11 @@
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Modal } from '../../../shared/ui/modal';
-import { getCurrentCamera } from '../model/add-basket-selectors';
-import { hideAddBasket } from '../model/add-basket-slice';
+import { cartItemAdd } from '../../../wigets/cart';
+import { getCurrentCamera } from '../model/add-cart-selectors';
+import { hideAddCart, showSuccessCart } from '../model/add-cart-slice';
 
-export function AddBasket (): JSX.Element {
+export function AddCart (): JSX.Element {
   const dispatch = useAppDispatch();
   const currentCamera = useAppSelector(getCurrentCamera);
 
@@ -14,8 +15,14 @@ export function AddBasket (): JSX.Element {
     );
   }
 
+  const onAddCartClick = () => {
+    dispatch(cartItemAdd(currentCamera));
+    dispatch(hideAddCart());
+    dispatch(showSuccessCart());
+  };
+
   return (
-    <Modal onClose={() => dispatch(hideAddBasket())} >
+    <Modal onClose={() => dispatch(hideAddCart())} >
       <>
         <p className="title title--h4">Добавить товар в корзину</p>
 
@@ -73,9 +80,13 @@ export function AddBasket (): JSX.Element {
         </div>
 
         <div className="modal__buttons">
-          <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" >
+          <button
+            className="btn btn--purple modal__btn modal__btn--fit-width"
+            type="button"
+            onClick={onAddCartClick}
+          >
             <svg width="24" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-add-basket"></use>
+              <use xlinkHref="#icon-add-basket" />
             </svg>
             Добавить в корзину
           </button>
@@ -85,7 +96,7 @@ export function AddBasket (): JSX.Element {
           className="cross-btn"
           type="button"
           aria-label="Закрыть попап"
-          onClick={() => dispatch(hideAddBasket())}
+          onClick={() => dispatch(hideAddCart())}
         >
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>

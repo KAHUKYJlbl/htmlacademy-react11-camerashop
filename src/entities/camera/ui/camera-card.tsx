@@ -1,11 +1,14 @@
 import { Link, generatePath } from 'react-router-dom';
 import cn from 'classnames';
 
-import { RatedCamera } from '../types/camera';
 import { AppRoute } from '../../../app/provider/router';
+import { getCameraCartStatus } from '../../../wigets/cart';
+import { showAddCart } from '../../../features/add-cart';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { showAddBasket } from '../../../features/add-basket';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { RATING_SCALE_MAX } from '../../review';
+
+import { RatedCamera } from '../types/camera';
 
 type CameraCardProps = {
   camera: RatedCamera;
@@ -14,6 +17,7 @@ type CameraCardProps = {
 
 export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const cartStatus = useAppSelector((state) => getCameraCartStatus(state, camera));
 
   return (
     <div className={ cn('product-card', className) }>
@@ -73,13 +77,29 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button
-          className="btn btn--purple product-card__btn"
-          type="button"
-          onClick={() => dispatch(showAddBasket(camera))}
-        >
-          Купить
-        </button>
+        {
+          cartStatus.inCart
+            ? (
+              <Link
+                className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
+                to={AppRoute.Cart}
+              >
+                <svg width="16" height="16" aria-hidden="true">
+                  <use xlinkHref="#icon-basket" />
+                </svg>
+
+                В корзине
+              </Link>
+            ) : (
+              <button
+                className="btn btn--purple product-card__btn"
+                type="button"
+                onClick={() => dispatch(showAddCart(camera))}
+              >
+                Купить
+              </button>
+            )
+        }
 
         <Link
           className="btn btn--transparent"

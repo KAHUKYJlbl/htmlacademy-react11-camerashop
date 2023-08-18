@@ -1,5 +1,5 @@
 export enum Titles {
   Catalog = 'Каталог',
-  Basket = 'Корзина',
+  Cart = 'Корзина',
   Product = ''
 }

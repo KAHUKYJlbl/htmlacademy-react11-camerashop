@@ -5,11 +5,12 @@ import { getCamera, getCameraLoadingStatus } from '../model/camera-info-selector
 
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
-import { CameraCardBig, CameraTabs } from '../../../entities/camera';
+import { CameraCardBig } from '../../../entities/camera';
 import { LoadingSpinner } from '../../../shared/ui/loading-spinner';
 import { useOutletContext } from 'react-router-dom';
 import { Oops } from '../../oops';
 import { getReviewsLoadingStatus, getSortedReviewsNewToOld } from '../../review-block/model/review-selectors';
+import { CameraTabs } from '../../../entities/camera/lib/const';
 
 type CameraInfoProps = {
   cameraTab: CameraTabs;

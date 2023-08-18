@@ -1,4 +1,9 @@
-import { AddBasket, getAddBasketShown } from '../../../features/add-basket';
+import {
+  AddCart,
+  SuccessCart,
+  getAddCartShown,
+  getSuccessCartShown
+} from '../../../features/add-cart';
 import { Titles } from '../../../shared/lib/const/titles';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
@@ -7,7 +12,8 @@ import { Catalog } from '../../../wigets/catalog';
 import { Layout } from '../../../wigets/layout';
 
 const CatalogPage = (): JSX.Element => {
-  const isAddBasketShown = useAppSelector(getAddBasketShown);
+  const isAddCartShown = useAppSelector(getAddCartShown);
+  const isSuccessCartShown = useAppSelector(getSuccessCartShown);
 
   return (
     <Layout title={Titles.Catalog} >
@@ -20,7 +26,8 @@ const CatalogPage = (): JSX.Element => {
           <Catalog />
         </div>
 
-        {isAddBasketShown && <AddBasket />}
+        {isAddCartShown && <AddCart />}
+        {isSuccessCartShown && <SuccessCart />}
       </main>
     </Layout>
   );

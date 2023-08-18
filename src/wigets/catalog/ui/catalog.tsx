@@ -57,11 +57,13 @@ export function Catalog (): JSX.Element {
       professional: !!searchParams.get(CatalogSearchParams.FilterLevel)?.includes('professional'),
     },
   };
+
   const [page, setPage] = useState<string>(searchParamsPage);
   const [currentSort, setCurrentSort] = useState<CurrentSort>(searchParamsSort);
   const [currentPrice, setCurrentPrice] = useState<CurrentPrice>(searchParamsPrice);
   const [currentPricePlaceholder, setCurrentPricePlaceholder] = useState<CurrentPrice>(searchParamsPrice);
   const [currentFilter, setCurrentFilter] = useState<CatalogFilterType>(searchParamsFilter);
+
   const dispatch = useAppDispatch();
   const catalog = useAppSelector((state) =>
     getSortedFilteredCatalog(state, currentSort, getCurrentFilters(currentFilter))
@@ -97,9 +99,8 @@ export function Catalog (): JSX.Element {
   // вносим сортировку в URL
   useSortSearchParams(currentSort, setSearchParams);
 
-  // вносим paginatioon в URL
+  // вносим пагинацию в URL
   usePageSearchParams(page, setSearchParams);
-
 
   // вычисление плейсхолдеров цены
   usePlaceholders(catalog, setCurrentPricePlaceholder);

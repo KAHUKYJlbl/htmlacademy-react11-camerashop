@@ -19,7 +19,7 @@ export function PostReview (): JSX.Element {
   const reviewPostingStatus = useAppSelector(getPostReviewLoadingStatus);
   const { register, handleSubmit } = useForm<ReviewForm>();
   const currentCameraId = useAppSelector(getCurrentCameraId);
-  const [fieldErrors, setFieldErrors] = useState({
+  const [ fieldErrors, setFieldErrors ] = useState({
     rating: false,
     userName: false,
     advantage: false,

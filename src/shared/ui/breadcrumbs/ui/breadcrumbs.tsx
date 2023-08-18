@@ -1,4 +1,4 @@
-import { Link, generatePath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../../../app/provider/router';
 import { Titles } from '../../../lib/const/titles';
@@ -34,11 +34,11 @@ export function Breadcrumbs ({title, camera}: BreadcrumbsProps): JSX.Element {
           }
 
           {
-            title === Titles.Basket &&
+            title === Titles.Cart &&
 
             <>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={ generatePath( AppRoute.Catalog, {page: '1'} ) }>
+                <Link className="breadcrumbs__link" to={AppRoute.Catalog}>
                   {Titles.Catalog}
                   <svg width="5" height="8" aria-hidden="true">
                     <image href="/img/sprite/icon-arrow-mini.svg" />
@@ -59,7 +59,7 @@ export function Breadcrumbs ({title, camera}: BreadcrumbsProps): JSX.Element {
 
             <>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={ generatePath( AppRoute.Catalog, {page: '1'} ) }>
+                <Link className="breadcrumbs__link" to={AppRoute.Catalog}>
                   {Titles.Catalog}
                   <svg width="5" height="8" aria-hidden="true">
                     <image href="/img/sprite/icon-arrow-mini.svg" />

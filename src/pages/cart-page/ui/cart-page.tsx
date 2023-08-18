@@ -1,0 +1,36 @@
+import { RemoveCart, getRemoveCartShown } from '../../../features/add-cart';
+import { Titles } from '../../../shared/lib/const/titles';
+import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
+import { CartList, CartSummary } from '../../../wigets/cart';
+import { Layout } from '../../../wigets/layout';
+
+const CartPage = (): JSX.Element => {
+  const isRemoveCartShown = useAppSelector(getRemoveCartShown);
+
+  return (
+    <Layout title={Titles.Cart} isScrollRestoration >
+      <main>
+        <div className="page-content">
+          <Breadcrumbs title={Titles.Cart} />
+
+          <section className="basket">
+            <div className="container">
+              <h1 className="title title--h2">
+                Корзина
+              </h1>
+
+              <CartList />
+
+              <CartSummary />
+            </div>
+          </section>
+        </div>
+
+        {isRemoveCartShown && <RemoveCart />}
+      </main>
+    </Layout>
+  );
+};
+
+export default CartPage;

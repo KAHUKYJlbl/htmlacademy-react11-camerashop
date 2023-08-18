@@ -1,12 +1,13 @@
+import { generatePath, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
-import { showAddBasket } from '../../../features/add-basket';
+import { AppRoute } from '../../../app/provider/router';
+import { showAddCart } from '../../../features/add-cart';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
+
+import { RATING_SCALE_MAX } from '../../review';
 import { RatedCamera } from '../types/camera';
 import { CameraTabs } from '../lib/const';
-import { generatePath, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../../app/provider/router';
-import { RATING_SCALE_MAX } from '../../review';
 
 type CameraPageInfoProps = {
   camera: RatedCamera;
@@ -76,7 +77,7 @@ export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.El
           <button
             className="btn btn--purple"
             type="button"
-            onClick={() => dispatch(showAddBasket(camera))}
+            onClick={() => dispatch(showAddCart(camera))}
           >
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
