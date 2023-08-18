@@ -117,7 +117,7 @@ describe('Reducer: postReviewSlice', () => {
       });
   });
 
-  it('should set FetchStatus.Pending to postReviewLoadingStatus while catalog are loading', () => {
+  it('should set FetchStatus.Pending to postReviewLoadingStatus while review is posting', () => {
     const state = {
       isPostReviewShown: false,
       currentCameraId: null,

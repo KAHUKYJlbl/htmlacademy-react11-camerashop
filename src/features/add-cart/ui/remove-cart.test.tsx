@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 
 import { HistoryRouter } from '../../../app/provider/history-router';
 import { createMemoryHistory } from 'history';
-import { AddCart } from './add-cart';
 import { Camera } from '../../../entities/camera';
 import { NameSpace } from '../../../app/provider/store';
+import { RemoveCart } from './remove-cart';
 
 const camera: Camera = {
   id: 0,
@@ -31,17 +31,18 @@ const store = mockStore({
 
 const history = createMemoryHistory();
 
-describe('Component: AddCart', () => {
+describe('Component: RemoveCart', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddCart />
+          <RemoveCart />
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByText(/Добавить товар в корзину/i)).toBeInTheDocument();
-    expect(screen.getByText(/Цена:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Удалить этот товар/i)).toBeInTheDocument();
+    expect(screen.getByText(/уровень/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button').some((button) => button.textContent === 'Удалить')).toBe(true);
   });
 });

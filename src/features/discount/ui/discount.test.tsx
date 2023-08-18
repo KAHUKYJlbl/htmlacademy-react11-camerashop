@@ -4,29 +4,16 @@ import { Provider } from 'react-redux';
 
 import { HistoryRouter } from '../../../app/provider/history-router';
 import { createMemoryHistory } from 'history';
-import { AddCart } from './add-cart';
-import { Camera } from '../../../entities/camera';
 import { NameSpace } from '../../../app/provider/store';
-
-const camera: Camera = {
-  id: 0,
-  name: '',
-  previewImg: '',
-  previewImg2x: '',
-  previewImgWebp: '',
-  previewImgWebp2x: '',
-  vendorCode: '',
-  type: 'Коллекционная',
-  category: 'Видеокамера',
-  level: 'Нулевой',
-  description: '',
-  price: 0,
-  reviewCount: 0,
-};
+import { Discount } from './discount';
+import { FetchStatus } from '../../../shared/types/fetch-status';
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  [NameSpace.AddCart]: {currentCamera: camera},
+  [NameSpace.Discount]: {
+    discountStatus: FetchStatus.Idle,
+    checkDiscountLoadingStatus: FetchStatus.Idle,
+  },
 });
 
 const history = createMemoryHistory();
@@ -36,12 +23,12 @@ describe('Component: AddCart', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddCart />
+          <Discount />
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByText(/Добавить товар в корзину/i)).toBeInTheDocument();
-    expect(screen.getByText(/Цена:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Если у вас есть промокод на скидку, примените его в этом поле/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button').some((button) => button.textContent === 'Применить')).toBe(true);
   });
 });
