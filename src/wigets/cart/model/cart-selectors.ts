@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 import { NameSpace, State } from '../../../app/provider/store';
-import { FetchStatus } from '../../../shared/types/fetch-status';
 import { CartCamera, RatedCamera } from '../../../entities/camera';
 
 export const getCartItems = createSelector(
@@ -39,13 +38,4 @@ export const getCartSumPrice = createSelector(
     items.reduce((sum, item) =>
       sum + (item.quantity ? item.quantity : 1) * item.camera.price,
     0)
-);
-
-export const getCartUploadingStatus = createSelector(
-  (state: State): FetchStatus => state[NameSpace.Cart].cartUploadingStatus,
-  (status) => ({
-    isLoading: status === FetchStatus.Pending,
-    isSuccess: status === FetchStatus.Success,
-    isFailed: status === FetchStatus.Failed,
-  })
 );

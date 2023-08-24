@@ -9,6 +9,7 @@ import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { RATING_SCALE_MAX } from '../../review';
 
 import { RatedCamera } from '../types/camera';
+import { priceFormat } from '../../../shared/lib/price-format';
 
 type CameraCardProps = {
   camera: RatedCamera;
@@ -18,6 +19,11 @@ type CameraCardProps = {
 export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const cartStatus = useAppSelector((state) => getCameraCartStatus(state, camera));
+
+  const onAddCartClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    dispatch(showAddCart(camera));
+  };
 
   return (
     <div className={ cn('product-card', className) }>
@@ -73,7 +79,7 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
           <span className="visually-hidden">
             Цена:
           </span>
-          {camera.price} ₽
+          {priceFormat(camera.price)}
         </p>
       </div>
       <div className="product-card__buttons">
@@ -94,7 +100,7 @@ export function CameraCard ({camera, className}: CameraCardProps): JSX.Element {
               <button
                 className="btn btn--purple product-card__btn"
                 type="button"
-                onClick={() => dispatch(showAddCart(camera))}
+                onClick={onAddCartClick}
               >
                 Купить
               </button>

@@ -1,5 +1,6 @@
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
+import { priceFormat } from '../../../shared/lib/price-format';
 import { Modal } from '../../../shared/ui/modal';
 import { cartItemAdd } from '../../../wigets/cart';
 import { getCurrentCamera } from '../model/add-cart-selectors';
@@ -74,7 +75,7 @@ export function AddCart (): JSX.Element {
               <span className="visually-hidden">
                 Цена:
               </span>
-              {currentCamera.price} ₽
+              {priceFormat(currentCamera.price)}
             </p>
           </div>
         </div>

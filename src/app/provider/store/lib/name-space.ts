@@ -7,5 +7,6 @@ export enum NameSpace {
   AddCart = 'AddCart',
   Review = 'Review',
   PostReview = 'PostReview',
+  PostOrder = 'PostOrder',
   Discount = 'Discount',
 }

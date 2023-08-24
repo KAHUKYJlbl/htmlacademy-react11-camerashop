@@ -1,4 +1,5 @@
 import { RemoveCart, getRemoveCartShown } from '../../../features/add-cart';
+import { OrderSuccess, getOrderSuccessShown } from '../../../features/post-order';
 import { Titles } from '../../../shared/lib/const/titles';
 import { useAppSelector } from '../../../shared/lib/hooks/use-app-selector';
 import { Breadcrumbs } from '../../../shared/ui/breadcrumbs';
@@ -7,6 +8,7 @@ import { Layout } from '../../../wigets/layout';
 
 const CartPage = (): JSX.Element => {
   const isRemoveCartShown = useAppSelector(getRemoveCartShown);
+  const isOrderSuccessShown = useAppSelector(getOrderSuccessShown);
 
   return (
     <Layout title={Titles.Cart} isScrollRestoration >
@@ -28,6 +30,7 @@ const CartPage = (): JSX.Element => {
         </div>
 
         {isRemoveCartShown && <RemoveCart />}
+        {isOrderSuccessShown && <OrderSuccess />}
       </main>
     </Layout>
   );

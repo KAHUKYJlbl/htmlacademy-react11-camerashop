@@ -11,6 +11,7 @@ import { getCheckDiscountLoadingStatus, getDiscountStatus } from '../model/disco
 import { checkDiscount } from '../model/api-actions/check-discount';
 import { setCoupon, setDiscountStatus } from '../model/discount-slice';
 import { DiscountForm } from '../lib/types/discount-form';
+import classes from './discount.module.css';
 
 export const Discount = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -49,7 +50,7 @@ export const Discount = (): JSX.Element => {
 
       <div className="basket-form">
         <form onSubmit={handleSubmit(onFormSubmit, onFormSubmitError)}>
-          <fieldset disabled={discountLoadingStatus.isLoading}>
+          <fieldset className={classes.fieldset} disabled={discountLoadingStatus.isLoading}>
             <div
               className={cn(
                 'custom-input',
