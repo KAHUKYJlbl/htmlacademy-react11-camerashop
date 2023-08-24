@@ -1,6 +1,6 @@
 import { CartCamera, RatedCamera } from '../../../entities/camera';
 import { FetchStatus } from '../../../shared/types/fetch-status';
-import { postOrder } from './api-actions/post-order';
+import { postOrder } from '../../../features/post-order/model/api-actions/post-order';
 import { cartItemAdd, cartItemRemove, cartItemSetQuantity, cartSlice } from './cart-slice';
 
 const camera: RatedCamera = {

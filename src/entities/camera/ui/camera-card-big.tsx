@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { RATING_SCALE_MAX } from '../../review';
 import { RatedCamera } from '../types/camera';
 import { CameraTabs } from '../lib/const';
+import { priceFormat } from '../../../shared/lib/price-format';
 
 type CameraPageInfoProps = {
   camera: RatedCamera;
@@ -17,6 +18,11 @@ type CameraPageInfoProps = {
 export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const onAddCartClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    dispatch(showAddCart(camera));
+  };
 
   return (
     <section className="product">
@@ -71,13 +77,13 @@ export function CameraCardBig ({camera, cameraTab}: CameraPageInfoProps): JSX.El
             <span className="visually-hidden">
               Цена:
             </span>
-            {camera.price} ₽
+            {priceFormat(camera.price)}
           </p>
 
           <button
             className="btn btn--purple"
             type="button"
-            onClick={() => dispatch(showAddCart(camera))}
+            onClick={onAddCartClick}
           >
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>

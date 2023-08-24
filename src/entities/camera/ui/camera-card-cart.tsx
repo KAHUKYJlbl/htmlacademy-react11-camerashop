@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
 import { cartItemSetQuantity } from '../../../wigets/cart';
 
 import { RatedCamera } from '../types/camera';
+import { priceFormat } from '../../../shared/lib/price-format';
 
 type CameraCardCartProps = {
   camera: RatedCamera;
@@ -20,10 +21,21 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
 
   const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStateQuantity((prev) =>
-      Number(e.target.value) > 99
-        ? prev
-        : +e.target.value
+      (
+        (
+          /^\d*$/.test(e.target.value)
+          && Number(e.target.value) <= 99
+          && Number(e.target.value) >= 1
+        ) || (e.target.value === '')
+      )
+        ? +e.target.value
+        : prev
     );
+  };
+
+  const onCartRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    dispatch(showRemoveCart(camera));
   };
 
   return (
@@ -75,7 +87,7 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
           Цена:
         </span>
 
-        {camera.price}
+        {priceFormat(camera.price)}
       </p>
 
       <div className="quantity">
@@ -92,13 +104,11 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
 
         <label className="visually-hidden" htmlFor="counter1" />
         <input
-          type="number"
+          type="text"
           id="counter1"
           value={quantity}
           onChange={(e) => onQuantityChange(e)}
-          onBlur={(e) => +e.target.value < 1 ? setStateQuantity(1) : null}
-          min="1"
-          max="99"
+          onBlur={(e) => +e.target.value === 0 ? setStateQuantity(1) : null}
           aria-label="количество товара"
         />
 
@@ -119,14 +129,14 @@ export const CameraCardCart = ({camera, quantity}: CameraCardCartProps): JSX.Ele
           Общая цена:
         </span>
 
-        {camera.price * (quantity ? quantity : 1)}
+        {priceFormat( camera.price * ( quantity ? quantity : 1 ) )}
       </div>
 
       <button
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
-        onClick={() => dispatch(showRemoveCart(camera))}
+        onClick={onCartRemove}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

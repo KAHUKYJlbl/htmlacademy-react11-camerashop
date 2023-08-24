@@ -4,7 +4,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
 import { APIRoute } from '../../../../shared/lib/const/api-routes';
-import { OrderForm } from '../../lib/types/order-form';
+import { OrderForm } from '../../../../wigets/cart/lib/types/order-form';
 
 export const postOrder = createAsyncThunk<void, OrderForm, {
   dispatch: AppDispatch;
@@ -24,7 +24,7 @@ export const postOrder = createAsyncThunk<void, OrderForm, {
       }
 
       if (err instanceof AxiosError && err.response?.status !== 401) {
-        toast.error('Coupon checking failed.');
+        toast.error('Order posting failed.');
       }
       throw err;
     }
