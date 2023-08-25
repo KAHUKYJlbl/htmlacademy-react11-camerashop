@@ -28,7 +28,7 @@ export function OrderSuccess (): JSX.Element {
         <div className="modal__buttons">
           <Link
             className="btn btn--purple modal__btn modal__btn--fit-width"
-            to={AppRoute.Cart}
+            to={AppRoute.Catalog}
             onClick={() => dispatch(hideOrderSuccess())}
           >
             Вернуться к покупкам
