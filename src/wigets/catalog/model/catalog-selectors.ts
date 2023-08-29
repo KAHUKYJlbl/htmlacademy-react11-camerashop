@@ -75,7 +75,8 @@ export const getSortedFilteredPricedCatalog = createSelector(
 export const getCatalogLoadingStatus = createSelector(
   (state: State): FetchStatus => state[NameSpace.Catalog].catalogLoadingStatus,
   (status) => ({
-    isLoading: [FetchStatus.Idle, FetchStatus.Pending].includes(status),
+    isIdle: status === FetchStatus.Idle,
+    isLoading: status === FetchStatus.Pending,
     isSuccess: status === FetchStatus.Success,
     isFailed: status === FetchStatus.Failed,
   })

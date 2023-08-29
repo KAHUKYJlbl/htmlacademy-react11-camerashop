@@ -7,19 +7,18 @@ import { getSearch } from '../model/search-selectors';
 import { AppRoute } from '../../../app/provider/router';
 import { handleNavigationKeys } from '../lib/handleNavigationKeys';
 import { useAppDispatch } from '../../../shared/lib/hooks/use-app-dispatch';
-import { fetchCatalog, getCatalog, getCatalogLoadingStatus } from '../../../wigets/catalog';
+import { fetchCatalog, getCatalogLoadingStatus } from '../../../wigets/catalog';
 
 export function Search (): JSX.Element {
   const listItemRef = useRef( new Array<HTMLAnchorElement | null>() );
   const dispatch = useAppDispatch();
   const [searchInput, setSearchInput] = useState('');
   const [currentSearchItemID, setCurrentSearchItemID] = useState<number | null>(null);
-  const catalog = useAppSelector(getCatalog);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
   const searchList = useAppSelector((state) => getSearch(state, searchInput));
 
   useEffect(() => {
-    if (!catalog.length) {
+    if (catalogLoadingStatus.isIdle) {
       dispatch(fetchCatalog());
     }
   }, []);
@@ -76,6 +75,8 @@ export function Search (): JSX.Element {
                   'form-search__select-item',
                   {'current': camera.id === currentSearchItemID}
                 )}
+                onMouseEnter={() => setCurrentSearchItemID(camera.id)}
+                onMouseLeave={() => setCurrentSearchItemID(null)}
               >
                 <Link
                   ref={(element) => listItemRef.current.push(element)}
@@ -85,8 +86,6 @@ export function Search (): JSX.Element {
                   onFocus={() => setCurrentSearchItemID(camera.id)}
                   onBlur={() => setCurrentSearchItemID(null)}
                   onKeyDown={onNavKeysDown}
-                  onMouseEnter={() => setCurrentSearchItemID(camera.id)}
-                  onMouseLeave={() => setCurrentSearchItemID(null)}
                   onClick={() => {
                     setSearchInput('');
                     setCurrentSearchItemID(null);

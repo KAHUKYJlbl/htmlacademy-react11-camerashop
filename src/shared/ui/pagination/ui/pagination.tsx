@@ -60,12 +60,6 @@ export function Pagination ({ page, pagesCount, setPage }: PaginationProps): JSX
                 e.preventDefault();
                 e.stopPropagation();
                 setPage((current) => String( +current + 1 ));
-                // setSearchParams((current) =>
-                //   new URLSearchParams({
-                //     ...Object.fromEntries( current.entries() ),
-                //     [CatalogSearchParams.Page]: String(+page + 1),
-                //   })
-                // );
               }}
             >
               Далее
