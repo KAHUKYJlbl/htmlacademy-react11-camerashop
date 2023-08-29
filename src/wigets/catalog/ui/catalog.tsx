@@ -5,10 +5,8 @@ import { CurrentSort, SortOrder, SortType } from '../lib/types/current-sort';
 import { getCurrentFilters } from '../lib/get-current-filters';
 import { CARDS_PER_PAGE } from '../lib/const/cards-per-page';
 import { CurrentPrice } from '../lib/types/current-price';
-import { fetchRating } from '../model/api-actions/fetch-rating';
 import { fetchCatalog } from '../model/api-actions/fetch-catalog';
 import {
-  getCatalogIDs,
   getCatalogLoadingStatus,
   getSortedFilteredCatalog,
   getSortedFilteredPricedCatalog
@@ -71,27 +69,19 @@ export function Catalog (): JSX.Element {
   const catalogPriced = useAppSelector((state) =>
     getSortedFilteredPricedCatalog(state, currentSort, getCurrentFilters(currentFilter), currentPrice)
   );
-  const catalogIDs = useAppSelector(getCatalogIDs);
   const catalogLoadingStatus = useAppSelector(getCatalogLoadingStatus);
 
   // фетчим каталог
   useEffect(() => {
     dispatch(fetchCatalog());
-  }, []);
-
-  // фетчим рейтинги для каждой камеры
-  useEffect(() => {
-    catalogIDs.forEach((ID) => {
-      dispatch(fetchRating( String(ID) ));
-    });
-  }, [catalogIDs]);
+  }, [dispatch]);
 
   // переполнение пагинации
   useEffect(() => {
     if (page && +page > Math.ceil( catalogPriced.length / CARDS_PER_PAGE )) {
       setPage('1');
     }
-  }, [catalogPriced.length]);
+  }, [catalogPriced.length, page]);
 
   // вносим фильтры в URL
   useFiltersSearchParams(currentFilter, currentPrice, setSearchParams);

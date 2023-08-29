@@ -4,12 +4,12 @@ import { fetchCatalog } from './api-actions/fetch-catalog';
 
 import { NameSpace } from '../../../app/provider/store';
 import { FetchStatus } from '../../../shared/types/fetch-status';
-import { Camera, RatedCamera } from '../../../entities/camera';
+import { RatedCamera, ReviewCamera } from '../../../entities/camera';
 import { fetchRating } from './api-actions/fetch-rating';
 
 type InitialState = {
   catalogLoadingStatus: FetchStatus;
-  catalog: Camera[];
+  catalog: ReviewCamera[];
   ratedCatalog: RatedCamera[];
 }
 
@@ -28,6 +28,14 @@ export const catalogSlice = createSlice({
       .addCase(fetchCatalog.fulfilled, (state, action) => {
         state.catalogLoadingStatus = FetchStatus.Success;
         state.catalog = action.payload;
+        state.ratedCatalog = action.payload.map((camera) => (
+          {
+            ...camera,
+            rating: Math.ceil(camera.reviews.reduce((rating, review) => (
+              rating + review.rating
+            ), 0) / camera.reviews.length)
+          }
+        ));
       })
       .addCase(fetchCatalog.pending, (state) => {
         state.catalogLoadingStatus = FetchStatus.Pending;

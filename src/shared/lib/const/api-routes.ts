@@ -1,5 +1,5 @@
 export enum APIRoute {
-  Catalog = '/cameras',
+  Catalog = '/cameras?_embed=reviews',
   Banner = '/promo',
   Camera = '/cameras/:cameraId',
   Similar = '/cameras/:cameraId/similar',

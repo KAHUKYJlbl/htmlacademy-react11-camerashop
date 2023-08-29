@@ -6,6 +6,7 @@ export type {
   Camera,
   BannerCamera,
   RatedCamera,
+  ReviewCamera,
   CartCamera,
   CameraRating,
   CameraTypes,
