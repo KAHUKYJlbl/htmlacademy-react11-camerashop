@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 
-import { Camera } from '../../../../entities/camera';
+import { ReviewCamera } from '../../../../entities/camera';
 import { AppDispatch, State } from '../../../../app/provider/store';
 import { toast } from 'react-toastify';
 import { APIRoute } from '../../../../shared/lib/const/api-routes';
 
-export const fetchCatalog = createAsyncThunk<Camera[], undefined, {
+export const fetchCatalog = createAsyncThunk<ReviewCamera[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -14,7 +14,7 @@ export const fetchCatalog = createAsyncThunk<Camera[], undefined, {
   'Catalog/fetchCatalog',
   async (_arg, {extra: axios}) => {
     try {
-      const { data } = await axios.get<Camera[]>(APIRoute.Catalog);
+      const { data } = await axios.get<ReviewCamera[]>(APIRoute.Catalog);
 
       return data;
     } catch (err) {

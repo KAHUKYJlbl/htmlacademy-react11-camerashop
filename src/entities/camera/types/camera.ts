@@ -1,3 +1,5 @@
+import { Review } from '../../review';
+
 export type BannerCamera = {
   id: number;
   name: string;
@@ -5,6 +7,17 @@ export type BannerCamera = {
   previewImg2x: string;
   previewImgWebp: string;
   previewImgWebp2x: string;
+};
+
+export type ReviewCamera = BannerCamera & {
+  vendorCode: string;
+  type: CameraTypes;
+  category: CameraCategories;
+  level: CameraLevels;
+  description: string;
+  price: number;
+  reviewCount: number;
+  reviews: Review[];
 };
 
 export type Camera = BannerCamera & {
