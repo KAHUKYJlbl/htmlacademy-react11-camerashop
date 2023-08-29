@@ -63,7 +63,7 @@ export function Catalog (): JSX.Element {
   const [currentFilter, setCurrentFilter] = useState<CatalogFilterType>(searchParamsFilter);
 
   const dispatch = useAppDispatch();
-  const catalog = useAppSelector((state) =>
+  const catalogFiltered = useAppSelector((state) =>
     getSortedFilteredCatalog(state, currentSort, getCurrentFilters(currentFilter))
   );
   const catalogPriced = useAppSelector((state) =>
@@ -73,7 +73,9 @@ export function Catalog (): JSX.Element {
 
   // фетчим каталог
   useEffect(() => {
-    dispatch(fetchCatalog());
+    if (catalogLoadingStatus.isIdle) {
+      dispatch(fetchCatalog());
+    }
   }, [dispatch]);
 
   // переполнение пагинации
@@ -93,9 +95,9 @@ export function Catalog (): JSX.Element {
   usePageSearchParams(page, setSearchParams);
 
   // вычисление плейсхолдеров цены
-  usePlaceholders(catalog, setCurrentPricePlaceholder);
+  usePlaceholders(catalogFiltered, setCurrentPricePlaceholder);
 
-  if (catalogLoadingStatus.isLoading) {
+  if (catalogLoadingStatus.isLoading || catalogLoadingStatus.isIdle) {
     return <LoadingSpinner spinnerType='widget' />;
   }
 
